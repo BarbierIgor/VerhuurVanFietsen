@@ -1,15 +1,15 @@
 version: '3.4'
 
 services:
-  verhuurvanfietsen:
-    image: verhuurvanfietsen
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
-    ports:
-      - 3000:3000
+  # verhuurvanfietsen:
+  #   image: verhuurvanfietsen
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #     NODE_ENV: production
+  #   ports:
+  #     - 3000:3000
 
   mariadb:
     image: mariadb:10.5.9

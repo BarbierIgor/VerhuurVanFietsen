@@ -12,7 +12,7 @@ export class BicycleStorage {
   @Column('text')
   street?: string
 
-  @Column('number')
+  @Column()
   houseNumber?: number
 
   bikesAvailable?: number

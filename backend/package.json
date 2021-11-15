@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsc && node dist/app.js",
-    "dev": "nodemon"
+    "dev": "npx nodemon --watch 'server/**/*' --exec 'ts-node' server/app.ts"
   },
   "repository": {
     "type": "git",
