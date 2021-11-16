@@ -7,13 +7,16 @@ import {
 } from 'typeorm'
 import { BicycleStorage } from './bicycleStorage'
 import { Bike } from './bike'
+import { User } from './user'
 
 @Entity('hiredHistory')
 export class HiredHistory {
   @PrimaryGeneratedColumn('uuid')
   uuid?: string
 
-  // user
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user?: User
 
   @ManyToOne(() => Bike)
   @JoinColumn({ name: 'bike_id' })

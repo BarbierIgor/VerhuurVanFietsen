@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { BicycleStorage } from './bicycleStorage'
 import { Bike } from './bike'
+import { User } from './user'
 
 @Entity('bikeInUse')
 export class BikeInUse {
@@ -23,5 +24,9 @@ export class BikeInUse {
 
   @ManyToOne(() => BicycleStorage)
   @JoinColumn({ name: 'bicyclestorage_id' })
-  bicycleStorage!: BicycleStorage
+  bicycleStorage?: BicycleStorage
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user?: User
 }
