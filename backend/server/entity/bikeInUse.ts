@@ -16,17 +16,13 @@ export class BikeInUse {
   uuid?: string
 
   @OneToOne(() => Bike)
-  @JoinColumn()
+  @JoinColumn({ name: 'bikeId' })
   bike?: Bike
 
   @Column('datetime')
   timeHired?: Date
 
-  @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicyclestorage_id' })
-  bicycleStorage?: BicycleStorage
-
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'userId' })
   user?: User
 }

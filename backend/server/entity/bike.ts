@@ -21,7 +21,7 @@ export class Bike {
   @Column('simple-json')
   location?: Record<string, string>
 
-  @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicycleStorage_id' })
-  bicycleStorage?: BicycleStorage
+  @ManyToOne(() => BicycleStorage, bs => bs.uuid)
+  @JoinColumn({ name: 'bicycleStorageId' })
+  bicycleStorage!: BicycleStorage
 }

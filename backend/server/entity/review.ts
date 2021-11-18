@@ -16,7 +16,7 @@ export class Review {
   uuid?: string
 
   @Column()
-  ratingOutOfFive?: number
+  rating?: number
 
   @Column('longtext')
   description?: string
@@ -26,6 +26,6 @@ export class Review {
   hiredhistory?: HiredHistory
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'userId' })
   user?: User
 }

@@ -1,34 +1,42 @@
 [
   {
+    "uuid": "65e9562b-5ce5-4bd2-b7bd-4b32dc058636",
     "type": "electric",
     "inStorage": 1,
     "location": {
       "lat": 50.855621,
       "long": 2.72718
-    }
+    },
+    "bicycleStorage": "8eab1d85-97c7-4f25-ada2-8b0acf0f4c8b"
   },
   {
+    "uuid": "8a2e7aeb-d6cd-4fa2-85e6-a570dd39bf81",
     "type": "non-electric",
     "inStorage": 1,
     "location": {
       "lat": 50.855621,
       "long": 2.72718
-    }
+    },
+    "bicycleStorage": "8eab1d85-97c7-4f25-ada2-8b0acf0f4c8b"
   },
   {
+    "uuid": "3c2a5e62-41de-4947-aa45-c60a027a1c9d",
     "type": "electric",
     "inStorage": 0,
     "location": {
       "lat": 49.855621,
       "long": 2.52718
-    }
+    },
+    "bicycleStorage": "ecd5c56e-d7aa-4155-8b27-7bba1e0b3f14"
   },
   {
+    "uuid": "40501da2-edb6-4369-a7e1-f8f4dd7a9a30",
     "type": "non-electric",
     "inStorage": 1,
     "location": {
       "lat": 48.855621,
       "long": 2.72718
-    }
+    },
+    "bicycleStorage": "ef10eed8-46ef-11ec-81d3-0242ac130003"
   }
 ]

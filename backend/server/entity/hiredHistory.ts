@@ -15,15 +15,15 @@ export class HiredHistory {
   uuid?: string
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'userId' })
   user?: User
 
   @ManyToOne(() => Bike)
-  @JoinColumn({ name: 'bike_id' })
+  @JoinColumn({ name: 'bikeId' })
   bike?: Bike
 
   @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicycle_torage_id' })
+  @JoinColumn({ name: 'bicycleStorageId' })
   bicycleStorage?: BicycleStorage
 
   @Column('float')

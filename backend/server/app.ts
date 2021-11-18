@@ -6,7 +6,24 @@ import {
   getConnectionOptions,
 } from 'typeorm'
 import { createDatabase } from 'typeorm-extension'
+import {
+  BicycleStorageController,
+  IBicycleStorageController,
+} from './controllers/bicycleStorage.controller'
 import { BikeController, IBikeController } from './controllers/bike.controller'
+import {
+  BikeInUseController,
+  IBikeInUseController,
+} from './controllers/bikeInUse.controller'
+import {
+  HiredHistoryController,
+  IHiredHistoryController,
+} from './controllers/hiredHistory.controller'
+import {
+  ReviewController,
+  IReviewController,
+} from './controllers/review.controller'
+import { UserController, IUserController } from './controllers/user.controller'
 import { IController } from './controllers/crud.controller'
 import seedDatabase from './seeders/seeder'
 ;(async () => {
@@ -23,10 +40,20 @@ import seedDatabase from './seeders/seeder'
 
       interface AppControllers {
         bike: IBikeController
+        bicycleStorage: IBicycleStorageController
+        bikeInUse: IBikeInUseController
+        hiredHistory: IHiredHistoryController
+        review: IReviewController
+        user: IUserController
       }
 
       const controllers: AppControllers = {
         bike: new BikeController(),
+        bicycleStorage: new BicycleStorageController(),
+        bikeInUse: new BikeInUseController(),
+        hiredHistory: new HiredHistoryController(),
+        review: new ReviewController(),
+        user: new UserController(),
       }
 
       Object.entries(controllers).forEach((entry: any) => {

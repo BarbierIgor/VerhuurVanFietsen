@@ -1,0 +1,20 @@
+[
+  {
+    "uuid": "ef10eed8-46ef-11ec-81d3-0242ac130003",
+    "city": "Kortrijk",
+    "street": "Beheerstraat",
+    "houseNumber": 50
+  },
+  {
+    "uuid": "8eab1d85-97c7-4f25-ada2-8b0acf0f4c8b",
+    "city": "Kortrijk",
+    "street": "StationStraat",
+    "houseNumber": 35
+  },
+  {
+    "uuid": "ecd5c56e-d7aa-4155-8b27-7bba1e0b3f14",
+    "city": "Kortrijk",
+    "street": "Kanonstraat",
+    "houseNumber": 25
+  }
+]
