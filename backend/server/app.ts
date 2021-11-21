@@ -44,11 +44,12 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
 
       app.use(express.json())
       // app.use(cors())
-      app.use(authMiddleware)
+      // app.use(authMiddleware)
 
       dotenv.config() // This will load in the GOOGLE_APPLICATION_CREDENTIALS
+      var serviceAccount = require('./auth/service-account.json')
       admin.initializeApp({
-        credential: admin.credential.applicationDefault(),
+        credential: admin.credential.cert(serviceAccount),
       })
 
       interface AppControllers {

@@ -7,9 +7,11 @@ services:
   #     context: .
   #     dockerfile: ./Dockerfile
   #   environment:
-  #     NODE_ENV: production
+  #     - GOOGLE_APPLICATION_CREDENTIALS="auth/service-account.json"
   #   ports:
   #     - 3000:3000
+  #   env_file:
+  #     - docker.ormconfig.env
 
   mariadb:
     image: mariadb:10.5.9
