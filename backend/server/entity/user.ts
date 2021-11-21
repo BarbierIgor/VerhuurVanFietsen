@@ -7,4 +7,7 @@ export class User {
 
   @Column('text')
   username?: string
+
+  @Column('boolean')
+  isAdmin?: boolean
 }

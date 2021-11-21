@@ -1,5 +1,6 @@
-import { Router } from 'express'
+import { NextFunction, Request, Response, Router } from 'express'
 import { User } from '../entity/user'
+import admin from 'firebase-admin'
 import { CrudController, IController, ICrudController } from './crud.controller'
 
 /**
@@ -21,6 +22,30 @@ export class UserController
 
     this.router.get('/all', this.all)
     this.router.get('/:id', this.one)
-    this.router.post('', this.save)
+    this.router.post('/signup', this.createUser)
+  }
+
+  createUser = async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) => {
+    const { email, password, name, isAdmin } = request.body
+
+    const user = await admin.auth().createUser({
+      email,
+      password,
+      displayName: name,
+    })
+
+    const newUser: User = {
+      uuid: user.uid,
+      username: request.body.name,
+      isAdmin: false,
+    }
+
+    await this.repository.save(newUser)
+
+    return response.json(user)
   }
 }

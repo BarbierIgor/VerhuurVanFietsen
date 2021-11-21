@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import {
   Connection,
   ConnectionOptions,
@@ -6,6 +6,9 @@ import {
   getConnectionOptions,
 } from 'typeorm'
 import { createDatabase } from 'typeorm-extension'
+import admin from 'firebase-admin'
+import dotenv from 'dotenv'
+// import cors from 'cors'
 import {
   BicycleStorageController,
   IBicycleStorageController,
@@ -26,6 +29,7 @@ import {
 import { UserController, IUserController } from './controllers/user.controller'
 import { IController } from './controllers/crud.controller'
 import seedDatabase from './seeders/seeder'
+import authMiddleware from './auth/firebaseAuthMiddleware'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -37,6 +41,15 @@ import seedDatabase from './seeders/seeder'
       // APP SETUP
       const app = express(),
         port = process.env.PORT || 3001
+
+      app.use(express.json())
+      // app.use(cors())
+      app.use(authMiddleware)
+
+      dotenv.config() // This will load in the GOOGLE_APPLICATION_CREDENTIALS
+      admin.initializeApp({
+        credential: admin.credential.applicationDefault(),
+      })
 
       interface AppControllers {
         bike: IBikeController

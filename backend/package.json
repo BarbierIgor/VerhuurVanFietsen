@@ -27,7 +27,10 @@
   },
   "dependencies": {
     "class-transformer": "^0.4.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "firebase-admin": "^10.0.0",
+    "graphql": "^16.0.1",
     "mysql": "^2.18.1",
     "typeorm": "^0.2.40",
     "typeorm-extension": "^1.0.1"
