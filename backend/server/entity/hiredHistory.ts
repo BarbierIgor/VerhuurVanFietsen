@@ -31,4 +31,10 @@ export class HiredHistory {
 
   @Column('boolean')
   paid?: boolean
+
+  @Column('datetime')
+  timeHiredStart?: Date
+
+  @Column('datetime')
+  timeHiredEnd?: Date
 }

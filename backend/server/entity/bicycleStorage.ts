@@ -15,6 +15,9 @@ export class BicycleStorage {
   @Column()
   houseNumber?: number
 
+  @Column('simple-json')
+  prices?: Record<string, string>
+
   bikesAvailable?: number
 
   capacity?: number
