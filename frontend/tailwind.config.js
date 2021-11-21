@@ -6,13 +6,32 @@ module.exports = {
 
   darkMode: 'media', // or 'class'
 
+  // corePlugins: {
+  //   preflight: false,
+  // },
+
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: {
+          'accent': '#E64650',
+          '400': '#DEDEDE',
+          '600': '#86898c',
+          '700': '#2E353B',
+          '900': '#202020',
+        },
+      },
+      backgroundImage: {
+        'login-background': "url('./src/assets/images/background.png')",
+      },
+    },
   },
 
   variants: {
     extend: {},
   },
 
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

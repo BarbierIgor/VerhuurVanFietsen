@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-dark-900;
+    }
+
+    input:focus {
+        @apply outline-none;
+    }
+
+    .custom-radiobuttons input[type="radio"]:checked + label {
+        @apply bg-dark-accent;
+        @apply text-dark-400;
+    }
+}
