@@ -36,8 +36,6 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
     .then(() => console.log('Database created successfully!'))
     .then(createConnection)
     .then(async (connection: Connection) => {
-      seedDatabase(connection)
-
       // APP SETUP
       const app = express(),
         port = process.env.PORT || 3001
@@ -51,6 +49,7 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
       })
+      seedDatabase(connection)
 
       interface AppControllers {
         bike: IBikeController

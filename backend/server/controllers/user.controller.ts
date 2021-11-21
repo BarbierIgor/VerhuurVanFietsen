@@ -23,6 +23,9 @@ export class UserController
     this.router.get('/all', this.all)
     this.router.get('/:id', this.one)
     this.router.post('/signup', this.createUser)
+
+    // MOET NOG BEVEILIGD WORDEN ZODAT NIET IEDEREEN EEN ADMIN KAN MAKEN
+    this.router.post('/signup/admin', this.createAdmin)
   }
 
   createUser = async (
@@ -30,7 +33,7 @@ export class UserController
     response: Response,
     next: NextFunction,
   ) => {
-    const { email, password, name, isAdmin } = request.body
+    const { email, password, name } = request.body
 
     const user = await admin.auth().createUser({
       email,
@@ -42,6 +45,30 @@ export class UserController
       uuid: user.uid,
       username: request.body.name,
       isAdmin: false,
+    }
+
+    await this.repository.save(newUser)
+
+    return response.json(user)
+  }
+
+  createAdmin = async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) => {
+    const { email, password, name } = request.body
+
+    const user = await admin.auth().createUser({
+      email,
+      password,
+      displayName: name,
+    })
+
+    const newUser: User = {
+      uuid: user.uid,
+      username: request.body.name,
+      isAdmin: true,
     }
 
     await this.repository.save(newUser)
