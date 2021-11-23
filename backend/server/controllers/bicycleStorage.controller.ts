@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express'
 import { BicycleStorage } from '../entity/bicycleStorage'
 import { CrudController, IController, ICrudController } from './crud.controller'
+import { checkIfAdmin } from '../auth/checkIfAdmin'
 
 /**
  * The interface to use for every Bird Controller.
