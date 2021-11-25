@@ -42,7 +42,7 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
 
       app.use(express.json())
       // app.use(cors())
-      app.use(authMiddleware)
+      app.use(/\/((?!signup).)*/, authMiddleware)
 
       dotenv.config() // This will load in the GOOGLE_APPLICATION_CREDENTIALS
       var serviceAccount = require('./auth/service-account.json')
