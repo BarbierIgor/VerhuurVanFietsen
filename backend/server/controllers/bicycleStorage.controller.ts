@@ -28,10 +28,14 @@ export class BicycleStorageController
   }
 
   all = async (request: Request, response: Response, next: NextFunction) => {
-    const bicycleStorages = await this.repository
-      .createQueryBuilder('bicycleStorages')
-      .leftJoinAndSelect('bicycleStorages.bikes', 'bike')
-      .getMany()
-    response.send(bicycleStorages)
+    try {
+      const bicycleStorages = await this.repository
+        .createQueryBuilder('bicycleStorages')
+        .leftJoinAndSelect('bicycleStorages.bikes', 'bike')
+        .getMany()
+      response.send(bicycleStorages)
+    } catch (error: any) {
+      next(error)
+    }
   }
 }

@@ -30,6 +30,7 @@ import { UserController, IUserController } from './controllers/user.controller'
 import { IController } from './controllers/crud.controller'
 import seedDatabase from './seeders/seeder'
 import authMiddleware from './auth/firebaseAuthMiddleware'
+import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -49,6 +50,7 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
       })
+
       seedDatabase(connection)
 
       interface AppControllers {
@@ -79,6 +81,7 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
         // The correct way is to use the callback method to properly log when the app starts listening
         console.info(`\nServer 👾 \nListening on http://localhost:${port}/`)
       })
+      app.use(errorHandlingMiddleware)
     })
     .catch(error => console.error(error)) // If it crashed anywhere, let's log the error!
 })()

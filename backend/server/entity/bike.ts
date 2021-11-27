@@ -13,13 +13,13 @@ export class Bike {
   uuid?: string
 
   @Column('text')
-  type?: string
+  type!: string
 
   @Column('boolean')
-  inStorage?: boolean
+  inStorage!: boolean
 
   @Column('simple-json')
-  location?: Record<string, string>
+  location!: Record<string, string>
 
   @ManyToOne(() => BicycleStorage, bs => bs.uuid)
   @JoinColumn({ name: 'bicycleStorageId' })

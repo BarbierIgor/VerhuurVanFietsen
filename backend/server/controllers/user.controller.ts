@@ -3,6 +3,7 @@ import { User } from '../entity/user'
 import admin from 'firebase-admin'
 import { CrudController, IController, ICrudController } from './crud.controller'
 import { checkIfAdmin } from '../auth/checkIfAdmin'
+import HttpException from '../exceptions/httpException'
 
 /**
  * The interface to use for every Bird Controller.
@@ -25,7 +26,6 @@ export class UserController
     this.router.get('/:id', this.one)
     this.router.post('/signup', this.createUser)
 
-    // MOET NOG BEVEILIGD WORDEN ZODAT NIET IEDEREEN EEN ADMIN KAN MAKEN
     this.router.post('/signup/admin', this.createAdmin)
   }
 
@@ -34,32 +34,7 @@ export class UserController
     response: Response,
     next: NextFunction,
   ) => {
-    const { email, password, name } = request.body
-
-    const user = await admin.auth().createUser({
-      email,
-      password,
-      displayName: name,
-    })
-
-    const newUser: User = {
-      uuid: user.uid,
-      username: request.body.name,
-      isAdmin: false,
-    }
-
-    await this.repository.save(newUser)
-
-    return response.json(user)
-  }
-
-  createAdmin = async (
-    request: Request,
-    response: Response,
-    next: NextFunction,
-  ) => {
-    const isAdmin = await checkIfAdmin(request)
-    if (isAdmin) {
+    try {
       const { email, password, name } = request.body
 
       const user = await admin.auth().createUser({
@@ -71,14 +46,53 @@ export class UserController
       const newUser: User = {
         uuid: user.uid,
         username: request.body.name,
-        isAdmin: true,
+        isAdmin: false,
       }
 
       await this.repository.save(newUser)
 
       return response.json(user)
-    } else {
-      return response.send({ message: 'Could not authorize' }).status(403)
+    } catch (error: any) {
+      error.status = 400
+      next(error)
+    }
+  }
+
+  createAdmin = async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const isAdmin = await checkIfAdmin(request)
+      if (isAdmin) {
+        const { email, password, name } = request.body
+
+        const user = await admin.auth().createUser({
+          email,
+          password,
+          displayName: name,
+        })
+
+        const newUser: User = {
+          uuid: user.uid,
+          username: request.body.name,
+          isAdmin: true,
+        }
+
+        await this.repository.save(newUser)
+
+        return response.json(user)
+      } else {
+        next(
+          new HttpException(
+            403,
+            'You do not have the permissoin to create a admin account',
+          ),
+        )
+      }
+    } catch (error: any) {
+      next(error)
     }
   }
 }

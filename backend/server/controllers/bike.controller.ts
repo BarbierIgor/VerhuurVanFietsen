@@ -22,6 +22,7 @@ export class BikeController
     this.router.get('/all', this.all)
     this.router.get('/:id', this.one)
     this.router.post('', this.save)
+    this.router.delete('/:id', this.remove)
   }
 
   // all = async (request: Request, response: Response, next: NextFunction) => {

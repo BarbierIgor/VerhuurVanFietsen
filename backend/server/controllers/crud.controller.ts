@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express'
 
-import { EntityTarget, getRepository, Repository } from 'typeorm'
+import { Any, EntityTarget, getRepository, Repository } from 'typeorm'
+import HttpException from '../exceptions/httpException'
 
 /**
  * The interface with Express relations
@@ -34,26 +35,52 @@ export class CrudController<T> implements ICrudController {
   }
 
   all = async (request: Request, response: Response, next: NextFunction) => {
-    const items = await this.repository.find()
-    response.send(items)
+    try {
+      const items = await this.repository.find()
+      response.send(items)
+    } catch (error: any) {
+      next(error)
+    }
   }
 
   one = async (request: Request, response: Response, next: NextFunction) => {
-    const item = await this.repository.findOne(request.params.id)
-    response.send(item)
+    try {
+      const item = await this.repository.findOne(request.params.id)
+      if (item) {
+        response.send(item)
+      } else {
+        next(
+          new HttpException(404, `No item found with id: ${request.params.id}`),
+        )
+      }
+    } catch (error: any) {
+      next(error)
+    }
   }
 
   save = async (request: Request, response: Response, next: NextFunction) => {
-    const item = await this.repository.save(request.body)
-    response.send(item)
+    try {
+      const item = await this.repository.save(request.body)
+      response.send(item)
+    } catch (error: any) {
+      error.status = 400
+      next(error)
+    }
   }
 
   remove = async (request: Request, response: Response, next: NextFunction) => {
-    const itemToRemove = (await this.repository.findOne(request.params.id)) as T
-    await this.repository.remove(itemToRemove)
-    response.send({
-      message: 'Successfully removed',
-      datetime: Date.now().toString(),
-    })
+    try {
+      const itemToRemove = (await this.repository.findOne(
+        request.params.id,
+      )) as T
+      await this.repository.remove(itemToRemove)
+      response.send({
+        message: 'Successfully removed',
+        datetime: Date.now().toString(),
+      })
+    } catch (error: any) {
+      error.status = 404
+      next(error)
+    }
   }
 }
