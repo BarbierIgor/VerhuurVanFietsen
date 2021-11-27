@@ -8,7 +8,7 @@ import {
 import { createDatabase } from 'typeorm-extension'
 import admin from 'firebase-admin'
 import dotenv from 'dotenv'
-// import cors from 'cors'
+import cors from 'cors'
 import {
   BicycleStorageController,
   IBicycleStorageController,
@@ -42,7 +42,7 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
         port = process.env.PORT || 3001
 
       app.use(express.json())
-      // app.use(cors())
+      app.use(cors())
       app.use(/\/((?!signup).)*/, authMiddleware)
 
       dotenv.config() // This will load in the GOOGLE_APPLICATION_CREDENTIALS

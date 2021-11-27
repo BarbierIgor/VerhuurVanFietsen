@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/BarbierIgor/VerhuurVanFietsen#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "eslint": "^8.2.0",
     "ts-node": "^10.4.0",
