@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
+import { BikeStorage } from './bikeStorage'
 
 @Entity('bikes')
 export class Bike {
@@ -21,7 +21,7 @@ export class Bike {
   @Column('simple-json')
   location!: Record<string, string>
 
-  @ManyToOne(() => BicycleStorage, bs => bs.uuid)
-  @JoinColumn({ name: 'bicycleStorageId' })
-  bicycleStorage!: BicycleStorage
+  @ManyToOne(() => BikeStorage, bs => bs.uuid)
+  @JoinColumn({ name: 'bikeStorageId' })
+  bikeStorage!: BikeStorage
 }

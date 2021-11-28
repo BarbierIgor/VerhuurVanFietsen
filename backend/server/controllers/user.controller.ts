@@ -47,6 +47,7 @@ export class UserController
         uuid: user.uid,
         username: request.body.name,
         isAdmin: false,
+        wallet: 0,
       }
 
       await this.repository.save(newUser)

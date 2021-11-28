@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { Bike } from './bike'
 
-@Entity('bicycleStorage')
-export class BicycleStorage {
+@Entity('bikeStorage')
+export class BikeStorage {
   @PrimaryGeneratedColumn('uuid')
   uuid?: string
 
@@ -22,6 +22,6 @@ export class BicycleStorage {
 
   capacity?: number
 
-  @OneToMany(() => Bike, bike => bike.bicycleStorage)
+  @OneToMany(() => Bike, bike => bike.bikeStorage)
   bikes?: Bike[]
 }

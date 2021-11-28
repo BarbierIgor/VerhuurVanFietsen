@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
+import { BikeStorage } from './bikeStorage'
 import { Bike } from './bike'
 import { User } from './user'
 
@@ -22,9 +22,9 @@ export class HiredHistory {
   @JoinColumn({ name: 'bikeId' })
   bike?: Bike
 
-  @ManyToOne(() => BicycleStorage)
+  @ManyToOne(() => BikeStorage)
   @JoinColumn({ name: 'bicycleStorageId' })
-  bicycleStorage?: BicycleStorage
+  bicycleStorage?: BikeStorage
 
   @Column('float')
   price?: number

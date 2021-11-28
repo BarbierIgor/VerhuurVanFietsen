@@ -6,7 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
+import { BikeStorage } from './bikeStorage'
 import { Bike } from './bike'
 import { User } from './user'
 

@@ -3,11 +3,14 @@ import { Column, Entity, PrimaryColumn } from 'typeorm'
 @Entity('user')
 export class User {
   @PrimaryColumn('uuid', { unique: true })
-  uuid?: string
+  uuid!: string
 
   @Column('text')
-  username?: string
+  username!: string
+
+  @Column()
+  wallet?: number
 
   @Column('boolean')
-  isAdmin?: boolean
+  isAdmin!: boolean
 }

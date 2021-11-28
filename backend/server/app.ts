@@ -10,9 +10,9 @@ import admin from 'firebase-admin'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import {
-  BicycleStorageController,
-  IBicycleStorageController,
-} from './controllers/bicycleStorage.controller'
+  BikeStorageController,
+  IBikeStorageController,
+} from './controllers/bikeStorage.controller'
 import { BikeController, IBikeController } from './controllers/bike.controller'
 import {
   BikeInUseController,
@@ -55,7 +55,7 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
 
       interface AppControllers {
         bike: IBikeController
-        bicycleStorage: IBicycleStorageController
+        bicycleStorage: IBikeStorageController
         bikeInUse: IBikeInUseController
         hiredHistory: IHiredHistoryController
         review: IReviewController
@@ -64,7 +64,7 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
 
       const controllers: AppControllers = {
         bike: new BikeController(),
-        bicycleStorage: new BicycleStorageController(),
+        bicycleStorage: new BikeStorageController(),
         bikeInUse: new BikeInUseController(),
         hiredHistory: new HiredHistoryController(),
         review: new ReviewController(),
