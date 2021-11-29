@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Request, Response, NextFunction, Router } from 'express'
 import { BikeInUse } from '../entity/bikeInUse'
 import { CrudController, IController, ICrudController } from './crud.controller'
 
@@ -23,5 +23,21 @@ export class BikeInUseController
     this.router.get('/:id', this.one)
     this.router.post('', this.save)
     this.router.delete('/:id', this.remove)
+  }
+
+  save = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { bike, user } = request.body
+      const newItem: BikeInUse = {
+        bike,
+        user,
+        timeHired: new Date(),
+      }
+      const item = await this.repository.save(newItem)
+      response.send(item)
+    } catch (error: any) {
+      error.status = 400
+      next(error)
+    }
   }
 }

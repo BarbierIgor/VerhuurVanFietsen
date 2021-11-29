@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Bike } from './bike'
+import { BikeStorage } from './bikeStorage'
 
 @Entity('problem')
 export class Problem {
@@ -16,4 +24,12 @@ export class Problem {
 
   // @Column('number')
   // objectId?: number
+
+  @ManyToOne(() => Bike, b => b.uuid)
+  @JoinColumn({ name: 'bikeId' })
+  bike?: Bike
+
+  @ManyToOne(() => BikeStorage, bs => bs.uuid)
+  @JoinColumn({ name: 'bikeStorageId' })
+  bikeStorage?: BikeStorage
 }

@@ -24,7 +24,7 @@ export class BikeController
     this.router.get('/:id', this.one)
     this.router.get('/type/:type', this.byType)
     this.router.post('', this.save)
-    this.router.put('/:id', this.updateBike)
+    this.router.put('/:id', this.update)
     this.router.delete('/:id', this.remove)
   }
 
@@ -77,22 +77,6 @@ export class BikeController
         )
       }
     } catch (error: any) {
-      next(error)
-    }
-  }
-
-  updateBike = async (
-    request: Request,
-    response: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const bike: any = await this.repository.findOne(request.params.id)
-      this.repository.merge(bike, request.body)
-      const result = await this.repository.save(bike)
-      return response.send(result)
-    } catch (error: any) {
-      error.status = 400
       next(error)
     }
   }

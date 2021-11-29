@@ -11,7 +11,7 @@
   },
   {
     "uuid": "8a2e7aeb-d6cd-4fa2-85e6-a570dd39bf81",
-    "type": "non-electric",
+    "type": "nonElectric",
     "inStorage": 1,
     "location": {
       "lat": 50.855621,
@@ -31,7 +31,7 @@
   },
   {
     "uuid": "40501da2-edb6-4369-a7e1-f8f4dd7a9a30",
-    "type": "non-electric",
+    "type": "nonElectric",
     "inStorage": 1,
     "location": {
       "lat": 48.855621,

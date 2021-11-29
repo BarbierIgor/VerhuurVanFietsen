@@ -23,6 +23,10 @@ import {
   IHiredHistoryController,
 } from './controllers/hiredHistory.controller'
 import {
+  ProblemController,
+  IProblemController,
+} from './controllers/problem.controller'
+import {
   ReviewController,
   IReviewController,
 } from './controllers/review.controller'
@@ -58,6 +62,7 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
         bicycleStorage: IBikeStorageController
         bikeInUse: IBikeInUseController
         hiredHistory: IHiredHistoryController
+        problem: IProblemController
         review: IReviewController
         user: IUserController
       }
@@ -67,6 +72,7 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
         bicycleStorage: new BikeStorageController(),
         bikeInUse: new BikeInUseController(),
         hiredHistory: new HiredHistoryController(),
+        problem: new ProblemController(),
         review: new ReviewController(),
         user: new UserController(),
       }

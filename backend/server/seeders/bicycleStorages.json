@@ -6,8 +6,8 @@
     "houseNumber": 50,
     "prices": {
       "electric": 8,
-      "non-electric": 5,
-      "e-step": 10
+      "nonElectric": 5,
+      "estep": 10
     }
   },
   {
@@ -17,8 +17,8 @@
     "houseNumber": 35,
     "prices": {
       "electric": 7,
-      "non-electric": 4,
-      "e-step": 8
+      "nonElectric": 4,
+      "estep": 8
     }
   },
   {
@@ -28,8 +28,8 @@
     "houseNumber": 25,
     "prices": {
       "electric": 10,
-      "non-electric": 6,
-      "e-step": 12
+      "nonElectric": 6,
+      "estep": 12
     }
   }
 ]

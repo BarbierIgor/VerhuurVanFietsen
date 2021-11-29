@@ -21,6 +21,7 @@ export interface ICrudController {
   one(request: Request, response: Response, next: NextFunction): void
   save(request: Request, response: Response, next: NextFunction): void
   remove(request: Request, response: Response, next: NextFunction): void
+  update(request: Request, response: Response, next: NextFunction): void
 }
 
 /**
@@ -80,6 +81,18 @@ export class CrudController<T> implements ICrudController {
       })
     } catch (error: any) {
       error.status = 404
+      next(error)
+    }
+  }
+
+  update = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const item: any = await this.repository.findOne(request.params.id)
+      this.repository.merge(item, request.body)
+      const result = await this.repository.save(item)
+      return response.send(result)
+    } catch (error: any) {
+      error.status = 400
       next(error)
     }
   }

@@ -22,10 +22,6 @@ export class HiredHistory {
   @JoinColumn({ name: 'bikeId' })
   bike?: Bike
 
-  @ManyToOne(() => BikeStorage)
-  @JoinColumn({ name: 'bicycleStorageId' })
-  bicycleStorage?: BikeStorage
-
   @Column('float')
   price?: number
 
