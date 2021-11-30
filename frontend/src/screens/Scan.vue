@@ -54,8 +54,6 @@ export default defineComponent({
     },
     handleNumberInputClick(e: any) {
       this.isNumberInputOpen = true;
-      // e.currentTarget.firstChild.focus();
-      // this.$refs.numberInput.focus();
       this.$nextTick(() => this.$refs.numberInput.focus());
     },
     focusIn() {
