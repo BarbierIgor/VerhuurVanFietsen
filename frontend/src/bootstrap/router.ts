@@ -9,9 +9,41 @@ import {
 } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: () => import('../screens/Home.vue') },
-  { path: '/login', component: () => import('../screens/Login.vue') },
-  { path: '/signup', component: () => import('../screens/SignUp.vue') },
+  { 
+    path: '/', 
+    component: () => import('../screens/Home.vue'),
+    meta: { requiresAuth: true}
+  },
+  { 
+    path: '/login', 
+    component: () => import('../screens/Login.vue'),
+    meta: { requiresAuth: false }
+  },
+  { 
+    path: '/signup', 
+    component: () => import('../screens/SignUp.vue'),
+    meta: { requiresAuth: false } 
+  },
+  { 
+    path: '/map', 
+    component: () => import('../screens/Map.vue'), 
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/scan', 
+    component: () => import('../screens/Scan.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/bikedetails', 
+    component: () => import('../screens/BikeDetails.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/profile', 
+    component: () => import('../screens/Profile.vue'),
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router: Router = createRouter({

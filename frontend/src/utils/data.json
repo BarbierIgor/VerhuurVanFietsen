@@ -1,0 +1,29 @@
+[
+    {
+        "id": 124,
+        "street": "stationstraat",
+        "available": 10,
+        "cost": 5,
+        "category": "e-step",
+        "image": "frontend/src/assets/images/bike01.png",
+        "favorite": false
+    },
+    {
+        "id": 123,
+        "street": "andre devaerelaan",
+        "available": 4,
+        "cost": 6,
+        "category": "electric",
+        "image": "frontend/src/assets/images/bike01.png",
+        "favorite": true
+    },
+    {
+        "id": 56,
+        "street": "hector casteleinstraat",
+        "available": 6,
+        "cost": 8,
+        "category": "normal",
+        "image": "frontend/src/assets/images/bike01.png",
+        "favorite": false
+    }
+]

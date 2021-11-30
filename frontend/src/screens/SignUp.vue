@@ -2,6 +2,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    data() {
+        return {
+            firstName: null,
+            lastName: null,
+            email: null,
+            password: null,
+        }
+    },  
+
     setup() {
         
     },
@@ -19,10 +28,10 @@ export default defineComponent({
         <div class="h-3/5 w-screen bg-dark-700 absolute bottom-0 rounded-t-3xl flex items-center flex-col">
             <h1 class="text-white text-2xl pt-8 pl-8 self-start">Sign up</h1>
             <div class="flex justify-center flex-col w-full pl-8 pr-8 pt-4">
-                <input class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="First name">
-                <input class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Last name">
-                <input class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
-                <input class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
+                <input v-model="firstName" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="First name">
+                <input v-model="lastName" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Last name">
+                <input v-model="email" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
+                <input v-model="password" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
                 <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="button" value="Sign Up">
             </div>
 

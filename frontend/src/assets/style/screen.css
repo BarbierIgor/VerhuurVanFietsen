@@ -12,7 +12,10 @@
     }
 
     .custom-radiobuttons input[type="radio"]:checked + label {
-        @apply bg-dark-accent;
         @apply text-dark-400;
+    }
+
+    .favorite-checkbox input[type=checkbox]:checked + label svg path {
+        @apply text-dark-accent;
     }
 }
