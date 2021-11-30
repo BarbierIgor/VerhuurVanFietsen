@@ -3,6 +3,7 @@ import { User } from '../entity/user'
 import admin from 'firebase-admin'
 import { CrudController, IController, ICrudController } from './crud.controller'
 import { checkIfAdmin } from '../auth/checkIfAdmin'
+import { checkIfUser } from '../auth/checkIfUser'
 import HttpException from '../exceptions/httpException'
 
 /**
@@ -27,6 +28,56 @@ export class UserController
     this.router.post('/signup', this.createUser)
 
     this.router.post('/signup/admin', this.createAdmin)
+  }
+
+  all = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const isAdmin = await checkIfAdmin(request)
+
+      if (isAdmin) {
+        const items = await this.repository.find()
+        response.send(items)
+      } else {
+        next(
+          new HttpException(
+            403,
+            'You do not have the permission to get all the accounts',
+          ),
+        )
+      }
+    } catch (error: any) {
+      next(error)
+    }
+  }
+
+  one = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const isAdmin = await checkIfAdmin(request)
+      const isUser = await checkIfUser(request)
+
+      if (isAdmin || isUser) {
+        const item = await this.repository.findOne(request.params.id)
+        if (item) {
+          response.send(item)
+        } else {
+          next(
+            new HttpException(
+              404,
+              `No item found with id: ${request.params.id}`,
+            ),
+          )
+        }
+      } else {
+        next(
+          new HttpException(
+            403,
+            'You do not have the permission to get other then your own account',
+          ),
+        )
+      }
+    } catch (error: any) {
+      next(error)
+    }
   }
 
   createUser = async (
@@ -88,7 +139,7 @@ export class UserController
         next(
           new HttpException(
             403,
-            'You do not have the permissoin to create a admin account',
+            'You do not have the permission to create a admin account',
           ),
         )
       }

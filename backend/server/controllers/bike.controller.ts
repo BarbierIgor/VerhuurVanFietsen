@@ -3,9 +3,6 @@ import { Bike } from '../entity/bike'
 import HttpException from '../exceptions/httpException'
 import { CrudController, IController, ICrudController } from './crud.controller'
 
-/**
- * The interface to use for every Bird Controller.
- */
 export interface IBikeController extends ICrudController, IController {
   test: string
 }
