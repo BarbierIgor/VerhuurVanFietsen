@@ -8,7 +8,11 @@ export const checkIfUser = async (request: Request) => {
   const token = request.headers.authorization?.replace('Bearer ', '')
   const tokeninfo = parseJwt(token)
   const item = await repository.findOne(tokeninfo.user_id)
-  if (item?.uuid === request.params.id || item?.uuid === request.body.user) {
+  if (
+    item?.uuid === request.params.id ||
+    item?.uuid === request.body.user ||
+    item?.uuid === request.body.id
+  ) {
     return true
   } else {
     return false
