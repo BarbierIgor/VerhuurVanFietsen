@@ -1,4 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
+import { GraphQLSchema } from 'graphql'
+import { buildSchema } from 'type-graphql'
+import { graphqlHTTP } from 'express-graphql'
 import {
   Connection,
   ConnectionOptions,
@@ -35,6 +38,8 @@ import { IController } from './controllers/crud.controller'
 import seedDatabase from './seeders/seeder'
 import authMiddleware from './auth/firebaseAuthMiddleware'
 import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
+import { BikeResolver } from './resolvers/bikeResolver'
+import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -82,6 +87,23 @@ import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
           controller = entry[1] as IController
         app.use(`/${key}`, controller.router)
       })
+
+      let schema: GraphQLSchema = {} as GraphQLSchema
+      await buildSchema({
+        resolvers: [BikeResolver, BikeStorageResolver],
+      }).then(_ => {
+        schema = _
+      })
+
+      // GraphQL init middleware
+      app.use(
+        '/v1/', // Url, do you want to keep track of a version?
+        graphqlHTTP((request, response) => ({
+          schema: schema,
+          context: { request, response },
+          graphiql: true,
+        })),
+      )
 
       app.listen(port, () => {
         // The correct way is to use the callback method to properly log when the app starts listening
