@@ -18,4 +18,11 @@
     .favorite-checkbox input[type=checkbox]:checked + label svg path {
         @apply text-dark-accent;
     }
+
+    .toggle-switch input[type=checkbox]:checked + label {
+        @apply bg-dark-accent;
+    }
+    .toggle-switch input[type=checkbox]:checked + label span {
+        transform: translate(120%);
+    }
 }
