@@ -39,6 +39,7 @@ import seedDatabase from './seeders/seeder'
 import authMiddleware from './auth/firebaseAuthMiddleware'
 import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
 import { BikeResolver } from './resolvers/bikeResolver'
+import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -89,7 +90,7 @@ import { BikeResolver } from './resolvers/bikeResolver'
 
       let schema: GraphQLSchema = {} as GraphQLSchema
       await buildSchema({
-        resolvers: [BikeResolver],
+        resolvers: [BikeResolver, BikeStorageResolver],
       }).then(_ => {
         schema = _
       })

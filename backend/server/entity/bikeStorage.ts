@@ -33,10 +33,10 @@ export class BikeStorage extends BaseEntity {
   @Column('simple-json')
   prices?: Record<string, string>
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { nullable: true })
   bikesAvailable?: number
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   capacity?: number
 
   @Field(type => [Bike])

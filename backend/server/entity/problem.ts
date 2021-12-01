@@ -22,9 +22,6 @@ export class Problem {
   @Column('date')
   date!: Date
 
-  // @Column('number')
-  // objectId?: number
-
   @ManyToOne(() => Bike, b => b.uuid)
   @JoinColumn({ name: 'bikeId' })
   bike?: Bike

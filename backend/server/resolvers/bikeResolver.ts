@@ -1,7 +1,5 @@
-import { Resolver, Query } from 'type-graphql'
+import { Resolver, Query, Arg } from 'type-graphql'
 import { Bike } from '../entity/bike'
-
-// const repository = getRepository(Bike)
 
 @Resolver()
 export class BikeResolver {
@@ -10,5 +8,13 @@ export class BikeResolver {
     return await Bike.createQueryBuilder('bikes')
       .leftJoinAndSelect('bikes.bikeStorage', 'bikeStorage')
       .getMany()
+  }
+
+  @Query(() => Bike)
+  async getBikeById(@Arg('id') id: string): Promise<Bike | undefined | null> {
+    return await Bike.createQueryBuilder('bike')
+      .leftJoinAndSelect('bike.bikeStorage', 'bikeStorage')
+      .where('bike.uuid = :id', { id: id })
+      .getOne()
   }
 }
