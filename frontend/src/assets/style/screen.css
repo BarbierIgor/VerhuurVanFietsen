@@ -25,4 +25,9 @@
     .toggle-switch input[type=checkbox]:checked + label span {
         transform: translate(120%);
     }
+
+    .selected-image {
+        width: 100%;
+        padding-bottom: 100%;
+    }
 }

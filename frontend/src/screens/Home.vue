@@ -69,14 +69,7 @@ export default defineComponent({
 
         <FilterSwitch></FilterSwitch>
 
-        <!-- <div class="my-items">
-            <div v-for="item in items" :key="item.idDrink">
-                <p>{{item}}</p>
-            </div>
-        </div> -->
-
         <BicycleStorageList></BicycleStorageList>
-
 
         <BottomNavigation></BottomNavigation>
 

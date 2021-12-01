@@ -44,6 +44,46 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../screens/Profile.vue'),
     meta: { requiresAuth: true }
   },
+  { 
+    path: '/profile/edit', 
+    component: () => import('../screens/EditProfile.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/report', 
+    component: () => import('../screens/ReportProblem.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/favorites', 
+    component: () => import('../screens/Favorites.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/wallet', 
+    component: () => import('../screens/Wallet.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/report/bike', 
+    component: () => import('../screens/ReportDefectBike.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/report/storage', 
+    component: () => import('../screens/ReportDefectBike.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/report/unknown', 
+    component: () => import('../screens/ReportDefectBike.vue'),
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: '/report/other', 
+    component: () => import('../screens/ReportDefectBike.vue'),
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router: Router = createRouter({

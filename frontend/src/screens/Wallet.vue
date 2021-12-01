@@ -8,9 +8,8 @@ export default defineComponent({
 })
 </script>
 
-
 <template>
     <div class="p-4">
-        <h1 class="bg-dark-400">Edit Profile</h1>
+        <h1>Wallet</h1>
     </div>
 </template>

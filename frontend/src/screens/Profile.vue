@@ -1,7 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router';
 import router from '../bootstrap/router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
+import Header from '../components/Header.vue';
 
 export default defineComponent({
     data() {
@@ -20,22 +22,16 @@ export default defineComponent({
         },
     },
     setup() {
+        const route = useRoute();
     },
-    components: { ToggleSwitch }
+    components: { ToggleSwitch, Header }
 })
 </script>
 
 
 <template>
     <div class="grid grid-cols-1 p-4 justify-center w-screen gap-4">
-            <div @click="handleBackButton()" class="col-span-full">
-                <svg class="w-6 h-6" viewBox="0 0 15.515 23.959">
-                    <g id="Group_52" data-name="Group 52" transform="translate(3.536 3.535)">
-                        <line id="Line_3" data-name="Line 3" x2="11.942" transform="translate(0 8.444) rotate(45)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="5"/>
-                        <line id="Line_4" data-name="Line 4" x2="11.942" transform="translate(0 8.444) rotate(-45)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="5"/>
-                    </g>
-                </svg>
-            </div>
+            <Header></Header>
 
             <!-- profile picture -->
             <picture class="flex justify-center w-full">
@@ -48,7 +44,7 @@ export default defineComponent({
 
             <!-- Edit Button -->
             <div class="flex justify-center">
-                <button class="flex items-center bg-dark-accent py-1 px-4 rounded-full">
+                <router-link tag="button" exact-active-class="bg-dark-accent" active-class="bg-none" to="/profile/edit" class="flex items-center bg-dark-accent py-1 px-4 rounded-full">
                     <p class="text-dark-400 font-bold">Edit profile</p>
                     <svg class="w-4 h-4 ml-4 rotate-180" viewBox="0 0 15.515 23.959">
                         <g id="Group_52" data-name="Group 52" transform="translate(3.536 3.535)">
@@ -56,10 +52,11 @@ export default defineComponent({
                             <line id="Line_4" data-name="Line 4" x2="11.942" transform="translate(0 8.444) rotate(-45)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="5"/>
                         </g>
                     </svg>
-                </button>
+                </router-link>
             </div>
 
-            <div @click="handleClickReport" class="flex items-center my-4 py-2">
+            <!-- Report a problem -->
+            <router-link to="/report" @click="handleClickReport" class="flex items-center my-4 py-2">
                 <svg class="w-6 h-6" viewBox="0 0 29.009 26.802">
                     <g data-name="Report icon" transform="translate(2.505 2.5)">
                         <g data-name="Path 32" transform="translate(-7.395 -9.846)" fill="none" stroke-linecap="round">
@@ -77,13 +74,12 @@ export default defineComponent({
                         <path data-name="Line 4" d="M7.461,1.5H0A1.5,1.5,0,0,1-1.5,0,1.5,1.5,0,0,1,0-1.5H7.461A1.5,1.5,0,0,1,8.961,0,1.5,1.5,0,0,1,7.461,1.5Z" transform="translate(5.276 5.276) rotate(-135)" fill="#dedede"/>
                     </g>
                 </svg>
-            </div>
+            </router-link>
 
             <!-- Section Account -->
             <div class="my-2">
                 <h1 class="text-dark-600">Account</h1>
-                <div class="flex w-full items-center justify-between py-2">
-
+                <router-link to="/favorites" class="flex w-full items-center justify-between py-2">
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 24 21.207">
                             <g transform="translate(0 -27.5)">
@@ -103,9 +99,9 @@ export default defineComponent({
                             <line data-name="Line 4" x2="7.461" transform="translate(5.276 5.276) rotate(-135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
                         </g>
                     </svg>
-
-                </div>
-                <div class="flex w-full items-center justify-between py-2">
+                </router-link>
+                
+                <router-link to="/wallet" class="flex w-full items-center justify-between py-2">
 
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 22 22">
@@ -127,7 +123,7 @@ export default defineComponent({
                         </svg>
                     </div>
 
-                </div>
+                </router-link>
             </div>
 
             <!-- Section Preferences -->
@@ -169,6 +165,32 @@ export default defineComponent({
                     </div>
 
                     <ToggleSwitch @onToggle="toggleDarkMode($event)" :is-checked="false"></ToggleSwitch>
+                </div>
+
+                <div class="flex w-full items-center justify-between py-2">
+
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4" viewBox="0 0 25.117 25">
+                            <g transform="translate(-4.44 -574.859)">
+                                <g data-name="Group 64" transform="translate(1 557.359)">
+                                <g data-name="Group 63" transform="translate(4 18)">
+                                    <path data-name="Path 21" d="M23.856,545.978,18.381,540.5a.49.49,0,0,0-.693,0L.144,558.048a.49.49,0,0,0,0,.694l5.474,5.475a.487.487,0,0,0,.349.143.508.508,0,0,0,.349-.143L23.86,546.671A.494.494,0,0,0,23.856,545.978ZM21.234,547.9h0l-2.41-2.376a.49.49,0,1,0-.689.7l2.405,2.371-1.062,1.062-1.131-1.131a.49.49,0,0,0-.693.694l1.131,1.131L17.737,551.4l-2.39-2.386a.49.49,0,0,0-.693.694l2.39,2.386L16,553.139l-1.131-1.131a.49.49,0,0,0-.693.694l1.131,1.131L14.235,554.9,11.869,552.5a.49.49,0,1,0-.7.689l2.376,2.41L12.5,556.642l-1.151-1.151a.49.49,0,0,0-.693.694l1.151,1.151-1.048,1.048-2.164-2.13a.49.49,0,0,0-.689.7l2.159,2.125-4.082,4.083-4.776-4.776,16.85-16.852,4.776,4.776Z" transform="translate(0 -540.359)" fill="none" stroke="#dedede" stroke-width="1"/>
+                                </g>
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="mx-4 justify-self-start text-dark-400">Distance units</p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <p class="mx-4 justify-self-start text-dark-600">Metric</p>
+                        <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
+                            <g transform="translate(2.121 2.121)" opacity="0.5">
+                                <line data-name="Line 3" x2="7.461" transform="translate(5.276 5.276) rotate(135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                                <line data-name="Line 4" x2="7.461" transform="translate(5.276 5.276) rotate(-135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                            </g>
+                        </svg>
+                    </div>
 
                 </div>
             </div>
