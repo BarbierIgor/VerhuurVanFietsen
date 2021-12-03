@@ -8,10 +8,6 @@ module.exports = {
 
   darkMode: 'media', // or 'class'
 
-  // corePlugins: {
-  //   preflight: false,
-  // },
-
   theme: {
     extend: {
       colors: {
@@ -28,6 +24,9 @@ module.exports = {
       },
       transitionProperty: {
         'width': 'width',
+        'position': 'top left right bottom',
+        'max-height': 'max-height',
+        'font-weight': 'font-weight',
     },
     },
   },
