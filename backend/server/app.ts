@@ -55,9 +55,9 @@ import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
       app.use(/\/((?!signup).)*/, authMiddleware)
 
       dotenv.config() // This will load in the GOOGLE_APPLICATION_CREDENTIALS
-      var serviceAccount = require('./auth/service-account.json')
+      // var serviceAccount = require('./auth/service-account.json')
       admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+        credential: admin.credential.applicationDefault(),
       })
 
       seedDatabase(connection)
