@@ -7,7 +7,12 @@ export default defineComponent({
             type: Array,
             default: () => [],
         },
+        selectValue: {
+            type: String,
+            default: '',
+        },
     },
+
     mounted() {
         console.log('mounted');
         console.log(this.$props.items?.length);
@@ -56,9 +61,16 @@ export default defineComponent({
     methods: {
         handleItemSelected(e: any, itemTitle: string) {
             this.selectedItemText = itemTitle;
+            this.$emit('input', this.selectedValue)
             setTimeout(() => {
                 this.$refs.selectElement.blur();
-            }, 300)
+            }, 200)
+        },
+        handleInput(value: any) {
+            // console.log('test')
+            // this.selectedValue = value
+            this.$emit('input', 'testValue')
+            // this.$emit('input', this.selectedValue)
         },
     },
     setup() {
@@ -106,7 +118,7 @@ export default defineComponent({
 
             <form ref="formElement" name="custom-select" class="group-focus:overflow-y-scroll flex-col flex max-h-0 transition-max-height duration-500 ease-out pointer-events-none group-focus:pointer-events-auto" v-bind:class="selectMaxHeight">
                 <div v-for="(item, index) in $props.items" :key="index" class="w-full">
-                    <input class="custom-select-input peer" :value="index" v-model="selectedValue" hidden type="radio" name="select" :id="`option${index}`">
+                    <input class="custom-select-input peer" :value="index"  hidden type="radio" name="select" :id="`option${index}`">
                     <label @click="handleItemSelected($event, item)" class="w-full block p-2 peer-checked:bg-dark-400 peer-checked:text-dark-900 transition-colors duration-300 ease-in" :for="`option${index}`">{{ item }}</label>
                 </div>
             </form>

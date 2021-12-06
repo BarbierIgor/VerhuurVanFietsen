@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import router from '../bootstrap/router'
 
 export default defineComponent({
     data() {
@@ -12,6 +13,7 @@ export default defineComponent({
     methods: {
         login() {
             console.log('login')
+            router.push({path: '/'})
         }
     },
 
@@ -31,10 +33,10 @@ export default defineComponent({
 
         <div class="h-3/6 w-screen bg-dark-700 absolute bottom-0 rounded-t-3xl flex items-center flex-col">
             <h1 class="text-white text-2xl pt-8 pl-8 self-start">Log in</h1>
-            <form action="login($event)" class="flex justify-center flex-col w-full pl-8 pr-8 pt-4">
-                <input v-model="email" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
-                <input v-model="password" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
-                <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="button" value="Sign Up">
+            <form @submit.prevent="login" class="flex justify-center flex-col w-full pl-8 pr-8 pt-4">
+                <input v-model="email" autocomplete="email" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
+                <input v-model="password" autocomplete="current-password" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
+                <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="submit" value="Login">
                 <a class="text-dark-600" href="#">Forgot password?</a>
             </form>
 

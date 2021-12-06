@@ -3,11 +3,12 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { useNetwork } from '../utils/networkComposable';
 import FilterSwitch from '../components/FilterSwitch.vue';
 import SearchBar from '../components/SearchBar.vue';
-import jsonData from '../utils/data.json';
+import data from '../utils/data.json';
 import { mapState } from 'vuex';
 import router from '../bootstrap/router';
 import BottomNavigation from '../components/BottomNavigation.vue';
-import BicycleStorageList from '../components/BicycleStorageList.vue';
+import StorageList from '../components/StorageList.vue';
+import StorageListItem from '../components/StorageListItem.vue';
 
 interface BikeStation {
     id: number,
@@ -27,16 +28,18 @@ export default defineComponent({
     data() {
         return {
             fromchild: '',
+            bikeStations: {},
+            loading: false,
         }
     },
 
     computed: mapState([
         'items'
     ]),
-    
 
     mounted() {
         this.$store.dispatch('loadItems');
+        this.getData();
     },
 
     methods: {
@@ -50,26 +53,38 @@ export default defineComponent({
         handleScanClick() {
             router.push({ path: '/scan' })
         },
+        getData() {
+            this.loading = true;
+            setTimeout(() => {
+                this.bikeStations = data;
+                this.loading = false;
+            }, 2000);
+        },
     },
 
     components: {
     FilterSwitch,
     SearchBar,
     BottomNavigation,
-    BicycleStorageList
+    StorageList,
+    StorageListItem
 }
 })
 </script>
 
 
 <template>
-    <div class="w-full h-full bg-dark-900 pt-4 page">
+    <div class="w-full h-full bg-dark-900 p-4">
 
         <SearchBar v-on:childToParent="onSearch"></SearchBar>
 
-        <FilterSwitch></FilterSwitch>
+        <FilterSwitch class="mt-4"></FilterSwitch>
 
-        <BicycleStorageList></BicycleStorageList>
+        <StorageList :data="bikeStations" :loading="loading" class="mt-8">
+            <template v-slot="slotProps">
+                <StorageListItem :bikeStation="slotProps.item"></StorageListItem>
+            </template>
+        </StorageList>
 
         <BottomNavigation></BottomNavigation>
 

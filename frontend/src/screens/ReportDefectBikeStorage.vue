@@ -53,11 +53,11 @@ export default defineComponent({
 
 <template>
     <div class="p-4">
-        <Header title="Defect Bike"></Header>
+        <Header title="Defect Bike Storage"></Header>
         <div class="w-full mt-10 grid gap-8">
             <div>
-                <h1 class="text-dark-600">Bike number <span class="text-dark-accent">*</span></h1>
-                <input v-model="bikeNumber" class="transition-opacity duration-200 bg-transparent w-full text-dark-600 border border-dark-600 rounded-lg p-2 mt-4 opacity-30 focus:outline-none focus:opacity-100" type="text" placeholder="Bike number">
+                <h1 class="text-dark-600">Bike storage number <span class="text-dark-accent">*</span></h1>
+                <input v-model="bikeNumber" class="transition-opacity duration-200 bg-transparent w-full text-dark-600 border border-dark-600 rounded-lg p-2 mt-4 opacity-30 focus:outline-none focus:opacity-100" type="text" placeholder="Bike storage number">
             </div>
 
             <div>

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import router from '../bootstrap/router'
 
 export default defineComponent({
     data() {
@@ -10,7 +11,11 @@ export default defineComponent({
             password: null,
         }
     },  
-
+    methods: {
+        signUp() {
+            router.push({path: '/'})
+        },
+    },
     setup() {
         
     },
@@ -27,16 +32,15 @@ export default defineComponent({
 
         <div class="h-3/5 w-screen bg-dark-700 absolute bottom-0 rounded-t-3xl flex items-center flex-col">
             <h1 class="text-white text-2xl pt-8 pl-8 self-start">Sign up</h1>
-            <div class="flex justify-center flex-col w-full pl-8 pr-8 pt-4">
-                <input v-model="firstName" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="First name">
-                <input v-model="lastName" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Last name">
-                <input v-model="email" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
-                <input v-model="password" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
-                <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="button" value="Sign Up">
-            </div>
+            <form @submit.prevent="signUp" class="flex justify-center flex-col w-full pl-8 pr-8 pt-4">
+                <input v-model="firstName" autocomplete="name" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="First name">
+                <input v-model="lastName" autocomplete="family-name" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Last name">
+                <input v-model="email" autocomplete="email" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="text" placeholder="Email">
+                <input v-model="password" autocomplete="new-password" class="bg-transparent text-dark-600 border border-dark-600 rounded-xl p-2 mb-4" type="password" placeholder="Password">
+                <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="submit" value="Sign Up">
+            </form>
 
             <p class="text-dark-600 absolute bottom-4">Already have an account? <RouterLink class="text-dark-accent" exact-active-class="text-dark-600" to="/login">Sign In</RouterLink></p>
-            <!-- <p class="text-dark-600 absolute bottom-4">Already have an account? <a href="#" class="text-dark-accent">Sign in</a></p> -->
         </div>
     </div>
 </template>

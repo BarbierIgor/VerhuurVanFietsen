@@ -4,12 +4,22 @@ import { useRoute } from 'vue-router';
 import router from '../bootstrap/router';
 import ToggleSwitch from '../components/ToggleSwitch.vue';
 import Header from '../components/Header.vue';
+import SelectOverlay from '../components/SelectOverlay.vue';
 
 export default defineComponent({
     data() {
         return {
-            toggleDark: Boolean,
+            toggleDark: true,
+            measurementUnit: null,
+            language: null,
+            isLanguageModalActive: false,
+            isDistanceUnitsModalActive: false,
+            overlayActive: false,
+            isAdmin: true,
         };
+    },
+    ready: {
+
     },
     methods: {
         handleBackButton() {
@@ -20,24 +30,46 @@ export default defineComponent({
         toggleDarkMode(isChecked: boolean) {
             console.log(isChecked)
         },
+        toggleModal(modalName: String = '') {
+            console.log(modalName)
+
+            if (modalName == 'distanceUnits') {
+                if (this.isDistanceUnitsModalActive) {
+                    this.isDistanceUnitsModalActive = false;
+                } else {
+                    this.isDistanceUnitsModalActive = true;
+                }
+            } else if (modalName == 'language') {
+                if (this.isLanguageModalActive) {
+                    this.isLanguageModalActive = false;
+                } else {
+                    this.isLanguageModalActive = true;
+                }
+            } else if (modalName == '') {
+                this.isLanguageModalActive = false;
+                this.isDistanceUnitsModalActive = false;
+            }
+        }
     },
     setup() {
         const route = useRoute();
     },
-    components: { ToggleSwitch, Header }
+    components: { ToggleSwitch, Header, SelectOverlay }
 })
 </script>
 
 
 <template>
-    <div class="grid grid-cols-1 p-4 justify-center w-screen gap-4">
+    <div class="grid grid-cols-1 p-4 justify-center w-screen h-screen gap-4">
+        <div class="grid grid-cols-1 justify-center w-full gap-4">
             <Header></Header>
 
             <!-- profile picture -->
             <picture class="flex justify-center w-full">
-                <img class="rounded-full bg-dark-600 w-36" src="../assets/images/profile_pic.png" alt="Profile Picture">
+                <img class="rounded-full bg-dark-600 w-36 h-36" src="../assets/images/profile_pic.png" alt="Profile Picture">
             </picture>
 
+            <!-- Name -->
             <h1 class="text-3xl font-bold my-4 text-dark-400 text-center">
                 Felix Vandemaele
             </h1>
@@ -54,6 +86,9 @@ export default defineComponent({
                     </svg>
                 </router-link>
             </div>
+        </div>
+
+        <div class="grid grid-cols-1 justify-center w-full gap-4 overflow-y-scroll">
 
             <!-- Report a problem -->
             <router-link to="/report" @click="handleClickReport" class="flex items-center my-4 py-2">
@@ -75,6 +110,59 @@ export default defineComponent({
                     </g>
                 </svg>
             </router-link>
+
+            <!-- Section Admin -->
+            <div v-if="isAdmin" class="my-2">
+                <h1 class="text-dark-600">Admin</h1>
+                <router-link to="/admin/problems" class="flex w-full items-center justify-between py-2">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4" viewBox="0 0 21.283 19.784">
+                            <g transform="translate(2.505 2.5)">
+                                <g transform="translate(-7.395 -9.846)" fill="none" stroke-linecap="round">
+                                <path d="M12.986,11.309a2.948,2.948,0,0,1,5.092,0L23.263,20.2a2.948,2.948,0,0,1-2.546,4.433H10.347A2.948,2.948,0,0,1,7.8,20.2Z" stroke="none"/>
+                                <path d="M 15.5323600769043 9.846347808837891 C 14.54364204406738 9.846347808837891 13.55492401123047 10.33382797241211 12.98619842529297 11.30878829956055 L 7.801288604736328 20.19719696044922 C 6.654979705810547 22.16230773925781 8.072439193725586 24.63016891479492 10.34745979309082 24.63016891479492 L 20.71726989746094 24.63016891479492 C 22.99227905273438 24.63016891479492 24.40973854064941 22.16230773925781 23.26342964172363 20.19719696044922 L 18.07852935791016 11.30878829956055 C 17.50979995727539 10.33382797241211 16.52108001708984 9.846347808837891 15.5323600769043 9.846347808837891 M 15.53235912322998 7.346347808837891 C 17.49163818359375 7.346347808837891 19.2507495880127 8.356727600097656 20.23796844482422 10.04910850524902 L 25.42287826538086 18.93751907348633 C 26.41778945922852 20.64308929443359 26.42463874816895 22.68355941772461 25.44120025634766 24.39575958251953 C 24.45775985717773 26.10795783996582 22.69179916381836 27.13016891479492 20.71726989746094 27.13016891479492 L 10.34745979309082 27.13016891479492 C 8.372919082641602 27.13016891479492 6.606958389282227 26.10795783996582 5.623519897460938 24.39575958251953 C 4.640079498291016 22.68354797363281 4.646928787231445 20.64308929443359 5.641839981079102 18.93752861022949 L 10.82674980163574 10.04910850524902 C 11.8139591217041 8.356727600097656 13.57306861877441 7.346347808837891 15.53235912322998 7.346347808837891 Z" stroke="none" fill="#dedede"/>
+                                </g>
+                                <path d="M-2.165,3.68A.835.835,0,0,1-3,2.845v-5.01A.835.835,0,0,1-2.165-3a.835.835,0,0,1,.835.835v5.01A.835.835,0,0,1-2.165,3.68Z" transform="translate(10.302 5.836)" fill="#dedede"/>
+                                <path d="M.835,0A.835.835,0,1,1,0,.835.835.835,0,0,1,.835,0Z" transform="translate(7.302 11.166)" fill="#dedede"/>
+                            </g>
+                        </svg>
+
+
+                        <p class="mx-4 justify-self-start text-dark-400">Problems</p>
+                    </div>
+
+                    <div class="flex items-center">	
+                        <p class="mx-4 justify-self-start text-dark-accent">16</p>
+                        <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
+                            <g transform="translate(2.121 2.121)" opacity="0.5">
+                                <line data-name="Line 3" x2="7.461" transform="translate(5.276 5.276) rotate(135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                                <line data-name="Line 4" x2="7.461" transform="translate(5.276 5.276) rotate(-135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                            </g>
+                        </svg>
+                    </div>
+                </router-link>
+                
+                <router-link to="/admin/empty" class="flex w-full items-center justify-between py-2">
+
+                    <div class="flex items-center">
+                        <svg class="w-4" viewBox="0 0 24 15.562">
+                            <path d="M19.08,55.279a5.081,5.081,0,0,0-1.187.129l-1.515-3.929h.494a3,3,0,0,0,2.069-.8l.523-.484a.561.561,0,0,0,.013-.815.615.615,0,0,0-.848-.011l-.523.479a1.787,1.787,0,0,1-1.234.472H15.515a.617.617,0,0,0-.492.26.573.573,0,0,0-.069.538l.577,1.494s-.007.011-.011.011,0,.011,0,.011H7.843L6.807,50.952l1.125-.377a.562.562,0,0,0,.4-.63.583.583,0,0,0-.591-.47H4.444a.812.812,0,0,0-.837.793A1.268,1.268,0,0,0,4.9,51.51a1.345,1.345,0,0,0,.422-.072l.328-.11,1.051,1.7-.807,2.335a5.073,5.073,0,0,0-.815-.093,4.971,4.971,0,0,0-3.694,1.442A4.62,4.62,0,0,0,0,60.164a4.841,4.841,0,0,0,4.757,4.588l.161,0a4.974,4.974,0,0,0,3.534-1.449A4.706,4.706,0,0,0,9.8,60.578h.963a1.316,1.316,0,0,0,.77.28,1.167,1.167,0,0,0,1.188-1.144,1.1,1.1,0,0,0-.155-.563l3.361-5.5.844,2.181a4.731,4.731,0,0,0-2.614,4.191,4.923,4.923,0,1,0,4.92-4.745Zm-4.614-1.487L11.54,58.58s0,0,0,0-.007.007-.01.007l-2.968-4.79h5.907Zm-6.953.54,2.988,4.82a1.509,1.509,0,0,0-.113.268H9.8a4.8,4.8,0,0,0-2.77-3.7ZM5.95,59.421a.706.706,0,0,0-.138-.172L6.521,57.2a3.289,3.289,0,0,1,1.665,2.225Zm1.355,2.812a3.355,3.355,0,0,1-2.5.976,3.266,3.266,0,0,1-3.21-3.1,3.118,3.118,0,0,1,.934-2.333,3.354,3.354,0,0,1,2.386-.975l.109,0a3.441,3.441,0,0,1,.355.03l-.717,2.074a1.14,1.14,0,0,0,.27,2.256,1.127,1.127,0,0,0,1.035-.59H8.186A3.156,3.156,0,0,1,7.305,62.233Zm11.775,1a3.268,3.268,0,0,1-3.321-3.2A3.182,3.182,0,0,1,17.34,57.3l1.127,2.913a.6.6,0,0,0,.562.376.615.615,0,0,0,.21-.037.572.572,0,0,0,.352-.744l-1.133-2.928a3.439,3.439,0,0,1,.623-.057,3.206,3.206,0,1,1,0,6.407Z" transform="translate(0 -49.208)" fill="#dedede"/>
+                        </svg>
+                        <p class="mx-4 justify-self-start text-dark-400">Empty storages</p>
+                    </div>
+
+                    <div class="flex items-center">	
+                        <p class="mx-4 justify-self-start text-dark-accent">10</p>
+                        <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
+                            <g transform="translate(2.121 2.121)" opacity="0.5">
+                                <line data-name="Line 3" x2="7.461" transform="translate(5.276 5.276) rotate(135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                                <line data-name="Line 4" x2="7.461" transform="translate(5.276 5.276) rotate(-135)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="3"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                </router-link>
+            </div>
 
             <!-- Section Account -->
             <div class="my-2">
@@ -129,7 +217,8 @@ export default defineComponent({
             <!-- Section Preferences -->
             <div class="my-2">
                 <h1 class="text-dark-600">Preferences</h1>
-                <div class="flex w-full items-center justify-between py-2">
+                <!-- Language -->
+                <div @click="toggleModal('language')" class="flex w-full items-center justify-between py-2">
 
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 20 20">
@@ -149,6 +238,8 @@ export default defineComponent({
                     </div>
 
                 </div>
+
+                <!-- Dark mode -->
                 <div class="flex w-full items-center justify-between py-2">
 
                     <div class="flex items-center">
@@ -167,7 +258,8 @@ export default defineComponent({
                     <ToggleSwitch @onToggle="toggleDarkMode($event)" :is-checked="false"></ToggleSwitch>
                 </div>
 
-                <div class="flex w-full items-center justify-between py-2">
+                <!-- Distance units -->
+                <div @click="toggleModal('distanceUnits')" class="flex w-full items-center justify-between py-2">
 
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 25.117 25">
@@ -194,5 +286,101 @@ export default defineComponent({
 
                 </div>
             </div>
+
+        </div>
+
+        <SelectOverlay v-on:toggleModal="toggleModal('distanceUnits')" :isActive="isDistanceUnitsModalActive" ref="overlayActive" title="Distance units">
+            <div class="w-full">
+                <!-- <h1 class="text-dark-900 font-semibold text-lg mb-4">Measurement Unit</h1> -->
+                <form class="justify-around items-center flex-col">
+                    <label class="w-full flex justify-between items-center py-2" for="metric">
+                        <p>Metric</p>
+                        <input class="peer group" v-model="measurementUnit" hidden type="radio" id="metric" name="units" value="0">
+                        <span 
+                            class="
+                                border-2 
+                                peer-checked:border-dark-accent 
+                                border-dark-600 
+                                w-4 h-4 
+                                rounded-full 
+                                tranistion duration-300 
+                                flex justify-center items-center
+
+                                before:tranistion before:duration-300 
+                                before:w-2 before:h-2 before:block 
+                                before:rounded-full 
+                                peer-checked:before:bg-dark-accent
+                            ">
+                        </span>
+                    </label>
+
+                    <label class="w-full flex justify-between items-center py-2" for="imperial">
+                        <p>Imperial</p>
+                        <input class="peer group" v-model="measurementUnit" type="radio" hidden id="imperial" name="units" value="1">
+                        <span 
+                            class="
+                                border-2 
+                                peer-checked:border-dark-accent 
+                                border-dark-600 
+                                w-4 h-4 
+                                rounded-full 
+                                tranistion duration-300 
+                                flex justify-center items-center 
+
+                                before:tranistion before:duration-300 
+                                before:w-2 before:h-2 before:block 
+                                before:rounded-full 
+                                peer-checked:before:bg-dark-accent
+                            ">
+                        </span>
+                    </label>
+                </form>
+            </div>
+        </SelectOverlay>
+
+        <SelectOverlay v-on:toggleModal="toggleModal('language')" :isActive="isLanguageModalActive" :title="`Language${language != null ? (' - ' + language) : '' }`">
+            <div class="w-full">
+                <form class="justify-around items-center flex-col overflow-y-scroll">
+                    <div class="relative w-full rounded-lg flex justify-start items-center pb-3">
+                        <input v-model="language" value="English" class="peer" name="language" hidden type="radio" id="english" >
+                        <label 
+                            class="
+                                w-full h-full bg-dark-600 bg-opacity-10 rounded-lg flex justify-start items-center p-2 pl-4
+                                transition duration-300 ease-in
+                                peer-checked:bg-dark-accent peer-checked:text-dark-400 peer-checked:bg-opacity-100
+                            " 
+                            for="english">
+                            <p>English</p>
+                        </label>
+                    </div>
+
+                    <div class="relative w-full rounded-lg flex justify-start items-center pb-3">
+                        <input v-model="language" value="Dutch" class="peer" name="language" hidden type="radio" id="dutch" >
+                        <label 
+                            class="
+                                w-full h-full bg-dark-600 bg-opacity-10 rounded-lg flex justify-start items-center p-2 pl-4
+                                transition duration-300 ease-in
+                                peer-checked:bg-dark-accent peer-checked:text-dark-400 peer-checked:bg-opacity-100
+                            " 
+                            for="dutch">
+                            <p>Dutch</p>
+                        </label>
+                    </div>
+
+                    <div class="relative w-full rounded-lg flex justify-start items-center pb-3">
+                        <input v-model="language" value="Spanish" class="peer" name="language" hidden type="radio" id="spanish" >
+                        <label 
+                            class="
+                                w-full h-full bg-dark-600 bg-opacity-10 rounded-lg flex justify-start items-center p-2 pl-4
+                                transition duration-300 ease-in
+                                peer-checked:bg-dark-accent peer-checked:text-dark-400 peer-checked:bg-opacity-100
+                            " 
+                            for="spanish">
+                            <p>Spanish</p>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </SelectOverlay>
     </div>
 </template>

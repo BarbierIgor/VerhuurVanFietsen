@@ -12,8 +12,8 @@ export default defineComponent({
     data() {
         return {
             bikeNumber: null,
+            storageNumber: null,
             description: null,
-            problem: null,
             files: new Array<FileInfo>(),
         }
     },
@@ -53,7 +53,7 @@ export default defineComponent({
 
 <template>
     <div class="p-4">
-        <Header title="Defect Bike"></Header>
+        <Header title="Other"></Header>
         <div class="w-full mt-10 grid gap-8">
             <div>
                 <h1 class="text-dark-600">Bike number <span class="text-dark-accent">*</span></h1>
@@ -61,9 +61,8 @@ export default defineComponent({
             </div>
 
             <div>
-                <h1 class="text-dark-600">Problem <span class="text-dark-accent">*</span></h1>
-
-                <CustomSelect v-model="problem" :items="['Option 01', 'Option 02', 'Option 03', 'Option 04', 'Option 05', 'Option 06']"></CustomSelect>
+                <h1 class="text-dark-600">Bike number <span class="text-dark-accent">*</span></h1>
+                <input v-model="storageNumber" class="transition-opacity duration-200 bg-transparent w-full text-dark-600 border border-dark-600 rounded-lg p-2 mt-4 opacity-30 focus:outline-none focus:opacity-100" type="text" placeholder="Bike number">
             </div>
 
             <div>

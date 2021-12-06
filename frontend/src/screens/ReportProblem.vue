@@ -27,7 +27,7 @@ export default defineComponent({
                     </div>
                 </router-link>
 
-                <router-link to="/map" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
+                <router-link to="/report/storage" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
                     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5/6 h-5/6 flex items-center justify-around flex-col">
                         <svg class="h-2/5" viewBox="0 0 65 66">
                             <path d="M62.665,64.853c0-16.254-.573-23.621-4.122-27.17-3.649-3.65-11.161-3.643-24.8-3.632h-2.1V63.515A2.315,2.315,0,0,1,29.31,65.81H6.189a2.315,2.315,0,0,1-2.335-2.295V6.609q0-.058,0-.115H1.168a1.148,1.148,0,1,1,0-2.295H3.817a4.422,4.422,0,0,1,.974-2.5A5.541,5.541,0,0,1,9.275,0H26.14a5.353,5.353,0,0,1,4.053,1.516A5.114,5.114,0,0,1,31.478,4.2h2.853a1.148,1.148,0,1,1,0,2.295H31.642c0,.038,0,.077,0,.115V31.757h2.1c14.27-.012,22.129-.019,26.466,4.318C64.528,40.394,65,48.548,65,64.853a1.168,1.168,0,0,1-2.335,0ZM5.722,6.609V63.515a.464.464,0,0,0,.467.459H29.31a.464.464,0,0,0,.468-.459V6.609a.44.44,0,0,0-.015-.115H5.736A.44.44,0,0,0,5.722,6.609Zm.513-3.743A2.561,2.561,0,0,0,5.692,4.2H29.574a3.149,3.149,0,0,0-.754-1.439,3.573,3.573,0,0,0-2.68-.925H9.275A3.8,3.8,0,0,0,6.235,2.866ZM41.664,58.2a4.322,4.322,0,0,1-3.751-6.5l4.136-7.058a4.352,4.352,0,0,1,7.5,0L53.686,51.7a4.322,4.322,0,0,1-3.751,6.5Zm2.1-12.559L39.632,52.7a2.34,2.34,0,0,0,2.031,3.52h8.272a2.34,2.34,0,0,0,2.031-3.52l-4.136-7.058a2.357,2.357,0,0,0-4.063,0Zm1.365,8.469a.768.768,0,1,1,.768.765A.767.767,0,0,1,45.133,54.108Zm0-2.737V47.392a.777.777,0,0,1,1.537,0v3.979a.777.777,0,0,1-1.537,0ZM12.961,40.11a2.315,2.315,0,0,1-2.335-2.295V36.439a2.315,2.315,0,0,1,2.335-2.295h9.576a2.315,2.315,0,0,1,2.335,2.295v1.376a2.315,2.315,0,0,1-2.335,2.295Zm-.467-3.671v1.376a.464.464,0,0,0,.467.459h9.576A.464.464,0,0,0,23,37.816V36.439a.464.464,0,0,0-.467-.459H12.961A.464.464,0,0,0,12.495,36.439Zm.467-5.966a2.315,2.315,0,0,1-2.335-2.295V18.771a2.315,2.315,0,0,1,2.335-2.295h9.576a2.315,2.315,0,0,1,2.335,2.295v9.408a2.315,2.315,0,0,1-2.335,2.295Zm-.467-11.7v9.408a.464.464,0,0,0,.467.459h9.576A.464.464,0,0,0,23,28.179V18.771a.464.464,0,0,0-.467-.459H12.961A.464.464,0,0,0,12.495,18.771Z" fill="#202020"/>
@@ -36,7 +36,7 @@ export default defineComponent({
                     </div>
                 </router-link>
 
-                <router-link to="/map" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
+                <router-link to="/report/unrecognized" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
                     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4/6 h-4/6 flex items-center justify-around flex-col">
                         <svg viewBox="0 0 99.002 67">
                             <g transform="translate(-41.999 -29)">
@@ -50,7 +50,7 @@ export default defineComponent({
                     </div>
                 </router-link>
 
-                <router-link to="/map" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
+                <router-link to="/report/other" class="rounded-2xl bg-dark-400 aspect-w-1 aspect-h-1">
                     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4/6 h-4/6 flex items-center justify-around flex-col">
                         <svg class="w-2/4" viewBox="0 0 62 10">
                             <g transform="translate(-39 -61)">

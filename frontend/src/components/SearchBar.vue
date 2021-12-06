@@ -3,6 +3,12 @@ import { defineComponent } from 'vue'
 import router from '../bootstrap/router'
 
 export default defineComponent({
+    props: {
+        isProfile: {
+            type: Boolean,
+            default: true,
+        }
+    },
     methods: {
         handleSearch(e: any) {
             const value = e.currentTarget.value;
@@ -25,9 +31,9 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="relative bg-dark-accent h-10 ml-4 mr-4 rounded-full">
+    <div class="relative bg-dark-accent h-10 rounded-full">
         <input v-on:keyup.enter="handleSearch($event)" class="relative w-full h-full rounded-full bg-dark-400 pl-12" type="text" placeholder="Find a bike station">
-        <img @click="handleProfileClick()" class="absolute right-1.5 h-8 w-8 rounded-full bg-dark-900 top-1.5 -mt-0.5" src="../assets/images/profile_pic.png"/>
+        <img v-if="isProfile" @click="handleProfileClick()" class="absolute right-1.5 h-8 w-8 rounded-full bg-dark-900 top-1.5 -mt-0.5" src="../assets/images/profile_pic.png"/>
 
         <svg  class="absolute top-2.5 left-2.5 -mt-0.5 h-6 w-6" viewBox="0 0 75.749 75.749">
             <g>

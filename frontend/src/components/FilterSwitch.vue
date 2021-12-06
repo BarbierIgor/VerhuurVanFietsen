@@ -53,8 +53,7 @@ export default defineComponent({
 
 
 <template>
-
-        <div class="bg-dark-400 h-10 mt-4 ml-4 mr-4 rounded-full p-1">
+        <div class="bg-dark-400 h-10 rounded-full p-1">
             <form ref="filterSwitch" class="relative custom-radiobuttons h-full w-full flex justify-between items-center">
                 <input v-model="filter" @change="handleCheckboxChange($event)" class="hidden" ref="checkbox1" checked type="radio" name="type" value="all" id="all">
                 <label class="z-10 flex-auto rounded-full text-center align-bottom" for="all">all</label>
@@ -68,5 +67,4 @@ export default defineComponent({
                 <span ref="slider" class="z-0 absolute h-full rounded-full bg-dark-accent transition-transform-width duration-200 ease-out "></span>
             </form>
         </div>
-
 </template>

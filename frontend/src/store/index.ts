@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const store = createStore({
   state: {
-    items: []
+    items: [],
+    isModalActive: Boolean,
   },
   getters: {
     items: (state) => {
