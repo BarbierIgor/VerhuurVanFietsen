@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="w-full bg-dark-400 rounded-lg overflow-hidden">
+    <div class="w-full bg-dark-400 rounded-lg overflow-hiddeno">
         <div class="relative flex overflow-hidden">
             <div @click="handleCarousel" ref="carousel" class="w-full flex transition-transform duration-1000">
                 <img class="w-full rounded-lg object-cover" v-for="(image, index) in $props.images" :key="index" :src="image" alt="Image">
