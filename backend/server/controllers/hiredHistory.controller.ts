@@ -99,7 +99,7 @@ export class HiredHistoryController
         const priceNonElectric = prices.nonElectric
         const priceEstep = prices.estep
 
-        var price
+        var price = 0
 
         if (bikeInUseItem.bike.type === 'electric') {
           price = Math.round((priceElectric / 60) * diffMins * 100) / 100

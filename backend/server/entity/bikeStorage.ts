@@ -19,25 +19,25 @@ export class BikeStorage extends BaseEntity {
 
   @Field()
   @Column('text')
-  city?: string
+  city!: string
 
   @Field()
   @Column('text')
-  street?: string
+  street!: string
 
   @Field(() => Int)
   @Column()
-  houseNumber?: number
+  houseNumber!: number
 
   @Field(() => GraphQLJSON)
   @Column('simple-json')
-  prices?: Record<string, string>
+  prices!: Record<string, string>
 
   @Field(() => Boolean, { nullable: true })
   bikesAvailable?: number
 
-  @Field(() => Int, { nullable: true })
-  capacity?: number
+  // @Field(() => Int, { nullable: true })
+  // capacity?: number
 
   @Field(type => [Bike])
   @OneToMany(() => Bike, bike => bike.bikeStorage)

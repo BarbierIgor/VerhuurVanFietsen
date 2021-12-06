@@ -64,7 +64,7 @@ import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
 
       interface AppControllers {
         bike: IBikeController
-        bicycleStorage: IBikeStorageController
+        bikeStorage: IBikeStorageController
         bikeInUse: IBikeInUseController
         hiredHistory: IHiredHistoryController
         problem: IProblemController
@@ -74,7 +74,7 @@ import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
 
       const controllers: AppControllers = {
         bike: new BikeController(),
-        bicycleStorage: new BikeStorageController(),
+        bikeStorage: new BikeStorageController(),
         bikeInUse: new BikeInUseController(),
         hiredHistory: new HiredHistoryController(),
         problem: new ProblemController(),

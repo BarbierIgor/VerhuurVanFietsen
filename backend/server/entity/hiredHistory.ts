@@ -16,21 +16,21 @@ export class HiredHistory {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
-  user?: User
+  user!: User
 
   @ManyToOne(() => Bike)
   @JoinColumn({ name: 'bikeId' })
-  bike?: Bike
+  bike!: Bike
 
   @Column('float')
-  price?: number
+  price!: number
 
   @Column('boolean')
-  paid?: boolean
+  paid!: boolean
 
   @Column('datetime')
-  timeHiredStart?: Date
+  timeHiredStart!: Date
 
   @Column('datetime')
-  timeHiredEnd?: Date
+  timeHiredEnd!: Date
 }
