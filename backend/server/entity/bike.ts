@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Field, InputType, ObjectType } from 'type-graphql'
+import { Field, ID, InputType, ObjectType } from 'type-graphql'
 import GraphQLJSON from 'graphql-type-json'
 
 import { BikeStorage } from './bikeStorage'
@@ -15,7 +15,7 @@ import { BikeStorage } from './bikeStorage'
 @InputType('BikeInput')
 @Entity('bike')
 export class Bike extends BaseEntity {
-  @Field()
+  @Field(() => ID, { nullable: true })
   @PrimaryGeneratedColumn('uuid')
   uuid?: string
 
@@ -36,3 +36,7 @@ export class Bike extends BaseEntity {
   @JoinColumn({ name: 'bikeStorageId' })
   bikeStorage!: BikeStorage
 }
+
+@InputType('CreateBikeInput')
+@Entity('bike')
+export class CreateBikeInput extends Bike {}

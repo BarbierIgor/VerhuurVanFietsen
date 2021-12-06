@@ -1,5 +1,5 @@
-import { Resolver, Query, Arg } from 'type-graphql'
-import { Bike } from '../entity/bike'
+import { Resolver, Query, Arg, Mutation } from 'type-graphql'
+import { Bike, CreateBikeInput } from '../entity/bike'
 
 @Resolver()
 export class BikeResolver {
@@ -16,5 +16,14 @@ export class BikeResolver {
       .leftJoinAndSelect('bike.bikeStorage', 'bikeStorage')
       .where('bike.uuid = :id', { id: id })
       .getOne()
+  }
+
+  @Mutation(() => Bike, { nullable: true })
+  async createBike(
+    @Arg('data') newBikeData: CreateBikeInput,
+  ): Promise<Bike | undefined | null> {
+    console.log(newBikeData)
+    const result = await Bike.save(newBikeData)
+    return result
   }
 }
