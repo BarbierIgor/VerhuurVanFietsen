@@ -30,4 +30,10 @@
         width: 100%;
         padding-bottom: 100%;
     }
+
+    input[type=password]::-ms-reveal,
+    input[type=password]::-ms-clear
+    {
+        @apply hidden;
+    }
 }

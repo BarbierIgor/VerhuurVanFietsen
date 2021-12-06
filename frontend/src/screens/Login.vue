@@ -9,6 +9,7 @@ export default defineComponent({
             password: null,
             showErrorMessage: false,
             errorMessage: '',
+            showPassword: false,
         }
     },
 
@@ -29,7 +30,10 @@ export default defineComponent({
                 this.showErrorMessage = false;
                 this.errorMessage = '';
             }, 2000);
-        }
+        },
+        togglePassword() {
+            this.showPassword = !this.showPassword;
+        },
     },
 
     setup() {
@@ -62,7 +66,7 @@ export default defineComponent({
                 </div>
 
                 <div class="relative mb-6">
-                    <input v-model="password" autocomplete="current-password" class="bg-transparent peer w-full h-full p-2 py-3 text-dark-600 border border-dark-600 opacity-50 focus:opacity-100 transition-opacity duration-200 rounded-lg" type="password" placeholder="Password" required>
+                    <input v-model="password" autocomplete="current-password" class="bg-transparent peer w-full h-full p-2 py-3 text-dark-600 border border-dark-600 opacity-50 focus:opacity-100 transition-opacity duration-200 rounded-lg" :type="showPassword ? 'text' : 'password'" placeholder="Password" required>
                     <label 
                         class="
                             absolute bg-dark-700 px-2 -translate-y-2/3 opacity-100
@@ -71,6 +75,22 @@ export default defineComponent({
                             left-2 text-dark-600 bg-opacity-100
 
                         " for="">Password</label>
+                    <span
+                        @click="togglePassword"
+                        class="
+                            absolute right-3 top-1/2 -translate-y-1/2  font-semibold text-sm overflow-hidden rounded-md py-1
+                            w-14
+                            transition-all duration-200
+                        "
+                        :class="showPassword ? 'bg-dark-accent text-dark-400' : 'bg-dark-600 text-dark-900'"
+                    >
+                        <div class="flex justify-start items-center w-28 transition-transform duration-200"
+                            :class="showPassword ? '-translate-x-14' : 'translate-x-0'"
+                        >
+                            <p class="text-center w-14">show</p>
+                            <p class="text-center w-14">hide</p>
+                        </div>
+                    </span>
                 </div>
 
                 <input class="bg-dark-accent text-white rounded-lg p-2 mb-2" type="submit" value="Login">
