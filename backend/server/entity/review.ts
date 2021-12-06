@@ -16,16 +16,16 @@ export class Review {
   uuid?: string
 
   @Column()
-  ratingOutOfFive?: number
+  rating!: number
 
   @Column('longtext')
   description?: string
 
   @OneToOne(() => HiredHistory)
   @JoinColumn()
-  hiredhistory?: HiredHistory
+  hiredhistory!: HiredHistory
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user?: User
+  @JoinColumn({ name: 'userId' })
+  user!: User
 }

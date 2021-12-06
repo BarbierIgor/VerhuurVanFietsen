@@ -6,7 +6,6 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
 import { Bike } from './bike'
 import { User } from './user'
 
@@ -16,17 +15,13 @@ export class BikeInUse {
   uuid?: string
 
   @OneToOne(() => Bike)
-  @JoinColumn()
-  bike?: Bike
+  @JoinColumn({ name: 'bikeId' })
+  bike!: Bike
 
   @Column('datetime')
-  timeHired?: Date
-
-  @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicyclestorage_id' })
-  bicycleStorage?: BicycleStorage
+  timeHired!: Date
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user?: User
+  @JoinColumn({ name: 'userId' })
+  user!: User
 }
