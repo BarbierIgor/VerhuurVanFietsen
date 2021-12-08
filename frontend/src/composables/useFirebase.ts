@@ -19,7 +19,7 @@ const firebaseConfig = {
     projectId: 'verhuur-fietsen-c124d',
     storageBucket: 'verhuur-fietsen-c124d.appspot.com',
     messagingSenderId: '461585575411',
-    appId: '1:461585575411:web:e4e4864230c152fb15f686',
+    appId: '1:461585575411:web:a801cb51c68b952415f686',
 }
 
 // Initialize Firebase
@@ -34,13 +34,15 @@ let user: Ref<User | null> = ref(auth.currentUser)
 
 export default () => {
     const restoreAuth = (): Promise<boolean> => {
+        console.log('hallo')
         return new Promise((resolve, reject) => {
             try {
                 auth.onAuthStateChanged(async state => {
+                    console.log(state)
                     if (state) {
                         user.value = state
-                        resolve(true)
                     }
+                    resolve(true)
                 })
             } catch (error) {
                 console.error(error)
@@ -54,7 +56,7 @@ export default () => {
             email: email,
             password: password,
         }
-        post('user/signup', user, null)
+        post('user/signup', user, '')
     }
 
     const login = (email: string, password: string): Promise<boolean> => {
