@@ -5,9 +5,19 @@ const cache = {}
 
 export const useNetwork = () => {}
 
-export const post = (endpoint: string, data: CreateUser, token: string) => {
-    console.log(data)
-    const res = fetch(`${baseUrl}/${endpoint}`, {
+export async function get(endpoint: string, token: string) {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(res => res.json())
+        .catch(error => console.error(error))
+    return res
+}
+
+export async function post(endpoint: string, data: CreateUser, token: string) {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
