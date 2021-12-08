@@ -1,27 +1,42 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
+import { Field, ID, InputType, ObjectType } from 'type-graphql'
+import GraphQLJSON from 'graphql-type-json'
 
-@Entity('bikes')
-export class Bike {
+import { BikeStorage } from './bikeStorage'
+
+@ObjectType()
+@InputType('BikeInput')
+@Entity('bike')
+export class Bike extends BaseEntity {
+  @Field(() => ID, { nullable: true })
   @PrimaryGeneratedColumn('uuid')
   uuid?: string
 
+  @Field()
   @Column('text')
-  type?: string
+  type!: string
 
+  @Field(() => Boolean)
   @Column('boolean')
-  inStorage?: boolean
+  inStorage!: boolean
 
+  @Field(() => GraphQLJSON)
   @Column('simple-json')
-  location?: Record<string, string>
+  location!: Record<string, string>
 
-  @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicycleStorage_id' })
-  bicycleStorage?: BicycleStorage
+  @Field(type => BikeStorage)
+  @ManyToOne(() => BikeStorage, bs => bs.uuid)
+  @JoinColumn({ name: 'bikeStorageId' })
+  bikeStorage!: BikeStorage
 }
+
+@InputType('CreateBikeInput')
+@Entity('bike')
+export class CreateBikeInput extends Bike {}
