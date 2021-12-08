@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { BicycleStorage } from './bicycleStorage'
+import { BikeStorage } from './bikeStorage'
 import { Bike } from './bike'
 import { User } from './user'
 
@@ -15,20 +15,22 @@ export class HiredHistory {
   uuid?: string
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user?: User
+  @JoinColumn({ name: 'userId' })
+  user!: User
 
   @ManyToOne(() => Bike)
-  @JoinColumn({ name: 'bike_id' })
-  bike?: Bike
-
-  @ManyToOne(() => BicycleStorage)
-  @JoinColumn({ name: 'bicycle_torage_id' })
-  bicycleStorage?: BicycleStorage
+  @JoinColumn({ name: 'bikeId' })
+  bike!: Bike
 
   @Column('float')
-  price?: number
+  price!: number
 
   @Column('boolean')
-  paid?: boolean
+  paid!: boolean
+
+  @Column('datetime')
+  timeHiredStart!: Date
+
+  @Column('datetime')
+  timeHiredEnd!: Date
 }

@@ -127,3 +127,5 @@ dist
 
 docker.ormconfig.env
 ormconfig.env
+firebase.env
+server/auth/service-account.json
