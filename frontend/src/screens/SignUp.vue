@@ -18,7 +18,7 @@ export default defineComponent({
         }
     },
     methods: {
-        signUp() {
+        async signUp() {
             const { createUser } = useFirebase()
             if (
                 this.email === null ||
@@ -32,7 +32,7 @@ export default defineComponent({
             ) {
                 this.displayErrorMessage('Please fill in the required fields!')
             } else {
-                createUser(this.firstName, this.email, this.password)
+                await createUser(this.firstName, this.email, this.password)
                 router.push({ path: '/login' })
             }
             // router.push({path: '/'})
