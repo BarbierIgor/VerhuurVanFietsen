@@ -6,7 +6,7 @@ import router from '../bootstrap/router';
 export default defineComponent({
 
   components: {
-    QrcodeStream
+    QrcodeStream,
   },
 
   data () {
@@ -131,6 +131,7 @@ export default defineComponent({
         leave-class="opacity-100"
         leave-to-class="opacity-0"
       >
+
         <div class="text-4xl text-dark-400 font-bold text-center mt-24 absolute top-10 left-1/2 -translate-x-1/2" v-show="loading">
           Loading...
         </div>
