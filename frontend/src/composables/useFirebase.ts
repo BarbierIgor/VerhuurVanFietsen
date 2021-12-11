@@ -8,6 +8,9 @@ import {
     setPersistence,
     User,
     signOut,
+    updateProfile,
+    updateEmail,
+    updatePassword,
 } from 'firebase/auth'
 import { Ref, ref, readonly } from 'vue'
 import { CreateUser } from '../interfaces/User'
@@ -85,6 +88,23 @@ export default () => {
         })
     }
 
+    const editName = (displayName: string) => {
+        try {
+            updateProfile(auth.currentUser, { displayName: displayName })
+        } catch (error) {
+            console.log('???')
+            console.error(error)
+        }
+    }
+
+    const editEmail = (email: string) => {
+        updateEmail(auth.currentUser, email)
+    }
+
+    const editPassword = (password: string) => {
+        updatePassword(auth.currentUser, password)
+    }
+
     // const getToken = () => {
     //     var token: string = ''
     //     auth.currentUser?.getIdToken().then(function (idToken) {
@@ -103,6 +123,9 @@ export default () => {
         logout,
         restoreAuth,
         // getToken,
+        editName,
+        editEmail,
+        editPassword,
         user: readonly(user),
     }
 }

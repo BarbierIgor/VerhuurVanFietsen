@@ -1,4 +1,4 @@
-import { CreateUser } from '../interfaces/User'
+import { CreateUser, User } from '../interfaces/User'
 
 const baseUrl = 'http://localhost:3001'
 const cache = {}
@@ -16,10 +16,24 @@ export async function get(endpoint: string, token: string) {
     return res
 }
 
-export async function post(endpoint: string, data: CreateUser, token: string) {
+export async function post(endpoint: string, data: any, token: string) {
     const res = await fetch(`${baseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .catch(error => console.error(error))
+    return res
+}
+
+export async function put(endpoint: string, data: any, token: string) {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

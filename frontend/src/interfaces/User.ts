@@ -6,7 +6,17 @@ export interface CreateUser {
 
 export interface User {
     uuid: string
-    name: string
+    username: string
     wallet: number
     isAdmin: boolean
+}
+
+export interface EditUserName {
+    uuid: string
+    username: string
+}
+
+export interface EditUserEmail {
+    uuid: string
+    email: string
 }
