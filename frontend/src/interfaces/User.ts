@@ -1,12 +1,22 @@
-export default interface CreateUser {
+export interface CreateUser {
     name: string
     email: string
     password?: string
 }
 
-export default interface User {
+export interface User {
     uuid: string
-    name: string
+    username: string
     wallet: number
     isAdmin: boolean
+}
+
+export interface EditUserName {
+    uuid: string
+    username: string
+}
+
+export interface EditUserEmail {
+    uuid: string
+    email: string
 }
