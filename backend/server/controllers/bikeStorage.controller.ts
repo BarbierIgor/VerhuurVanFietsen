@@ -33,6 +33,15 @@ export class BikeStorageController
         .createQueryBuilder('bikeStorages')
         .leftJoinAndSelect('bikeStorages.bikes', 'bike')
         .getMany()
+      bikeStorages.forEach(item => {
+        var counter = 0
+        item.bikes?.forEach(element => {
+          if (element.inStorage === true) {
+            counter += 1
+          }
+        })
+        item.bikesAvailable = counter
+      })
       response.send(bikeStorages)
     } catch (error: any) {
       next(error)

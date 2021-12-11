@@ -1,10 +1,10 @@
-export default interface CreateUser {
+export interface CreateUser {
     name: string
     email: string
     password?: string
 }
 
-export default interface User {
+export interface User {
     uuid: string
     name: string
     wallet: number

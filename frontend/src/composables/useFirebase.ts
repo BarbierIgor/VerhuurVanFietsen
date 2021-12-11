@@ -10,7 +10,7 @@ import {
     signOut,
 } from 'firebase/auth'
 import { Ref, ref, readonly } from 'vue'
-import CreateUser from '../interfaces/User'
+import { CreateUser } from '../interfaces/User'
 import { post } from './networkComposable'
 
 const firebaseConfig = {
@@ -34,7 +34,6 @@ let user: Ref<User | null> = ref(auth.currentUser)
 
 export default () => {
     const restoreAuth = (): Promise<boolean> => {
-        console.log('hallo')
         return new Promise((resolve, reject) => {
             try {
                 auth.onAuthStateChanged(async state => {
@@ -42,6 +41,16 @@ export default () => {
                     if (state) {
                         user.value = state
                     }
+                    auth.currentUser?.getIdToken().then(function (idToken) {
+                        var userStorageObject = {
+                            userId: user.value?.uid,
+                            bearerToken: idToken,
+                        }
+                        localStorage.setItem(
+                            'userInfo',
+                            JSON.stringify(userStorageObject),
+                        )
+                    })
                     resolve(true)
                 })
             } catch (error) {
@@ -76,9 +85,24 @@ export default () => {
         })
     }
 
+    // const getToken = () => {
+    //     var token: string = ''
+    //     auth.currentUser?.getIdToken().then(function (idToken) {
+    //         token = idToken
+    //     })
+    //     return token
+    // }
+
     const logout = () => {
         return signOut(auth)
     }
 
-    return { createUser, login, logout, restoreAuth, user: readonly(user) }
+    return {
+        createUser,
+        login,
+        logout,
+        restoreAuth,
+        // getToken,
+        user: readonly(user),
+    }
 }

@@ -1,4 +1,4 @@
-import CreateUser from '../interfaces/User'
+import { CreateUser } from '../interfaces/User'
 
 const baseUrl = 'http://localhost:3001'
 const cache = {}
