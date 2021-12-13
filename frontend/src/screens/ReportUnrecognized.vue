@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import useFirebase from '../composables/useFirebase'
 import router from '../bootstrap/router'
 import Header from '../components/Header.vue'
 import CustomSelect from '../components/CustomSelect.vue'

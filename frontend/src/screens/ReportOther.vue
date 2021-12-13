@@ -1,7 +1,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import useFirebase from '../composables/useFirebase'
+import router from '../bootstrap/router'
 import Header from '../components/Header.vue'
 import CustomSelect from '../components/CustomSelect.vue'
+import { NewOtherProblem } from '../interfaces/Problem'
+import { post } from '../composables/networkComposable'
 
 interface FileInfo {
     file: File
@@ -11,8 +15,6 @@ interface FileInfo {
 export default defineComponent({
     data() {
         return {
-            bikeNumber: null,
-            storageNumber: null,
             description: null,
             files: new Array<FileInfo>(),
         }
@@ -36,8 +38,32 @@ export default defineComponent({
 
             image.style.transform = 'translate(50px, 50px)'
         },
-        reportProblem() {
-            // Save problem to database
+        async reportProblem() {
+            const { uploadProblemImage } = useFirebase()
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
+            if (this.description !== null) {
+                try {
+                    const problem: NewOtherProblem = {
+                        category: 'otherProblem',
+                        description: this.description,
+                    }
+                    const res = await post(
+                        'problem',
+                        problem,
+                        userInfo.bearerToken,
+                    )
+                    console.log(res)
+                    this.files.forEach(image => {
+                        console.log(image.file)
+                        uploadProblemImage(res.id, image.file)
+                        router.push({ path: '/report' })
+                    })
+                } catch (error) {
+                    console.error(error)
+                }
+            } else {
+                console.error('fill in all the necessary fields!')
+            }
         },
     },
     watch: {

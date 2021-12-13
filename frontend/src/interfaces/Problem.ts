@@ -26,3 +26,8 @@ export interface NewBikeUnrecognizedProblem {
     category: string
     bikeId: number
 }
+
+export interface NewOtherProblem {
+    category: string
+    description: string
+}

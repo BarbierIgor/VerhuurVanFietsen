@@ -16,8 +16,8 @@ export class Problem {
   @Column('text')
   category!: string
 
-  @Column('text')
-  description!: string
+  @Column('text', { nullable: true })
+  description?: string
 
   @Column('date')
   date!: Date
