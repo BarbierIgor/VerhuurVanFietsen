@@ -76,7 +76,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/report/bike',
         component: () => import('../screens/ReportDefectBike.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/report/storage',
@@ -96,7 +96,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/problems',
         component: () => import('../screens/Problems.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/admin/problems/:id',
