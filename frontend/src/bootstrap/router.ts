@@ -66,7 +66,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/favorites',
         component: () => import('../screens/Favorites.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/wallet',
@@ -76,7 +76,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/report/bike',
         component: () => import('../screens/ReportDefectBike.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/report/storage',
@@ -96,7 +96,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/problems',
         component: () => import('../screens/Problems.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/admin/problems/:id',
@@ -107,6 +107,11 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/empty',
         component: () => import('../screens/Empty.vue'),
+    },
+    {
+        path: '/activity',
+        component: () => import('../screens/Activity.vue'),
+        meta: { requireAuth: false },
     },
 ]
 
