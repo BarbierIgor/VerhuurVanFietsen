@@ -87,7 +87,7 @@ export class HiredHistoryController
           .createQueryBuilder('bikeInUse')
           .leftJoinAndSelect('bikeInUse.bike', 'bike')
           .leftJoinAndSelect('bike.bikeStorage', 'bikeStorage')
-          .where('bikeInUse.uuid =:id', { id: bikeInUse })
+          .where('bikeInUse.id =:id', { id: bikeInUse })
           .getOne()
         const currentDateTime = new Date()
         var diffMs =

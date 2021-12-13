@@ -12,8 +12,8 @@ import { User } from './user'
 
 @Entity('review')
 export class Review {
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  uuid?: number
 
   @Column()
   rating!: number

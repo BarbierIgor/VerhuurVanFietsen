@@ -10,8 +10,8 @@ import { BikeStorage } from './bikeStorage'
 
 @Entity('problem')
 export class Problem {
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  id?: number
 
   @Column('text')
   category!: string
@@ -22,11 +22,11 @@ export class Problem {
   @Column('date')
   date!: Date
 
-  @ManyToOne(() => Bike, b => b.uuid)
+  @ManyToOne(() => Bike, b => b.id)
   @JoinColumn({ name: 'bikeId' })
   bike?: Bike
 
-  @ManyToOne(() => BikeStorage, bs => bs.uuid)
+  @ManyToOne(() => BikeStorage, bs => bs.id)
   @JoinColumn({ name: 'bikeStorageId' })
   bikeStorage?: BikeStorage
 }

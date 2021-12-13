@@ -14,8 +14,8 @@ import { Bike } from './bike'
 @Entity('bikeStorage')
 export class BikeStorage extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  id?: number
 
   @Field()
   @Column('text')

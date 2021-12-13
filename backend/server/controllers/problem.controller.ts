@@ -25,4 +25,16 @@ export class ProblemController
     this.router.post('', this.save)
     this.router.delete('/:id', this.remove)
   }
+  save = async (request: Request, response: Response, next: NextFunction) => {
+    const { description, category, bikeId, bikeStorageId } = request.body
+    const newProblem: Problem = {
+      description,
+      category,
+      bike: bikeId,
+      bikeStorage: bikeStorageId,
+      date: new Date(),
+    }
+    const item = await this.repository.save(newProblem)
+    response.send(item)
+  }
 }

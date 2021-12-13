@@ -20,6 +20,7 @@ export async function post(endpoint: string, data: any, token: string) {
     const res = await fetch(`${baseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

@@ -122,21 +122,16 @@ router.beforeEach(
         from: RouteLocationNormalized,
         next: NavigationGuardNext,
     ) => {
-        console.log(to.meta)
         // Check a property that you added to the route meta
         if (to.meta.requiresAuth && to.meta.requiresAuth == true) {
-            console.log('test2')
             // If user is allowed
             if (user.value) {
-                console.log('test3')
                 next()
                 // Else redirect to error or path, etc.
             } else {
-                console.log('test4')
                 next('/login')
             }
         } else {
-            console.log('test5')
             next()
         }
     },
