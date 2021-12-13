@@ -75,16 +75,16 @@ export default defineComponent({
 
 
 <template>
-    <div @click="$router.go(-1)" class="w-full h-full bg-dark-900 p-4 page">
+    <div class="w-full h-full bg-dark-900 p-4 page">
         <div class="w-full flex justify-between items-center">
-            <router-link to="/map" class="h-10 w-10 bg-dark-400 rounded-full mr-4 flex justify-center items-center">
+            <div @click="$router.go(-1)" class="h-10 w-10 bg-dark-400 rounded-full mr-4 flex justify-center items-center">
                 <svg class="w-2/4 h-2/4 -ml-1" viewBox="0 0 16.192 22.396">
                     <g transform="translate(-85.87 -25.598)">
                         <line x2="11.942" transform="translate(89.392 36.796) rotate(40)" fill="none" stroke="#2e353b" stroke-linecap="round" stroke-width="5"/>
                         <line x2="11.942" transform="translate(89.392 36.796) rotate(-40)" fill="none" stroke="#2e353b" stroke-linecap="round" stroke-width="5"/>
                     </g>
                 </svg>
-            </router-link>
+            </div>
             <SearchBar class="flex-grow" v-on:childToParent="onSearch"></SearchBar>
         </div>
 

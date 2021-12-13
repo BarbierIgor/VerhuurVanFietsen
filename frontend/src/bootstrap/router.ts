@@ -66,7 +66,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/favorites',
         component: () => import('../screens/Favorites.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/wallet',
@@ -107,6 +107,11 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/empty',
         component: () => import('../screens/Empty.vue'),
+    },
+    {
+        path: '/activity',
+        component: () => import('../screens/Activity.vue'),
+        meta: { requireAuth: false },
     },
 ]
 
