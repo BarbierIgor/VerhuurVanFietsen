@@ -2,6 +2,17 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    data() {
+        return {
+            isActivityActive: false,
+        }
+    },
+    methods: {
+        handleActivityStartStop() {
+            console.log('test')
+            this.isActivityActive = !this.isActivityActive;
+        },
+    },
     setup() {
         
     },
@@ -11,7 +22,7 @@ export default defineComponent({
 <template>
     <div class="relative h-screen w-screen">
         <!-- map -->
-        <div class="w-full h-full bg-dark-400 opacity-20">
+        <div class="w-full h-full bg-dark-900 opacity-20">
 
         </div>
 
@@ -23,7 +34,12 @@ export default defineComponent({
             "
         >
             <div class="flex items-center" >    
-                <div @click="$router.go(-1)" class="h-10 w-10 bg-dark-400 rounded-full mr-4 flex justify-center items-center">
+                <div 
+                    @click="$router.go(-1)" 
+                    class="h-10 w-10 bg-dark-400 rounded-full mr-4 flex justify-center items-center transition-all duration-500"
+                    :class="isActivityActive ? 'scale-0 opacity-0' : 'scale-100 opacity-100'"
+                >
+                    <!-- :class="isActivityActive ? '-translate-x-18' : 'translate-x-0'" -->
                     <svg class="w-2/4 h-2/4 -ml-1" viewBox="0 0 16.192 22.396">
                         <g transform="translate(-85.87 -25.598)">
                             <line x2="11.942" transform="translate(89.392 36.796) rotate(40)" fill="none" stroke="#2e353b" stroke-linecap="round" stroke-width="5"/>
@@ -31,7 +47,10 @@ export default defineComponent({
                         </g>
                     </svg>
                 </div>
-                <div class="h-10 w-20 bg-dark-400 rounded-full mr-4 flex justify-evenly items-center">
+                <div 
+                    class="h-10 w-20 bg-dark-400 rounded-full mr-4 flex justify-evenly items-center transition-transform duration-500"
+                    :class="isActivityActive ? '-translate-x-14' : 'translate-x-0'"    
+                >
                     <div>
                         <svg class="h-6 w-4" viewBox="0 0 13 25">
                             <g transform="translate(-2057 873)">
@@ -49,9 +68,9 @@ export default defineComponent({
             </div>
 
 
-            <div class="fixed bottom-6 left-0 w-full px-6 flex flex-col items-end">
+            <div class="fixed bottom-4 px-4 left-0 w-full flex flex-col items-end">
 
-                <div class="bg-dark-400 w-12 h-12 rounded-full flex justify-center items-center mb-6">
+                <div class="bg-dark-400 w-12 h-12 rounded-full flex justify-center items-center mb-4">
                     <svg class="w-2/5 h-2/5" viewBox="0 0 20.584 21.037">
                         <g transform="translate(1 1)">
                             <g transform="translate(3.31 3.536)" fill="none">
@@ -65,15 +84,79 @@ export default defineComponent({
                             <circle cx="3.167" cy="3.167" r="3.167" transform="translate(6.125 6.703)" fill="#2e353b"/>
                         </g>
                     </svg>
-
-
-                    <!-- <svg class="w-2/4 h-2/4" viewBox="0 0 19.047 25.773">
-                        <path d="M50.626,0A9.534,9.534,0,0,0,41.1,9.523c0,5.084,8.682,15.584,9.052,16.028a.614.614,0,0,0,.944,0c.37-.445,9.052-10.944,9.052-16.028A9.534,9.534,0,0,0,50.626,0Zm0,24.186c-.77-.961-2.369-3.009-3.952-5.351-2.842-4.2-4.344-7.424-4.344-9.311a8.3,8.3,0,1,1,16.592,0c0,1.888-1.5,5.107-4.344,9.311C53,21.176,51.4,23.224,50.626,24.186Z" transform="translate(-41.103)" fill="#2e353b"/>
-                        <path d="M100.824,57.5a5.285,5.285,0,1,0,4.824,5.265A5.065,5.065,0,0,0,100.824,57.5Zm0,9.245a4,4,0,1,1,3.647-3.981A3.829,3.829,0,0,1,100.824,66.745Z" transform="translate(-91.3 -52.935)" fill="#2e353b"/>
-                    </svg> -->
                 </div>
 
-                <button class="w-full h-12 px-6 bg-dark-success font-bold rounded-lg text-dark-400 text-md">START</button>
+                <!-- info -->
+                <div 
+                    class="
+                        h-32 w-full
+                        transition-all duration-500 ease-in-out
+                        grid gap-4
+                        grid-cols-3
+                    "
+                    :class="
+                        isActivityActive ?
+                        'max-h-32 opacity-100 pointer-events-auto mb-4' :
+                        'max-h-0 opacity-0 pointer-events-none mb-0'
+                    "
+                >
+                    <div 
+                        class="h-full rounded-lg bg-dark-400 flex flex-col justify-evenly items-center overflow-hidden
+                            transition duration-500
+                        "
+                        :class="isActivityActive ? 'opacity-100' : 'opacity-0' "
+                    >
+                        <svg class="h-6 w-6" viewBox="0 0 28 28">
+                            <path d="M371.189,361.709c-.144,0-.289-.009-.438-.009-.089,0-.177,0-.261,0q-.35.007-.7.028a14.027,14.027,0,0,0-12.406,9.787c-.075.233-.14.471-.2.708s-.112.471-.158.7a14,14,0,1,0,14.163-11.222Zm3.663,20.734a4.961,4.961,0,0,1-2.764,1.426v.559a.927.927,0,0,1-.927.927h-.5a.927.927,0,0,1-.927-.927v-.583a6.491,6.491,0,0,1-1.71-.578,4.237,4.237,0,0,1-1.6-1.533,4.876,4.876,0,0,1-.643-1.612.9.9,0,0,1,.1-.643.928.928,0,0,1,.648-.457l.5-.089a.8.8,0,0,1,.3,0,.922.922,0,0,1,.755.685,3.45,3.45,0,0,0,.569,1.286,2.97,2.97,0,0,0,2.344,1.086h0a3.27,3.27,0,0,0,.475-.037,2.691,2.691,0,0,0,2.354-2.778,2.345,2.345,0,0,0-.461-1.519,4.23,4.23,0,0,0-2.4-1.184c-.405-.093-.792-.182-1.174-.289a8.582,8.582,0,0,1-1.855-.746,3.672,3.672,0,0,1-1.459-1.463,4.346,4.346,0,0,1-.508-2.107c0-.093,0-.182,0-.27a5.558,5.558,0,0,1,.093-.76,4.362,4.362,0,0,1,.256-.825,4.254,4.254,0,0,1,1.123-1.529,4.174,4.174,0,0,1,1.16-.7,5.571,5.571,0,0,1,1.119-.326V366.7a.916.916,0,0,1,.061-.322.927.927,0,0,1,.7-.587,1.015,1.015,0,0,1,.168-.014h.531a.926.926,0,0,1,.9.923v.769a4.8,4.8,0,0,1,2.135.951,4.178,4.178,0,0,1,1.286,1.855.924.924,0,0,1-.736,1.221l-.489.075a.924.924,0,0,1-1.011-.615,2.423,2.423,0,0,0-.471-.848,2.538,2.538,0,0,0-1.906-.778,3.273,3.273,0,0,0-.68.075,3.115,3.115,0,0,0-.419.126,2.546,2.546,0,0,0-.974.652,2.354,2.354,0,0,0-.3.424,2.449,2.449,0,0,0,.21,2.605,2.8,2.8,0,0,0,1.063.764,9.153,9.153,0,0,0,1.818.5,8.96,8.96,0,0,1,1.85.508,4.878,4.878,0,0,1,1.487.979,4.009,4.009,0,0,1,.895,1.379,5.028,5.028,0,0,1-.974,5.1Z" transform="translate(-356.751 -361.7)" fill="#2e353b"/>
+                        </svg>
+
+                        <p class="text-lg font-semibold">
+                            €5.75
+                        </p>
+                    </div>
+
+                    <div 
+                        class="h-full rounded-lg bg-dark-400 flex flex-col justify-evenly items-center overflow-hidden
+                            transition duration-500
+                        "
+                        :class="isActivityActive ? 'opacity-100' : 'opacity-0' "
+                    >
+                        <p class="text-2xl font-semibold">
+                            17
+                        </p>
+
+                        <p class="text-md font-semibold">
+                            km/h
+                        </p>
+                    </div>
+
+                    <div 
+                        class="h-full rounded-lg bg-dark-400 flex flex-col justify-evenly items-center overflow-hidden
+                            transition duration-500
+                        "
+                        :class="isActivityActive ? 'opacity-100' : 'opacity-0' "
+                    >
+                        <svg class="h-6 w-6" viewBox="0 0 28 28">
+                            <path d="M371.189,361.709c-.144,0-.289-.009-.438-.009-.089,0-.177,0-.261,0q-.35.007-.7.028a14.027,14.027,0,0,0-12.406,9.787c-.075.233-.14.471-.2.708s-.112.471-.158.7a14,14,0,1,0,14.163-11.222Zm3.663,20.734a4.961,4.961,0,0,1-2.764,1.426v.559a.927.927,0,0,1-.927.927h-.5a.927.927,0,0,1-.927-.927v-.583a6.491,6.491,0,0,1-1.71-.578,4.237,4.237,0,0,1-1.6-1.533,4.876,4.876,0,0,1-.643-1.612.9.9,0,0,1,.1-.643.928.928,0,0,1,.648-.457l.5-.089a.8.8,0,0,1,.3,0,.922.922,0,0,1,.755.685,3.45,3.45,0,0,0,.569,1.286,2.97,2.97,0,0,0,2.344,1.086h0a3.27,3.27,0,0,0,.475-.037,2.691,2.691,0,0,0,2.354-2.778,2.345,2.345,0,0,0-.461-1.519,4.23,4.23,0,0,0-2.4-1.184c-.405-.093-.792-.182-1.174-.289a8.582,8.582,0,0,1-1.855-.746,3.672,3.672,0,0,1-1.459-1.463,4.346,4.346,0,0,1-.508-2.107c0-.093,0-.182,0-.27a5.558,5.558,0,0,1,.093-.76,4.362,4.362,0,0,1,.256-.825,4.254,4.254,0,0,1,1.123-1.529,4.174,4.174,0,0,1,1.16-.7,5.571,5.571,0,0,1,1.119-.326V366.7a.916.916,0,0,1,.061-.322.927.927,0,0,1,.7-.587,1.015,1.015,0,0,1,.168-.014h.531a.926.926,0,0,1,.9.923v.769a4.8,4.8,0,0,1,2.135.951,4.178,4.178,0,0,1,1.286,1.855.924.924,0,0,1-.736,1.221l-.489.075a.924.924,0,0,1-1.011-.615,2.423,2.423,0,0,0-.471-.848,2.538,2.538,0,0,0-1.906-.778,3.273,3.273,0,0,0-.68.075,3.115,3.115,0,0,0-.419.126,2.546,2.546,0,0,0-.974.652,2.354,2.354,0,0,0-.3.424,2.449,2.449,0,0,0,.21,2.605,2.8,2.8,0,0,0,1.063.764,9.153,9.153,0,0,0,1.818.5,8.96,8.96,0,0,1,1.85.508,4.878,4.878,0,0,1,1.487.979,4.009,4.009,0,0,1,.895,1.379,5.028,5.028,0,0,1-.974,5.1Z" transform="translate(-356.751 -361.7)" fill="#2e353b"/>
+                        </svg>
+
+                        <p class="text-lg font-semibold">
+                            €5.75
+                        </p>
+                    </div>
+                </div>
+
+                <button 
+                    ref="startStopButton"
+                    @click="handleActivityStartStop"
+                    class="
+                        w-full h-12 px-6 font-bold rounded-lg text-dark-400 text-md
+                        transition-colors duration-300
+                    "
+                    :class="isActivityActive ? 'bg-dark-accent' : 'bg-dark-success'"
+                >
+                    {{ isActivityActive ? 'STOP' : 'START'}}
+                </button>
             </div>
 
         </div>
