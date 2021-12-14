@@ -43,3 +43,15 @@ export async function put(endpoint: string, data: any, token: string) {
         .catch(error => console.error(error))
     return res
 }
+
+export async function remove(endpoint: string, token: string) {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(res => res.json())
+        .catch(error => console.error(error))
+    return res
+}

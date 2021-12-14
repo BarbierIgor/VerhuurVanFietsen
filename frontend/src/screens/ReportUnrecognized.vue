@@ -26,7 +26,7 @@ export default defineComponent({
             if (this.bikeNumber !== null) {
                 try {
                     const problem: NewBikeUnrecognizedProblem = {
-                        category: 'bikeUnrecognizedProblem',
+                        category: 'unrecognized bike',
                         bikeId: this.bikeNumber,
                     }
                     const res = await post(

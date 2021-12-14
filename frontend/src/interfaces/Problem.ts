@@ -8,6 +8,7 @@ export interface Problem {
     date: Date
     bike: Bike
     bikeStorage: BikeStorage
+    imageUrls: Array<string>
 }
 
 export interface NewBikeProblem {
@@ -30,4 +31,8 @@ export interface NewBikeUnrecognizedProblem {
 export interface NewOtherProblem {
     category: string
     description: string
+}
+
+export interface AddImageProblem {
+    imageUrl: string
 }

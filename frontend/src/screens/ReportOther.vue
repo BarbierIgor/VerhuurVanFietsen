@@ -44,7 +44,7 @@ export default defineComponent({
             if (this.description !== null) {
                 try {
                     const problem: NewOtherProblem = {
-                        category: 'otherProblem',
+                        category: 'other',
                         description: this.description,
                     }
                     const res = await post(
@@ -56,8 +56,8 @@ export default defineComponent({
                     this.files.forEach(image => {
                         console.log(image.file)
                         uploadProblemImage(res.id, image.file)
-                        router.push({ path: '/report' })
                     })
+                    router.push({ path: '/report' })
                 } catch (error) {
                     console.error(error)
                 }

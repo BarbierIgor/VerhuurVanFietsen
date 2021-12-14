@@ -46,7 +46,7 @@ export default defineComponent({
             if (this.bikeStorageNumber !== null && this.description !== null) {
                 try {
                     const problem: NewBikeStorageProblem = {
-                        category: 'bikeStorageProblem',
+                        category: 'bikestorage',
                         description: this.description,
                         bikeStorageId: this.bikeStorageNumber,
                     }

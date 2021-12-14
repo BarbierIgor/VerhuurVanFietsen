@@ -22,6 +22,9 @@ export class Problem {
   @Column('date')
   date!: Date
 
+  @Column('simple-array', { nullable: true })
+  imageUrls?: string[]
+
   @ManyToOne(() => Bike, b => b.id)
   @JoinColumn({ name: 'bikeId' })
   bike?: Bike

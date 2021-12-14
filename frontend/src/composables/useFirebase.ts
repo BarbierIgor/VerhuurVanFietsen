@@ -17,10 +17,13 @@ import {
     ref as refFirebase,
     uploadBytesResumable,
     getDownloadURL,
+    listAll,
+    deleteObject,
 } from 'firebase/storage'
 import { Ref, ref, readonly } from 'vue'
+import { AddImageProblem } from '../interfaces/Problem'
 import { CreateUser } from '../interfaces/User'
-import { post } from './networkComposable'
+import { post, put } from './networkComposable'
 
 const firebaseConfig = {
     apiKey: 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI',
@@ -176,10 +179,58 @@ export default () => {
             () => {
                 // Upload completed successfully, now we can get the download URL
                 getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                    const userInfo = JSON.parse(
+                        localStorage.getItem('userInfo') as any,
+                    )
+                    const imageUrl: AddImageProblem = { imageUrl: downloadURL }
                     console.log('File available at', downloadURL)
+                    put(
+                        `problem/addimage/${problemId}`,
+                        imageUrl,
+                        userInfo.bearerToken,
+                    )
                 })
             },
         )
+    }
+
+    const deleteProblemImage = (problemId: number) => {
+        const storage = getStorage()
+        // Create a reference to the file to delete
+        const listRef = refFirebase(storage, `problemImages/${problemId}`)
+
+        // Find all the prefixes and items.
+        listAll(listRef)
+            .then(res => {
+                res.items.forEach(item => {
+                    console.log(item.fullPath)
+                    const imageRef = refFirebase(storage, item.fullPath)
+                    deleteObject(imageRef)
+                        .then(() => {
+                            // File deleted successfully
+                            console.log('delete succesfull')
+                        })
+                        .catch(error => {
+                            // Uh-oh, an error occurred!
+                            console.error('delete unsuccesfull')
+                        })
+                })
+            })
+            .catch(error => {
+                // Uh-oh, an error occurred!
+                console.error(error)
+            })
+
+        // Delete the file
+        // deleteObject(desertRef)
+        //     .then(() => {
+        //         // File deleted successfully
+        //         console.log('delete succesfull')
+        //     })
+        //     .catch(error => {
+        //         // Uh-oh, an error occurred!
+        //         console.error('delete unsuccesfull')
+        //     })
     }
 
     return {
@@ -192,6 +243,7 @@ export default () => {
         editEmail,
         editPassword,
         uploadProblemImage,
+        deleteProblemImage,
         user: readonly(user),
     }
 }
