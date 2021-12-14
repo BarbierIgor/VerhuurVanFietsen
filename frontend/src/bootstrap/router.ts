@@ -113,6 +113,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../screens/Activity.vue'),
         meta: { requireAuth: false },
     },
+    {
+        path: '/bike/:id',
+        component: () => import('../screens/BikeDetails.vue'),
+        meta: { requireAuth: false },
+    },
 ]
 
 const router: Router = createRouter({

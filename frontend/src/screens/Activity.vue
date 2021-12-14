@@ -68,9 +68,9 @@ export default defineComponent({
             </div>
 
 
-            <div class="fixed bottom-6 left-0 w-full px-6 flex flex-col items-end">
+            <div class="fixed bottom-4 px-4 left-0 w-full flex flex-col items-end">
 
-                <div class="bg-dark-400 w-12 h-12 rounded-full flex justify-center items-center mb-6">
+                <div class="bg-dark-400 w-12 h-12 rounded-full flex justify-center items-center mb-4">
                     <svg class="w-2/5 h-2/5" viewBox="0 0 20.584 21.037">
                         <g transform="translate(1 1)">
                             <g transform="translate(3.31 3.536)" fill="none">
