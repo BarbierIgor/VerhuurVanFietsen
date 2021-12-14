@@ -39,14 +39,13 @@ export default defineComponent({
         }
 
         // const bikeStorages: BikeStorage[] = []
-        const getToken = async () => {
+        const getData = async () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
-            console.log('token' + userInfo.bearerToken)
             data = await get('bikestorage/all', userInfo.bearerToken)
             console.log(bikeStorages)
             bikeStorages.value = data
         }
-        getToken()
+        getData()
         return { onSearch, handleScanClick, handleMapsClick, bikeStorages }
     },
 

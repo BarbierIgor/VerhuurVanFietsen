@@ -18,7 +18,7 @@ export default defineComponent({
 <template>
     <li
         v-if="$props.bikeStorage"
-        :key="`${$props.bikeStorage.uuid}`"
+        :key="`${$props.bikeStorage.id}`"
         class="flex h-28 justify-between mt-8 first:mt-0"
     >
         <div class="bg-dark-400 rounded-2xl h-30 w-24">
@@ -67,11 +67,11 @@ export default defineComponent({
             <input
                 type="checkbox"
                 hidden
-                @change="handleFavorite($event, $props.bikeStorage.uuid)"
-                :id="`checkbox${$props.bikeStorage.uuid}`"
+                @change="handleFavorite($event, $props.bikeStorage.id)"
+                :id="`checkbox${$props.bikeStorage.id}`"
                 :checked="Boolean(true)"
             />
-            <label :for="`checkbox${$props.bikeStorage.uuid}`">
+            <label :for="`checkbox${$props.bikeStorage.id}`">
                 <svg class="h-full w-6" viewBox="0 0 24 21.208">
                     <g transform="translate(0 -27.5)">
                         <path

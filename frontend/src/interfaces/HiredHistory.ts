@@ -2,7 +2,7 @@ import Bike from './Bike'
 import { User } from './User'
 
 export default interface HiredHistory {
-    uuid: string
+    id: number
     bike: Bike
     timeHiredStart: Date
     timeHiredEnd: Date
