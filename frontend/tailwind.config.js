@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         dark: {
+          'success': '#4691E6',
           'accent': '#E64650',
           '400': '#DEDEDE',
           '600': '#86898c',
