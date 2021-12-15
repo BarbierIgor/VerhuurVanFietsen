@@ -1,0 +1,35 @@
+[
+    {
+      "type": "electric",
+      "inStorage": 1,
+      "location": {
+        "lat": 50.855621,
+        "long": 2.72718
+      }
+    },
+    {
+      "type": "non-electric",
+      "inStorage": 1,
+      "location": {
+        "lat": 50.855621,
+        "long": 2.72718
+      }
+    },
+    {
+      "type": "electric",
+      "inStorage": 0,
+      "location": {
+        "lat": 49.855621,
+        "long": 2.52718
+      }
+    },
+    {
+      "type": "non-electric",
+      "inStorage": 1,
+      "location": {
+        "lat": 48.855621,
+        "long": 2.72718
+      }
+    }
+]
+  
