@@ -40,6 +40,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/bikedetails',
+        name: 'BikeDetails',
         component: () => import('../screens/BikeDetails.vue'),
         meta: { requiresAuth: true },
     },
@@ -66,7 +67,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/favorites',
         component: () => import('../screens/Favorites.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/wallet',
@@ -76,7 +77,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/report/bike',
         component: () => import('../screens/ReportDefectBike.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/report/storage',
@@ -96,7 +97,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/problems',
         component: () => import('../screens/Problems.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/admin/problems/:id',
@@ -111,12 +112,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/activity',
         component: () => import('../screens/Activity.vue'),
-        meta: { requireAuth: false },
-    },
-    {
-        path: '/bike/:id',
-        component: () => import('../screens/BikeDetails.vue'),
-        meta: { requireAuth: false },
+        meta: { requireAuth: true },
     },
 ]
 
