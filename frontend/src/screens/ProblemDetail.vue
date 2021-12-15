@@ -57,7 +57,6 @@ export default defineComponent({
         }
 
         getData()
-        // getImages()
         return { problem, problemSolved }
     },
     components: { Header, ImageCarousel },
