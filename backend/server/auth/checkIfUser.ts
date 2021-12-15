@@ -11,7 +11,8 @@ export const checkIfUser = async (request: Request) => {
   if (
     item?.uuid === request.params.id ||
     item?.uuid === request.body.user ||
-    item?.uuid === request.body.id
+    item?.uuid === request.body.id ||
+    item?.uuid === request.body.uuid
   ) {
     return true
   } else {

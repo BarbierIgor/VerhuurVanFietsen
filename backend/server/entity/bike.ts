@@ -16,8 +16,8 @@ import { BikeStorage } from './bikeStorage'
 @Entity('bike')
 export class Bike extends BaseEntity {
   @Field(() => ID, { nullable: true })
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  id?: number
 
   @Field()
   @Column('text')
@@ -32,7 +32,7 @@ export class Bike extends BaseEntity {
   location!: Record<string, string>
 
   @Field(type => BikeStorage)
-  @ManyToOne(() => BikeStorage, bs => bs.uuid)
+  @ManyToOne(() => BikeStorage, bs => bs.id)
   @JoinColumn({ name: 'bikeStorageId' })
   bikeStorage!: BikeStorage
 }

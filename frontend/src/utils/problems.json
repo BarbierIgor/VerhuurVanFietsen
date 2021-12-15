@@ -1,0 +1,78 @@
+[
+    {
+        "id": 12345,
+        "adres": "Stationstraat 123",
+        "distance": 1.2, 
+        "category": "Defect Bike 1",
+        "brokenPart": "Wheel",
+        "description": "Description",
+        "date": "26/11/2021",
+        "bikeNumber": 123456,
+        "images": [
+            "https://images.immediate.co.uk/production/volatile/sites/21/2019/11/Cannondale-CAAD13-Force-eTap-AXS-01-eea8773.jpg?quality=90&resize=620,413",
+            "https://www.fietsenplaats.nl/image/cache/data/Spirit-Regular/spirit-regular-man-mat-zwart-2836-2017-1500x1000.jpg",
+            "https://novusbike.com/files/bilder/bike/novus-bike-rot-technology.jpg",
+            "https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Woman-riding-bycicle-at-the-park-1296x728-header.jpg?w=1155&h=1528",
+            "https://res.cloudinary.com/whistler/image/upload/w_500,c_scale,dpr_3.0,q_auto/v1/s3/images/header/recreational-biking.jpg",
+            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/image-from-ios-1570711663.jpg?crop=1.00xw:0.531xh;0,0.392xh&resize=1200:*",
+            "https://www.bike.brussels/uploads/images/_960xAUTO_crop_center-center_none/BIKE_FOR_BRUSSELS1260-1-min.jpg"
+        ]
+    },
+    {
+        "id": 89765,
+        "adres": "Stationstraat 123",
+        "distance": 1.2, 
+        "category": "Defect Bike 2",
+        "brokenPart": "Wheel",
+        "description": "Description",
+        "date": "26/11/2021",
+        "bikeNumber": 123456,
+        "images": [
+            "1600x1067_US_B_Blue_ANGLE.jpg",
+            "2021_FUJI_AURIC_275_13_SAGE_BLACK.jpg",
+            "2021-specialized-s-works-tarmac-sl7-sram-red-etap-axs.jpg",
+            "Green-Fixie-Karin-Bijlsma-Acrylglas-print.jpg",
+            "LEKKER_Bikes_Jordaan_eBike_Denim_Blue.png",
+            "S1_Tribute_Front_Right.0.jpg",
+            "Switchback-FS-160-Elite-Complete-Coil.jpg"
+        ]
+    },
+    {
+        "id": 16554,
+        "adres": "Stationstraat 123",
+        "distance": 1.2, 
+        "category": "Defect Bike 3",
+        "brokenPart": "Wheel",
+        "description": "Description",
+        "date": "26/11/2021",
+        "bikeNumber": 123456,
+        "images": [
+            "1600x1067_US_B_Blue_ANGLE.jpg",
+            "2021_FUJI_AURIC_275_13_SAGE_BLACK.jpg",
+            "2021-specialized-s-works-tarmac-sl7-sram-red-etap-axs.jpg",
+            "Green-Fixie-Karin-Bijlsma-Acrylglas-print.jpg",
+            "LEKKER_Bikes_Jordaan_eBike_Denim_Blue.png",
+            "S1_Tribute_Front_Right.0.jpg",
+            "Switchback-FS-160-Elite-Complete-Coil.jpg"
+        ]
+    },
+    {
+        "id": 98755,
+        "adres": "Stationstraat 123",
+        "distance": 1.2, 
+        "category": "Defect Bike 4",
+        "brokenPart": "Wheel",
+        "description": "Description",
+        "date": "26/11/2021",
+        "bikeNumber": 123456,
+        "images": [
+            "1600x1067_US_B_Blue_ANGLE.jpg",
+            "2021_FUJI_AURIC_275_13_SAGE_BLACK.jpg",
+            "2021-specialized-s-works-tarmac-sl7-sram-red-etap-axs.jpg",
+            "Green-Fixie-Karin-Bijlsma-Acrylglas-print.jpg",
+            "LEKKER_Bikes_Jordaan_eBike_Denim_Blue.png",
+            "S1_Tribute_Front_Right.0.jpg",
+            "Switchback-FS-160-Elite-Complete-Coil.jpg"
+        ]
+    }
+]

@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-dark-900;
+    }
+
+    input:focus {
+        @apply outline-none;
+    }
+
+    .custom-radiobuttons input[type="radio"]:checked + label {
+        @apply text-dark-400;
+    }
+
+    .favorite-checkbox input[type=checkbox]:checked + label svg path {
+        @apply text-dark-accent;
+    }
+
+    .toggle-switch input[type=checkbox]:checked + label {
+        @apply bg-dark-accent;
+    }
+    .toggle-switch input[type=checkbox]:checked + label span {
+        transform: translate(120%);
+    }
+
+    .selected-image {
+        width: 100%;
+        padding-bottom: 100%;
+    }
+
+    input[type=password]::-ms-reveal,
+    input[type=password]::-ms-clear
+    {
+        @apply hidden;
+    }
+}

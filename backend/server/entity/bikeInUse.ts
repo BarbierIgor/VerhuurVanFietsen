@@ -11,8 +11,8 @@ import { User } from './user'
 
 @Entity('bikeInUse')
 export class BikeInUse {
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  id?: number
 
   @OneToOne(() => Bike)
   @JoinColumn({ name: 'bikeId' })
