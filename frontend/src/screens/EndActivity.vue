@@ -9,9 +9,6 @@ export default defineComponent({
             paymentMethod: 0,
         }
     },
-    mounted() {
-        this.setCheckedItem()
-    },
     methods: {
         handleRating(index: number) {
             console.log(index)
