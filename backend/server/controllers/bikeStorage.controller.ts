@@ -58,7 +58,7 @@ export class BikeStorageController
       const bikeStorage = await this.repository
         .createQueryBuilder('bikeStorage')
         .leftJoinAndSelect('bikeStorage.bikes', 'bike')
-        .where('bikeStorage.uuid = :id', { id: request.params.id })
+        .where('bikeStorage.id = :id', { id: request.params.id })
         .getOne()
       if (bikeStorage) {
         bikeStorage?.bikes?.forEach(item => {

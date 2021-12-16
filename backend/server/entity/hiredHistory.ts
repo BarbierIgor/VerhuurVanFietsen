@@ -11,8 +11,8 @@ import { User } from './user'
 
 @Entity('hiredHistory')
 export class HiredHistory {
-  @PrimaryGeneratedColumn('uuid')
-  uuid?: string
+  @PrimaryGeneratedColumn('increment')
+  uuid?: number
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })

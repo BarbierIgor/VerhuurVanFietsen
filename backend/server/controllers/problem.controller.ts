@@ -24,5 +24,77 @@ export class ProblemController
     this.router.get('/:id', this.one)
     this.router.post('', this.save)
     this.router.delete('/:id', this.remove)
+    this.router.put('/addimage/:id', this.addImageUrl)
+  }
+
+  all = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const problems = await this.repository
+        .createQueryBuilder('problems')
+        .leftJoinAndSelect('problems.bike', 'bike')
+        .leftJoinAndSelect('problems.bikeStorage', 'bikeStorage')
+        .getMany()
+      response.send(problems)
+    } catch (error: any) {
+      next(error)
+    }
+  }
+
+  one = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const item = await this.repository
+        .createQueryBuilder('problem')
+        .leftJoinAndSelect('problem.bike', 'bike')
+        .leftJoinAndSelect('problem.bikeStorage', 'bikeStorage')
+        .where('problem.id = :id', { id: request.params.id })
+        .getOne()
+      if (item) {
+        response.send(item)
+      } else {
+        next(
+          new HttpException(404, `No item found with id: ${request.params.id}`),
+        )
+      }
+    } catch (error: any) {
+      next(error)
+    }
+  }
+
+  save = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { description, category, bikeId, bikeStorageId } = request.body
+      const newProblem: Problem = {
+        description: description,
+        category,
+        bike: bikeId,
+        bikeStorage: bikeStorageId,
+        date: new Date(),
+        imageUrls: new Array<string>(),
+      }
+      const item = await this.repository.save(newProblem)
+      response.send(item)
+    } catch (error: any) {
+      error.status = 400
+      next(error)
+    }
+  }
+
+  addImageUrl = async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { imageUrl } = request.body
+      const item: any = await this.repository.findOne(request.params.id)
+      item.imageUrls.push(imageUrl)
+
+      const result = await this.repository.save(item)
+      return response.send(result)
+    } catch (error: any) {
+      console.log(error)
+      error.status = 400
+      next(error)
+    }
   }
 }

@@ -40,6 +40,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/bikedetails',
+        name: 'BikeDetails',
         component: () => import('../screens/BikeDetails.vue'),
         meta: { requiresAuth: true },
     },
@@ -66,7 +67,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/favorites',
         component: () => import('../screens/Favorites.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/wallet',
@@ -76,7 +77,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/report/bike',
         component: () => import('../screens/ReportDefectBike.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/report/storage',
@@ -96,7 +97,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/admin/problems',
         component: () => import('../screens/Problems.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/admin/problems/:id',
@@ -111,6 +112,11 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/activity',
         component: () => import('../screens/Activity.vue'),
+        meta: { requireAuth: true },
+    },
+    {
+        path: '/activity/finish',
+        component: () => import('../screens/EndActivity.vue'),
         meta: { requireAuth: false },
     },
     {
@@ -132,21 +138,16 @@ router.beforeEach(
         from: RouteLocationNormalized,
         next: NavigationGuardNext,
     ) => {
-        console.log(to.meta)
         // Check a property that you added to the route meta
         if (to.meta.requiresAuth && to.meta.requiresAuth == true) {
-            console.log('test2')
             // If user is allowed
             if (user.value) {
-                console.log('test3')
                 next()
                 // Else redirect to error or path, etc.
             } else {
-                console.log('test4')
                 next('/login')
             }
         } else {
-            console.log('test5')
             next()
         }
     },

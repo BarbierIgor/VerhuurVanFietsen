@@ -1,42 +1,42 @@
 [
   {
-    "uuid": "65e9562b-5ce5-4bd2-b7bd-4b32dc058636",
+    "id": 1,
     "type": "electric",
     "inStorage": 1,
     "location": {
       "lat": 50.855621,
       "long": 2.72718
     },
-    "bikeStorage": "8eab1d85-97c7-4f25-ada2-8b0acf0f4c8b"
+    "bikeStorage": 1
   },
   {
-    "uuid": "8a2e7aeb-d6cd-4fa2-85e6-a570dd39bf81",
+    "id": 2,
     "type": "nonElectric",
     "inStorage": 1,
     "location": {
       "lat": 50.855621,
       "long": 2.72718
     },
-    "bikeStorage": "8eab1d85-97c7-4f25-ada2-8b0acf0f4c8b"
+    "bikeStorage": 1
   },
   {
-    "uuid": "3c2a5e62-41de-4947-aa45-c60a027a1c9d",
+    "id": 3,
     "type": "electric",
     "inStorage": 0,
     "location": {
       "lat": 49.855621,
       "long": 2.52718
     },
-    "bikeStorage": "ecd5c56e-d7aa-4155-8b27-7bba1e0b3f14"
+    "bikeStorage": 2
   },
   {
-    "uuid": "40501da2-edb6-4369-a7e1-f8f4dd7a9a30",
+    "id": 4,
     "type": "nonElectric",
     "inStorage": 1,
     "location": {
       "lat": 48.855621,
       "long": 2.72718
     },
-    "bikeStorage": "ef10eed8-46ef-11ec-81d3-0242ac130003"
+    "bikeStorage": 3
   }
 ]

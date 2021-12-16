@@ -75,25 +75,14 @@ export class BikeInUseController
 
   save = async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const isUser = await checkIfUser(request)
-
-      if (isUser) {
-        const { bike, user } = request.body
-        const newItem: BikeInUse = {
-          bike,
-          user,
-          timeHired: new Date(),
-        }
-        const item = await this.repository.save(newItem)
-        response.send(item)
-      } else {
-        next(
-          new HttpException(
-            403,
-            'You do not have the permission to post for other accounts',
-          ),
-        )
+      const { bike, user } = request.body
+      const newItem: BikeInUse = {
+        bike,
+        user,
+        timeHired: new Date(),
       }
+      const item = await this.repository.save(newItem)
+      response.send(item)
     } catch (error: any) {
       error.status = 400
       next(error)
