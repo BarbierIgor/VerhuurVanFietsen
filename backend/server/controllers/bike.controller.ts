@@ -42,7 +42,7 @@ export class BikeController
       const item = await this.repository
         .createQueryBuilder('bike')
         .leftJoinAndSelect('bike.bikeStorage', 'bikeStorage')
-        .where('bike.uuid = :id', { id: request.params.id })
+        .where('bike.id = :id', { id: request.params.id })
         .getOne()
       if (item) {
         response.send(item)

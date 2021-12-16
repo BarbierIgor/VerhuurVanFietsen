@@ -2,7 +2,7 @@ import HiredHistory from './HiredHistory'
 import { User } from './User'
 
 export default interface Review {
-    uuid: string
+    id: string
     rating: number
     description: string
     hiredhistory: HiredHistory

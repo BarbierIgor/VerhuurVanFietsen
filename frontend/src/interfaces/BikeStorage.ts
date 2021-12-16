@@ -2,7 +2,7 @@ import Bike from './Bike'
 import Prices from './Prices'
 
 export default interface BikeStorage {
-    uuid: string
+    id: number
     city: string
     street: string
     houseNumber: number

@@ -20,6 +20,7 @@ export async function post(endpoint: string, data: any, token: string) {
     const res = await fetch(`${baseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
@@ -37,6 +38,18 @@ export async function put(endpoint: string, data: any, token: string) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .catch(error => console.error(error))
+    return res
+}
+
+export async function remove(endpoint: string, token: string) {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     })
         .then(res => res.json())
         .catch(error => console.error(error))
