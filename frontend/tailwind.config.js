@@ -14,6 +14,7 @@ module.exports = {
         dark: {
           'success': '#4691E6',
           'accent': '#E64650',
+          'accent-lighter': 'rgba(230, 70, 80, 0.3)',
           '400': '#DEDEDE',
           '600': '#86898c',
           '700': '#2E353B',
