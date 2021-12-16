@@ -33,6 +33,10 @@ export class BikeStorage extends BaseEntity {
   @Column('simple-json')
   prices!: Record<string, string>
 
+  @Field(() => GraphQLJSON)
+  @Column('simple-json')
+  location!: Record<string, string>
+
   @Field(() => Boolean, { nullable: true })
   bikesAvailable?: number
 

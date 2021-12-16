@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, Router } from 'express'
+import { checkIfAdmin } from '../auth/checkIfAdmin'
 import { Problem } from '../entity/problem'
 import HttpException from '../exceptions/httpException'
 import { CrudController, IController, ICrudController } from './crud.controller'
@@ -94,6 +95,32 @@ export class ProblemController
     } catch (error: any) {
       console.log(error)
       error.status = 400
+      next(error)
+    }
+  }
+
+  remove = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const isAdmin = await checkIfAdmin(request)
+      if (isAdmin) {
+        const itemToRemove: any = await this.repository.findOne(
+          request.params.id,
+        )
+        await this.repository.remove(itemToRemove)
+        response.send({
+          message: 'Successfully removed',
+          datetime: Date.now().toString(),
+        })
+      } else {
+        next(
+          new HttpException(
+            403,
+            'You do not have the permission to delete a problem',
+          ),
+        )
+      }
+    } catch (error: any) {
+      error.status = 404
       next(error)
     }
   }
