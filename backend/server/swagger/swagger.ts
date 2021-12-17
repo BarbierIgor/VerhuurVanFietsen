@@ -1,4 +1,4 @@
-import { getAllBikes } from './bike.swagger'
+// import { getAllBikes } from './bike.swagger'
 
 export const swaggerDocument = {
   openapi: '3.0.0',
@@ -10,6 +10,6 @@ export const swaggerDocument = {
   },
   tags: [],
   paths: {
-    '/api/v1/destination/all': { get: getAllBikes },
+    // '/api/v1/destination/all': { get: getAllBikes },
   },
 }

@@ -2,27 +2,37 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Seans-TypeScript-NodeJS-CRUD-REST-API-Boilerplate",
-    "description": "A minimal and easy to follow example of what you need to create a CRUD style API in NodeJs using TypeScript",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
+    "title": "Documentation VerhuurVanFietsen",
+    "description": "A full documentation of the api VerhuurVanFietsen"
   },
-  "servers": [
-    {
-      "url": "/",
-      "description": "Local Dev, or from Heroku"
-    },
-    {
-      "url": "/api/",
-      "description": "With docker-compose and nginx proxy"
-    }
-  ],
   "tags": [
     {
-      "name": "Bikes",
-      "description": "API for bikes in the system"
+      "name": "Bike",
+      "description": "Routes for bikes in the system"
+    },
+    {
+      "name": "BikeStorage",
+      "description": "Routes for bikeStorages in the system"
+    },
+    {
+      "name": "BikeInUse",
+      "description": "Routes for bikeInUse in system"
+    },
+    {
+      "name": "HiredHistory",
+      "description": "Routes for hiredHistory in system"
+    },
+    {
+      "name": "Problem",
+      "description": "Routes for problem items in system"
+    },
+    {
+      "name": "Review",
+      "description": "Routes for review items in system"
+    },
+    {
+      "name": "User",
+      "description": "Routes for user items in system"
     }
   ],
   "consumes": ["application/json"],
@@ -30,7 +40,7 @@
   "paths": {
     "/bike/all": {
       "get": {
-        "tags": ["Bikes"],
+        "tags": ["Bike"],
         "summary": "Get all bikes in system",
         "responses": {
           "200": {
@@ -38,13 +48,16 @@
             "schema": {
               "$ref": "#/definitions/Bikes"
             }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/bike": {
       "post": {
-        "tags": ["Bikes"],
+        "tags": ["Bike"],
         "summary": "Create a new bike in system",
         "requestBody": {
           "description": "Bike Object",
@@ -71,25 +84,16 @@
         }
       }
     },
-    "/cats/{id}": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "description": "ID of the cat that we want to match",
-          "type": "string"
-        }
-      ],
+    "/bike/{id}": {
       "get": {
-        "tags": ["Cats"],
-        "summary": "Get cat with given ID",
+        "tags": ["Bike"],
+        "summary": "Get one bikes in system",
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
-            "description": "Cat with id",
+            "description": "Find Bike with id",
             "schema": {
               "$ref": "#/definitions/id"
             }
@@ -99,63 +103,64 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Cat"
+              "$ref": "#/definitions/Bike"
             }
           },
           "404": {
-            "description": "Failed. Cat not found."
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
       "put": {
-        "summary": "Update cat with given ID",
-        "tags": ["Cats"],
+        "tags": ["Bike"],
+        "summary": "Update a bike in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Edit bike with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
         "requestBody": {
-          "description": "Cat Object",
+          "description": "Bike Object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/Cat"
+                "$ref": "#/definitions/Bike"
               }
             }
           }
         },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "Cat with new values of properties",
-            "schema": {
-              "$ref": "#/definitions/id"
-            }
-          }
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Cat"
+              "$ref": "#/definitions/id"
             }
           },
           "400": {
             "description": "Failed. Bad post data."
-          },
-          "404": {
-            "description": "Failed. Cat not found."
           }
         }
       },
       "delete": {
-        "summary": "Delete cat with given ID",
-        "tags": ["Cats"],
+        "summary": "Delete bike with given id",
+        "tags": ["Bike"],
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
-            "description": "Delete Cat with id",
+            "description": "Delete Bike with id",
             "schema": {
               "$ref": "#/definitions/id"
             }
@@ -169,7 +174,834 @@
             }
           },
           "404": {
-            "description": "Failed. Cat not found."
+            "description": "Bike with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/bike/type/{type}": {
+      "get": {
+        "tags": ["Bike"],
+        "summary": "Get bikes in system with by type",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "description": "Find Bike with id",
+            "schema": {
+              "$ref": "#/definitions/type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Bike"
+            }
+          },
+          "404": {
+            "description": "Item with 'type' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/biketorage/all": {
+      "get": {
+        "tags": ["BikeStorage"],
+        "summary": "Get all bike storages in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeStorages"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/bikestorage": {
+      "post": {
+        "tags": ["BikeStorage"],
+        "summary": "Create a new bikeStorage in system",
+        "requestBody": {
+          "description": "BikeStorage Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/BikeStorage"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/bikestorage/{id}": {
+      "get": {
+        "tags": ["BikeStorage"],
+        "summary": "Get one bikeStorage in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find BikeStorage with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeStorage"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete bikeStorage with given id",
+        "tags": ["BikeStorage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete BikeStorage with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "404": {
+            "description": "BikeStorage with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/bikeinuse/all": {
+      "get": {
+        "tags": ["BikeInUse"],
+        "summary": "Get all bikeInUse items in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeInUse"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/bikeinuse": {
+      "post": {
+        "tags": ["BikeInUse"],
+        "summary": "Create a new bikeInUse item in system",
+        "requestBody": {
+          "description": "BikeInUse Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/BikeInUse"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/bikeinuse/{id}": {
+      "get": {
+        "tags": ["BikeInUse"],
+        "summary": "Get one bikeInUse item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find BikeInUse with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeInUse"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete bikeInUse item with given id",
+        "tags": ["BikeInUse"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete BikeInUse item with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "404": {
+            "description": "BikeStorage with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/bikeinuse/user/{id}": {
+      "get": {
+        "tags": ["BikeInUse"],
+        "summary": "Get one bikeInUse item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find BikeInUse with userid",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeInUse"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/hiredhistory/all": {
+      "get": {
+        "tags": ["HiredHistory"],
+        "summary": "Get all bikeInUse items in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeInUse"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/hiredhistory": {
+      "post": {
+        "tags": ["HiredHistory"],
+        "summary": "Create a new hiredhistory item in system",
+        "requestBody": {
+          "description": "BikeInUse Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/HiredHistoryPost"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "403": {
+            "description": "You are not authorized to post for other then your own account"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/hiredhistory/{id}": {
+      "get": {
+        "tags": ["HiredHistory"],
+        "summary": "Get one hiredHistory item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find hiredHistory with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/HiredHistory"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["HiredHistory"],
+        "summary": "Update a hiredHistory in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Edit hiredHistory with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Bike Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/HiredHistory"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/hiredhistory/user/{id}": {
+      "get": {
+        "tags": ["HiredHistory"],
+        "summary": "Get one hiredhistory item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find hiredhistory with userid",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BikeInUse"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/problem/all": {
+      "get": {
+        "tags": ["Problem"],
+        "summary": "Get all Problem items in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/problem": {
+      "post": {
+        "tags": ["Problem"],
+        "summary": "Create a new Problem item in system",
+        "requestBody": {
+          "description": "Problem Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Problem"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/problem/{id}": {
+      "get": {
+        "tags": ["Problem"],
+        "summary": "Get one problem item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find problem with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete problem item with given id",
+        "tags": ["Problem"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete roblem item with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "404": {
+            "description": "BikeStorage with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/problem/addimage/{id}": {
+      "put": {
+        "tags": ["Problem"],
+        "summary": "Update a problem in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Edit problem with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Problem Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ProblemAddImage"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/review/all": {
+      "get": {
+        "tags": ["Review"],
+        "summary": "Get all review items in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/review": {
+      "post": {
+        "tags": ["Review"],
+        "summary": "Create a new review item in system",
+        "requestBody": {
+          "description": "review Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Review"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/review/{id}": {
+      "get": {
+        "tags": ["Review"],
+        "summary": "Get one review item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find review with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete review item with given id",
+        "tags": ["Review"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete review item with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "404": {
+            "description": "BikeStorage with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/all": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all user items in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "403": {
+            "description": "You are not authorized to acces this route"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get one user item in system",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Find user with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Item with 'id' not found"
+          },
+          "403": {
+            "description": "You are not authorized to acces this route"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user item with given id",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete user item with id",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "403": {
+            "description": "You are not authorized to delete other then your own account"
+          },
+          "404": {
+            "description": "User with 'id' not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user item in system",
+        "requestBody": {
+          "description": "user Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/signup/admin": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new admin user item in system",
+        "requestBody": {
+          "description": "user Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "403": {
+            "description": "You are not authorized to acces this route"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
           }
         }
       }
@@ -178,7 +1010,14 @@
   "definitions": {
     "id": {
       "properties": {
-        "uuid": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "type": {
+      "properties": {
+        "type": {
           "type": "string"
         }
       }
@@ -203,7 +1042,6 @@
         }
       }
     },
-
     "Bikes": {
       "type": "object",
       "properties": {
@@ -212,6 +1050,186 @@
           "additionalProperties": {
             "$ref": "#/definitions/Bike"
           }
+        }
+      }
+    },
+
+    "BikeStorage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "city": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "houseNumber": {
+          "type": "integer"
+        },
+        "prices": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "bikesAvailable": {
+          "type": "integer"
+        }
+      }
+    },
+    "BikeStorages": {
+      "type": "object",
+      "properties": {
+        "bikes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/BikeStorage"
+          }
+        }
+      }
+    },
+    "BikeInUse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "bikeId": {
+          "type": "integer"
+        },
+        "timeHired": {
+          "type": "string",
+          "format": "date"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "BikeInUses": {
+      "type": "object",
+      "properties": {
+        "bikeInUses": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/BikeInUse"
+          }
+        }
+      }
+    },
+    "HiredHistory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "bikeId": {
+          "type": "integer"
+        },
+        "timeHiredStart": {
+          "type": "string",
+          "format": "date"
+        },
+        "timeHiredEnd": {
+          "type": "string",
+          "format": "date"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "HiredHistoryPost": {
+      "type": "object",
+      "properties": {
+        "bikeInUse": {
+          "type": "integer"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "HiredHistorys": {
+      "type": "object",
+      "properties": {
+        "bikeInUses": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/HiredHistory"
+          }
+        }
+      }
+    },
+    "Problem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "bikeId": {
+          "type": "integer"
+        },
+        "bikeStorageId": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageUrls": {
+          "type": "string"
+        }
+      }
+    },
+    "ProblemAddImage": {
+      "type": "object",
+      "properties": {
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hiredHistoryId": {
+          "type": "integer"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
         }
       }
     }
