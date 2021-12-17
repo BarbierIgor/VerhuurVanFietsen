@@ -40,6 +40,9 @@ import authMiddleware from './auth/firebaseAuthMiddleware'
 import errorHandlingMiddleware from './middleware/errorHandlingMiddleware'
 import { BikeResolver } from './resolvers/bikeResolver'
 import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
+
+import swaggerUi from 'swagger-ui-express'
+import * as swaggerDocument from './swagger/swagger.json'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -51,6 +54,7 @@ import { BikeStorageResolver } from './resolvers/bikeStorageResolver'
         port = process.env.PORT || 3001
 
       app.use(express.json())
+      app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
       app.use(cors())
       app.use(/\/((?!signup).)*/, authMiddleware)
 

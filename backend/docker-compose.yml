@@ -1,19 +1,6 @@
 version: '3.4'
 
 services:
-  verhuurvanfietsen:
-    image: verhuurvanfietsen
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 3001:3001
-    env_file:
-      - docker.ormconfig.env
-      - googleAuth.env
-    volumes:
-      - ./server/auth/service-account.json:/usr/app/auth/service-account.json
-
   mariadb:
     image: mariadb:10.5.9
     env_file:
@@ -28,5 +15,19 @@ services:
     ports:
       - 9999:8080
 
+  verhuurvanfietsen:
+    image: ghrc.io/barbierigor/verhuurvanfietsen
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3001:3001
+    env_file:
+      - docker.ormconfig.env
+      - googleAuth.env
+    environment:
+      NODE_ENV: Production
+    volumes:
+      - ./server/auth/service-account.json:/usr/app/auth/service-account.json
 volumes:
   database:

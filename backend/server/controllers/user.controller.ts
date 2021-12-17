@@ -28,6 +28,7 @@ export class UserController
     this.router.put('', this.updateUser)
     this.router.post('/signup', this.createUser)
     this.router.post('/signup/admin', this.createAdmin)
+    this.router.delete('/:id', this.remove)
   }
 
   all = async (request: Request, response: Response, next: NextFunction) => {
@@ -72,6 +73,33 @@ export class UserController
           new HttpException(
             403,
             'You do not have the permission to get other then your own account',
+          ),
+        )
+      }
+    } catch (error: any) {
+      next(error)
+    }
+  }
+
+  remove = async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const isUser = await checkIfUser(request)
+      if (isUser) {
+        const itemToRemove = await this.repository.findOne(request.params.id)
+        if (itemToRemove) {
+          await this.repository.remove(itemToRemove)
+          response.send({
+            message: 'Successfully removed',
+            datetime: Date.now().toString(),
+          })
+        } else {
+          next(new HttpException(404, 'Item with id not found'))
+        }
+      } else {
+        next(
+          new HttpException(
+            403,
+            'You do not have the permission to delete other then your own account',
           ),
         )
       }

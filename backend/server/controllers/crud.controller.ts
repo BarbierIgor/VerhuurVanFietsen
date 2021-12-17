@@ -74,13 +74,16 @@ export class CrudController<T> implements ICrudController {
       const itemToRemove = (await this.repository.findOne(
         request.params.id,
       )) as T
-      await this.repository.remove(itemToRemove)
-      response.send({
-        message: 'Successfully removed',
-        datetime: Date.now().toString(),
-      })
+      if (itemToRemove) {
+        await this.repository.remove(itemToRemove)
+        response.send({
+          message: 'Successfully removed',
+          datetime: Date.now().toString(),
+        })
+      } else {
+        next(new HttpException(404, 'Item with id not found'))
+      }
     } catch (error: any) {
-      error.status = 404
       next(error)
     }
   }

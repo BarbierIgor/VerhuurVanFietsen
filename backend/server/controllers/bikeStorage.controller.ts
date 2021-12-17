@@ -24,7 +24,7 @@ export class BikeStorageController
     this.router.get('/all', this.all)
     this.router.get('/:id', this.one)
     this.router.post('', this.save)
-    this.router.get('/amountinstorage/:id', this.getAmountInStorage)
+    this.router.delete('/:id', this.remove)
   }
 
   all = async (request: Request, response: Response, next: NextFunction) => {
@@ -48,11 +48,7 @@ export class BikeStorageController
     }
   }
 
-  getAmountInStorage = async (
-    request: Request,
-    response: Response,
-    next: NextFunction,
-  ) => {
+  one = async (request: Request, response: Response, next: NextFunction) => {
     try {
       var counter = 0
       const bikeStorage = await this.repository
