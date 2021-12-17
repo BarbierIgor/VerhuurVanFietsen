@@ -7,11 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.12.11",
+    "@googlemaps/markerclusterer": "^1.0.17",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "animate.css": "^4.1.1",
     "axios": "^0.24.0",
-    "lottie-vuejs": "^0.4.0",
     "firebase": "^9.6.0",
+    "lottie-vuejs": "^0.4.0",
     "vue": "^3.2.23",
     "vue-qrcode-reader": "^3.0.6",
     "vue-router": "^4.0.12",

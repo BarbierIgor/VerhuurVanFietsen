@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         component: () => import('../screens/Home.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: '/login',
@@ -113,6 +113,16 @@ const routes: RouteRecordRaw[] = [
         path: '/activity',
         component: () => import('../screens/Activity.vue'),
         meta: { requireAuth: true },
+    },
+    {
+        path: '/activity/finish',
+        component: () => import('../screens/EndActivity.vue'),
+        meta: { requireAuth: false },
+    },
+    {
+        path: '/bike/:id',
+        component: () => import('../screens/BikeDetails.vue'),
+        meta: { requireAuth: false },
     },
 ]
 
