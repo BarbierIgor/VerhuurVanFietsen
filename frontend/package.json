@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.12.11",
+    "@googlemaps/markerclusterer": "^1.0.17",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "animate.css": "^4.1.1",
     "axios": "^0.24.0",
