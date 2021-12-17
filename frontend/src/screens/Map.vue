@@ -1,12 +1,13 @@
 <script lang="ts">
 /* eslint-disable no-undef */
-import { computed, defineComponent, onMounted, onUpdated, reactive, ref } from 'vue'
+import { computed, defineComponent, onMounted, onUpdated, reactive, ref, watch } from 'vue'
 import { useGeolocation } from '../composables/useGeolocation'
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { MarkerClusterer, MarkerClustererOptions } from "@googlemaps/markerclusterer";
 import { Loader } from '@googlemaps/js-api-loader'
 import BottomNavigation from '../components/BottomNavigation.vue'
 
 import createHTMLMapMarker from '../classes/CustomMarker';
+import Coordinates from '../interfaces/Coordinates';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 // const GOOGLE_MAPS_API_KEY = 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI'
@@ -14,13 +15,6 @@ const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 // TODO: Marker Cluster
 
 export default defineComponent({
-    methods: {
-        handleMapCenter() {
-            console.log('Centering map')
-            this.centerMap
-        },
-    },
-
     setup() {
         const data = reactive({showInfo: false});
         const markerLocations = [
@@ -29,37 +23,61 @@ export default defineComponent({
             {lat: 50.818365, lng: 3.272511},
             {lat: 50.817057, lng: 3.278106},
             {lat: 50.819027, lng: 3.285213},
-        ]
+        ];
 
-        // const { coords } = useGeolocation();
         const { coords } = useGeolocation();
         console.log(coords.value)
         const currPos = computed(() => ({
             lat: coords.value.latitude,
             lng: coords.value.longitude,
         }));
-        const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY });
+        const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY,  version: 'beta'});
+
         const mapDiv = ref(null);
 
         let map: google.maps.Map;
+        let markers: any;
+        let currPosMarker: any
+
+        let service: any;
 
         onMounted(async () => {
             await loader.load();
-            map = new google.maps.Map(mapDiv.value, {
-                mapId: '220791bae99d37e0',
-                // center: currPos.value,
+            service = new google.maps.DistanceMatrixService();
+
+            map = new google.maps.Map(mapDiv.value as HTMLElement, {
+                mapId: 'f01f21c52ee2ebff',
                 center: { lat: 50.82004350284792, lng: 3.277652756641025 },
                 zoom: 15,
+                heading: 0,
                 disableDefaultUI: true,
                 rotateControl: true,
                 gestureHandling: 'greedy',
             });
 
-            const markers = markerLocations.map((coordinates) => {
+            // TODO: ------------------ Distance Matrix ---------------------
+
+            markers = markerLocations.map(async (location: any) => {
+                // build request
+                const origin = { lat: 50.82004350284792, lng: 3.277652756641025 };
+    
+                const request = {
+                    origins: [origin],
+                    destinations: [location],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false,
+                };
+
+                const distance = await service.getDistanceMatrix(request)
+
+                console.log(distance)
+
                 const marker = new google.maps.Marker({
-                    storageId: 1234,
+                    storageId: 2,
                     // position: { lat: 50.82004350284792, lng: 3.277652756641025 },
-                    position: coordinates,
+                    position: location,
                     map: map,
                     icon: {
                         url: "src/assets/images/mapsMarker.png",
@@ -68,43 +86,54 @@ export default defineComponent({
                     },
                     clickable: true,
                     optimized: false,
-                    label: {text: '560m', color: '#DEDEDE', fontWeight: 'bold'},
+                    label: {
+                        text: distance.rows[0].elements[0].distance.text, 
+                        color: '#DEDEDE', 
+                        fontWeight: 'bold'
+                    },
                 });
     
                 marker.addListener('click', (e: any) => {
                     console.log(marker.storageId);
                     showInfoPopup()
                 })
-            })
 
-            // const markerCluster = new MarkerClusterer({ map, markers });
-
-            window.addEventListener("deviceorientation", (e: any) => {console.log(e)}, true);
-
-
-            // TODO: ------------ Testing Custom Overlay -----------------------
-
-            let test = createHTMLMapMarker({
-                latlng: { lat: 50.82004350284792, lng: 3.277652756641025 },
-                map: map,
+                return marker;
             });
 
-            // TODO: ------------ Testing Custom Overlay -----------------------
+
+            // TODO: ------------------ Distance Matrix ---------------------
+
+            // const markerCluster = new MarkerClusterer(map, markers, clusterOptions);
+            // const markerCluster = new MarkerClusterer({ markers, map});
+
+
+            currPosMarker = createHTMLMapMarker({
+                latlng: { lat: 50.82004350284792, lng: 3.277652756641025 },
+                map: map,
+                img: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
+            });
+
+            window.addEventListener("deviceorientation", (e: any) => {
+                console.log(map.getHeading())
+                map.setHeading(e.alpha);
+            }, true);
         });
+        
+        watch(coords, (coords, prevCount) => {
+            if (currPosMarker) {
+                currPosMarker.setMarkerPosition({ lat: coords.latitude, lng: coords.longitude });
+            }
+        })
 
 
         const centerMap = (): void => {
             console.log(currPos.value)
             map.setCenter(currPos.value)
+            map.setHeading(0)
+            map.setTilt(0)
             map.setZoom(15)
         }
-        
-        // const getCoordsFromAddress = (address: string) => {
-        //     const geocoder = new google.maps.Geocoder()
-        //     geocoder.geocode({ address: address }, function (results: any, status: any) {
-        //         console.log(results)
-        //     })
-        // }
 
         const showInfoPopup = () => {
             data.showInfo = !data.showInfo;
@@ -125,12 +154,6 @@ export default defineComponent({
 <template>
     <div class="relative h-screen w-screen">
         <div ref="mapDiv" class="h-screen w-screen"></div>
-        <!-- <div class="absolute top-20 left-20 w-10 h-10">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-accent w-full h-full rounded-full opacity-20"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-accent w-5/6 h-5/6 rounded-full opacity-80"></div>
-            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/6 h-4/6 rounded-full" src="../assets/images/profile_pic.png" alt="profile_picture">
-        </div> -->
-
         <div class="absolute top-14 left-0 right-0 w-screen p-4 transition-all duration-200" :class="!data.showInfo ? '-translate-y-4 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100 pointer-events-auto'">
             <div class="w-full h-36 bg-dark-700 flex p-2 justify-between rounded-2xl">
                 <div class="bg-dark-400 rounded-2xl h-30 w-24">
