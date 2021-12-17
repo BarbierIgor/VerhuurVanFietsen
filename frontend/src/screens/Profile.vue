@@ -1,11 +1,13 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, Ref } from 'vue'
 import { useRoute } from 'vue-router'
 import router from '../bootstrap/router'
 import ToggleSwitch from '../components/ToggleSwitch.vue'
 import Header from '../components/Header.vue'
 import SelectOverlay from '../components/SelectOverlay.vue'
 import useFirebase from '../composables/useFirebase'
+import { Problem } from '../interfaces/Problem'
+import { get } from '../composables/networkComposable'
 
 export default defineComponent({
     data() {
@@ -58,8 +60,21 @@ export default defineComponent({
         const { user } = useFirebase()
         const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
         const isAdmin = userInfo.isAdmin
+        const problems: Ref<any> = ref([])
+        var data: Problem[] = []
 
-        return { user, isAdmin }
+        const getProblems = async () => {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
+            data = await get('problem/all', userInfo.bearerToken)
+            console.log(data)
+            problems.value = data
+        }
+
+        if (isAdmin) {
+            getProblems()
+        }
+
+        return { user, isAdmin, problems }
     },
     components: { ToggleSwitch, Header, SelectOverlay },
 })
@@ -251,7 +266,7 @@ export default defineComponent({
 
                     <div class="flex items-center">
                         <p class="mx-4 justify-self-start text-dark-accent">
-                            16
+                            {{ problems.length }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
