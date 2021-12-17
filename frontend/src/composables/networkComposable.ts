@@ -1,6 +1,6 @@
 import { CreateUser, User } from '../interfaces/User'
 
-const baseUrl = 'http://localhost:3001'
+const baseUrl = 'http://localhost:31401'
 const cache = {}
 
 export const useNetwork = () => {}
