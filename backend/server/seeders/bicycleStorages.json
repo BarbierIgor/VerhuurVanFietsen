@@ -4,6 +4,10 @@
     "city": "Kortrijk",
     "street": "Beheerstraat",
     "houseNumber": 50,
+    "location": {
+      "lat": 50.828,
+      "long": 3.25738
+    },
     "prices": {
       "electric": 8,
       "nonElectric": 5,
@@ -15,6 +19,10 @@
     "city": "Kortrijk",
     "street": "StationStraat",
     "houseNumber": 35,
+    "location": {
+      "lat": 50.82536549342938,
+      "long": 3.264503904856577
+    },
     "prices": {
       "electric": 7,
       "nonElectric": 4,
@@ -26,6 +34,10 @@
     "city": "Kortrijk",
     "street": "Kanonstraat",
     "houseNumber": 25,
+    "location": {
+      "lat": 50.82268297803872,
+      "long": 3.2717479721064846
+    },
     "prices": {
       "electric": 10,
       "nonElectric": 6,
