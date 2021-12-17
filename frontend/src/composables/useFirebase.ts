@@ -99,7 +99,9 @@ export default () => {
 
     const editName = (displayName: string) => {
         try {
-            updateProfile(auth.currentUser, { displayName: displayName })
+            if (auth.currentUser) {
+                updateProfile(auth.currentUser, { displayName: displayName })
+            }
         } catch (error) {
             console.log('???')
             console.error(error)
@@ -107,11 +109,15 @@ export default () => {
     }
 
     const editEmail = (email: string) => {
-        updateEmail(auth.currentUser, email)
+        if (auth.currentUser) {
+            updateEmail(auth.currentUser, email)
+        }
     }
 
     const editPassword = (password: string) => {
-        updatePassword(auth.currentUser, password)
+        if (auth.currentUser) {
+            updatePassword(auth.currentUser, password)
+        }
     }
 
     // const getToken = () => {
@@ -128,6 +134,7 @@ export default () => {
 
     const uploadProblemImage = (problemId: number, file: any) => {
         const storage = getStorage()
+        console.log(file)
         // Create the file metadata
         // @type {any}
         const metadata = {
@@ -220,17 +227,71 @@ export default () => {
                 // Uh-oh, an error occurred!
                 console.error(error)
             })
+    }
 
-        // Delete the file
-        // deleteObject(desertRef)
-        //     .then(() => {
-        //         // File deleted successfully
-        //         console.log('delete succesfull')
-        //     })
-        //     .catch(error => {
-        //         // Uh-oh, an error occurred!
-        //         console.error('delete unsuccesfull')
-        //     })
+    const uploadProfileImage = (userId: string, file: any) => {
+        const storage = getStorage()
+        console.log(file)
+        // Create the file metadata
+        // @type {any}
+        const metadata = {
+            contentType: 'image/jpeg',
+        }
+
+        // Upload file and metadata to the object 'images/mountains.jpg'
+        const storageRef = refFirebase(
+            storage,
+            `profileImages/${userId}/${file.name}`,
+        )
+        const uploadTask = uploadBytesResumable(storageRef, file, metadata)
+
+        // Listen for state changes, errors, and completion of the upload.
+        uploadTask.on(
+            'state_changed',
+            snapshot => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                console.log('Upload is ' + progress + '% done')
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused')
+                        break
+                    case 'running':
+                        console.log('Upload is running')
+                        break
+                }
+            },
+            error => {
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break
+
+                    // ...
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break
+                }
+            },
+            () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                    console.log(downloadURL)
+                    if (auth.currentUser) {
+                        updateProfile(auth.currentUser, {
+                            photoURL: downloadURL,
+                        })
+                    }
+                })
+            },
+        )
     }
 
     return {
@@ -244,6 +305,7 @@ export default () => {
         editPassword,
         uploadProblemImage,
         deleteProblemImage,
+        uploadProfileImage,
         user: readonly(user),
     }
 }

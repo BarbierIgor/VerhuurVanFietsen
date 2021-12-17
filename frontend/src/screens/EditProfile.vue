@@ -13,11 +13,13 @@ export default defineComponent({
             firstName: '',
             lastName: '',
             email: '',
+            profileImgFile: null,
         }
     },
 
     methods: {
         async saveChanges() {
+            const { uploadProfileImage } = useFirebase()
             try {
                 const userInfo = JSON.parse(
                     localStorage.getItem('userInfo') as any,
@@ -32,7 +34,7 @@ export default defineComponent({
                     await editEmail(this.email)
                     // router.push({ path: '/profile' })
                 }
-                if (this.firstName !== null || this.firstName !== '') {
+                if (this.firstName !== '') {
                     const user: EditUserName = {
                         uuid: userInfo.userId,
                         username: this.firstName,
@@ -42,12 +44,24 @@ export default defineComponent({
                     await editName(this.firstName)
                     // router.push({ path: '/profile' })
                 }
+                if (this.profileImgFile !== null) {
+                    uploadProfileImage(userInfo.uid, this.profileImgFile)
+                }
             } catch (error) {
                 console.error(error)
             }
         },
+        async onFileSelected(e: any) {
+            console.log(e.currentTarget.files)
+            this.profileImgFile = e.currentTarget.files[0]
+            console.log(this.profileImgFile)
+        },
     },
-    setup() {},
+    setup() {
+        const { user } = useFirebase()
+
+        return { user }
+    },
     components: { Header },
 })
 </script>
@@ -60,11 +74,19 @@ export default defineComponent({
         <picture class="flex justify-center w-full">
             <div class="relative rounded-full w-36 h-36">
                 <img
+                    v-if="user?.photoURL"
                     class="rounded-full bg-dark-600 w-full"
-                    src="../assets/images/profile_pic.png"
+                    :src="user.photoURL"
+                    alt="Profile Picture"
+                />
+                <img
+                    v-if="!user?.photoURL"
+                    class="rounded-full bg-dark-600 w-full"
+                    src="../assets/images/default-profile.png"
                     alt="Profile Picture"
                 />
                 <input
+                    @change="onFileSelected($event)"
                     type="file"
                     name="selectImage"
                     accept="image/png, image/jpeg"
@@ -102,7 +124,7 @@ export default defineComponent({
         </picture>
 
         <h1 class="text-3xl font-bold my-4 text-dark-400 text-center">
-            Felix Vandemaele
+            {{ user?.displayName }}
         </h1>
 
         <!-- Form -->
