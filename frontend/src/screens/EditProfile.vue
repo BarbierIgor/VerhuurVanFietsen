@@ -32,7 +32,6 @@ export default defineComponent({
                         email: this.email,
                     }
                     await editEmail(this.email)
-                    // router.push({ path: '/profile' })
                 }
                 if (this.firstName !== '') {
                     const user: EditUserName = {
@@ -42,11 +41,11 @@ export default defineComponent({
                     console.log(user)
                     await put('user', user, userInfo.bearerToken)
                     await editName(this.firstName)
-                    // router.push({ path: '/profile' })
                 }
                 if (this.profileImgFile !== null) {
-                    uploadProfileImage(userInfo.uid, this.profileImgFile)
+                    uploadProfileImage(userInfo.userId, this.profileImgFile)
                 }
+                router.push({ path: '/profile' })
             } catch (error) {
                 console.error(error)
             }

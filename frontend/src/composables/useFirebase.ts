@@ -23,7 +23,9 @@ import {
 import { Ref, ref, readonly } from 'vue'
 import { AddImageProblem } from '../interfaces/Problem'
 import { CreateUser } from '../interfaces/User'
-import { post, put } from './networkComposable'
+import { get, post, put } from './networkComposable'
+import router from '../bootstrap/router'
+import { User as Userdb } from '../interfaces/User'
 
 const firebaseConfig = {
     apiKey: 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI',
@@ -53,16 +55,25 @@ export default () => {
                     if (state) {
                         user.value = state
                     }
-                    auth.currentUser?.getIdToken().then(function (idToken) {
-                        var userStorageObject = {
-                            userId: user.value?.uid,
-                            bearerToken: idToken,
-                        }
-                        localStorage.setItem(
-                            'userInfo',
-                            JSON.stringify(userStorageObject),
-                        )
-                    })
+                    auth.currentUser
+                        ?.getIdToken()
+                        .then(async function (idToken) {
+                            if (user.value) {
+                                const userItem: Userdb = await get(
+                                    `user/${user.value.uid}`,
+                                    idToken,
+                                )
+                                var userStorageObject = {
+                                    userId: user.value?.uid,
+                                    bearerToken: idToken,
+                                    isAdmin: userItem.isAdmin,
+                                }
+                                localStorage.setItem(
+                                    'userInfo',
+                                    JSON.stringify(userStorageObject),
+                                )
+                            }
+                        })
                     resolve(true)
                 })
             } catch (error) {
@@ -100,7 +111,11 @@ export default () => {
     const editName = (displayName: string) => {
         try {
             if (auth.currentUser) {
-                updateProfile(auth.currentUser, { displayName: displayName })
+                updateProfile(auth.currentUser, {
+                    displayName: displayName,
+                }).then(() => {
+                    router.go(0)
+                })
             }
         } catch (error) {
             console.log('???')
@@ -231,6 +246,27 @@ export default () => {
 
     const uploadProfileImage = (userId: string, file: any) => {
         const storage = getStorage()
+        const listRef = refFirebase(storage, `profileImages/${userId}`)
+        listAll(listRef)
+            .then(res => {
+                res.items.forEach(item => {
+                    console.log(item.fullPath)
+                    const imageRef = refFirebase(storage, item.fullPath)
+                    deleteObject(imageRef)
+                        .then(() => {
+                            // File deleted successfully
+                            console.log('delete succesfull')
+                        })
+                        .catch(error => {
+                            // Uh-oh, an error occurred!
+                            console.error('delete unsuccesfull')
+                        })
+                })
+            })
+            .catch(error => {
+                // Uh-oh, an error occurred!
+                console.error(error)
+            })
         console.log(file)
         // Create the file metadata
         // @type {any}
@@ -288,6 +324,7 @@ export default () => {
                         updateProfile(auth.currentUser, {
                             photoURL: downloadURL,
                         })
+                        router.go(0)
                     }
                 })
             },
