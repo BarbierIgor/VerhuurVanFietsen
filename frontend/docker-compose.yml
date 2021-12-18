@@ -1,0 +1,8 @@
+services:
+    frontend:
+        image: verhuurvanfietsen-frontend
+        build: .
+        ports:
+            - 3000:8080
+        volumes:
+            - ./src/config.js:/usr/app/src/config.js
