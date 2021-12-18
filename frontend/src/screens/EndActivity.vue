@@ -38,31 +38,40 @@ export default defineComponent({
             if (this.paymentMethodText !== '') {
                 if (this.userdb.wallet >= this.hiredHistory.price) {
                     const newWallet: EditWalletUser = {
-                        wallet: this.userdb - this.hiredHistory.price,
+                        wallet: Number.parseFloat(
+                            (
+                                this.userdb.wallet - this.hiredHistory.price
+                            ).toFixed(2),
+                        ),
                     }
                     put(
                         `user/${this.userInfo.userId}`,
                         newWallet,
                         this.userInfo.bearerToken,
                     )
-                    if (this.rating !== 0 || this.description !== '') {
-                        const review: ReviewPost = {
-                            rating: this.rating,
-                            hiredhistory: Number.parseInt(
-                                this.$route.params.hiredHistoryId[0],
-                            ),
-                            description: this.description,
-                            user: this.userInfo.userId,
-                        }
-                        const postReview = await post(
-                            'review',
-                            review,
-                            this.userInfo.bearerToken,
-                        )
-                        // console.log(postReview)
-                    }
+                    console.log(
+                        (this.userdb.wallet - this.hiredHistory.price).toFixed(
+                            2,
+                        ),
+                    )
                 } else {
                     console.error('you dont have enough funds in your wallet')
+                }
+                if (this.rating !== 0 || this.description !== '') {
+                    const review: ReviewPost = {
+                        rating: this.rating,
+                        hiredhistory: Number.parseInt(
+                            this.$route.params.hiredHistoryId[0],
+                        ),
+                        description: this.description,
+                        user: this.userInfo.userId,
+                    }
+                    const postReview = await post(
+                        'review',
+                        review,
+                        this.userInfo.bearerToken,
+                    )
+                    // console.log(postReview)
                 }
                 router.push('/')
             } else {
