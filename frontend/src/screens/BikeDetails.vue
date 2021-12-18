@@ -1,8 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref, Ref } from 'vue'
 import { useRoute } from 'vue-router'
+import router from '../bootstrap/router'
 import Header from '../components/Header.vue'
-import { get } from '../composables/networkComposable'
+import { get, post } from '../composables/networkComposable'
+import { BikeInUsePost } from '../interfaces/BikeInUse'
 
 export default defineComponent({
     setup() {
@@ -19,8 +21,22 @@ export default defineComponent({
             console.log(data)
         }
 
+        const rentMeClicked = async (bikeId: number) => {
+            const newBikeInuse: BikeInUsePost = {
+                bike: bikeId,
+                user: userInfo.userId,
+            }
+            console.log(bikeId)
+            const res = await post(
+                'bikeinuse',
+                newBikeInuse,
+                userInfo.bearerToken,
+            )
+            router.push('/activity')
+        }
+
         getData()
-        return { bike }
+        return { bike, rentMeClicked }
     },
     components: { Header },
 })
@@ -242,6 +258,7 @@ export default defineComponent({
         </div>
 
         <button
+            @click="rentMeClicked(bike.id)"
             ref="startStopButton"
             class="
                 w-full

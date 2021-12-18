@@ -8,7 +8,7 @@ export class User {
   @Column('text')
   username!: string
 
-  @Column()
+  @Column('float')
   wallet?: number
 
   @Column('boolean')

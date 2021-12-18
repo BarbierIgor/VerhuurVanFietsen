@@ -1,7 +1,7 @@
 import Bike from './Bike'
 import { User } from './User'
 
-export default interface HiredHistory {
+export interface HiredHistory {
     id: number
     bike: Bike
     timeHiredStart: Date
@@ -9,4 +9,9 @@ export default interface HiredHistory {
     user: User
     paid: boolean
     price: number
+}
+
+export interface HiredHistoryPost {
+    bikeInUse: number
+    user: string
 }
