@@ -14,6 +14,9 @@ export default defineComponent({
             paymentMethod: 0,
             paymentMethodText: '',
             description: '',
+
+            selectPaymentError: false,
+            notEnoughFundsError: false,
         }
     },
     methods: {
@@ -38,35 +41,46 @@ export default defineComponent({
             if (this.paymentMethodText !== '') {
                 if (this.userdb.wallet >= this.hiredHistory.price) {
                     const newWallet: EditWalletUser = {
-                        wallet: this.userdb - this.hiredHistory.price,
+                        wallet: Number.parseFloat(
+                            (
+                                this.userdb.wallet - this.hiredHistory.price
+                            ).toFixed(2),
+                        ),
                     }
                     put(
                         `user/${this.userInfo.userId}`,
                         newWallet,
                         this.userInfo.bearerToken,
                     )
-                    if (this.rating !== 0 || this.description !== '') {
-                        const review: ReviewPost = {
-                            rating: this.rating,
-                            hiredhistory: Number.parseInt(
-                                this.$route.params.hiredHistoryId[0],
-                            ),
-                            description: this.description,
-                            user: this.userInfo.userId,
-                        }
-                        const postReview = await post(
-                            'review',
-                            review,
-                            this.userInfo.bearerToken,
-                        )
-                        // console.log(postReview)
-                    }
+                    console.log(
+                        (this.userdb.wallet - this.hiredHistory.price).toFixed(
+                            2,
+                        ),
+                    )
                 } else {
                     console.error('you dont have enough funds in your wallet')
+                    this.notEnoughFundsError = true
+                }
+                if (this.rating !== 0 && this.description !== '') {
+                    const review: ReviewPost = {
+                        rating: this.rating,
+                        hiredhistory: Number.parseInt(
+                            this.$route.params.hiredHistoryId[0],
+                        ),
+                        description: this.description,
+                        user: this.userInfo.userId,
+                    }
+                    const postReview = await post(
+                        'review',
+                        review,
+                        this.userInfo.bearerToken,
+                    )
+                    // console.log(postReview)
                 }
                 router.push('/')
             } else {
                 console.error('please select a payment method')
+                this.selectPaymentError = true
             }
         },
     },
@@ -535,7 +549,19 @@ export default defineComponent({
         </div>
 
         <div class="fixed bottom-4 px-4 left-0 w-full flex flex-col items-end">
-            <p class="text-dark-400 text-center leading-tight mb-6">
+            <p
+                v-if="selectPaymentError"
+                class="text-red-600 leading-tight mb-6 w-full text-center"
+            >
+                Please select a payment method
+            </p>
+            <p
+                v-if="notEnoughFundsError"
+                class="text-red-600 leading-tight mb-6 w-full text-center"
+            >
+                you dont have enough funds in your wallet
+            </p>
+            <p class="text-dark-400 w-full text-center leading-tight mb-6">
                 Please put your bike back inside a bike rack before finishing
             </p>
             <button
