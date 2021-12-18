@@ -18,7 +18,9 @@ export default defineComponent({
     },
     setup() {
         const bikeInUse: Ref<any> = ref([])
+        var timer: Ref<any> = ref(0)
         const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
+        var timerInterval: any
 
         const getBikeInUse = async () => {
             const data = await get(
@@ -40,6 +42,7 @@ export default defineComponent({
                 userInfo.bearerToken,
             )
             if (res) {
+                clearInterval(timerInterval)
                 console.log(res)
                 router.push({
                     name: 'EndActivity',
@@ -48,8 +51,29 @@ export default defineComponent({
             }
         }
 
+        const startTimer = () => {
+            timerInterval = setInterval(() => {
+                timer.value += 1
+                console.log(timer)
+            }, 1000)
+        }
+
+        const msToTime = (ms: number) => {
+            let seconds = Number.parseFloat((ms / 1000).toFixed(1))
+            let minutes = Number.parseFloat((ms / (1000 * 60)).toFixed(1))
+            let hours = Number.parseFloat((ms / (1000 * 60 * 60)).toFixed(1))
+            let days = Number.parseFloat(
+                (ms / (1000 * 60 * 60 * 24)).toFixed(1),
+            )
+            if (seconds < 60) return seconds + ' Sec'
+            else if (minutes < 60) return minutes + ' Min'
+            else if (hours < 24) return hours + ' Hrs'
+            else return days + ' Days'
+        }
+
         getBikeInUse()
-        return { bikeInUse, stopButtonUsed }
+        startTimer()
+        return { bikeInUse, stopButtonUsed, timer, msToTime }
     },
 })
 </script>
@@ -253,21 +277,29 @@ export default defineComponent({
                             overflow-hidden
                             transition
                             duration-500
+                            col-start-3
                         "
                         :class="isActivityActive ? 'opacity-100' : 'opacity-0'"
                     >
-                        <svg class="h-6 w-6" viewBox="0 0 28 28">
-                            <path
-                                d="M371.189,361.709c-.144,0-.289-.009-.438-.009-.089,0-.177,0-.261,0q-.35.007-.7.028a14.027,14.027,0,0,0-12.406,9.787c-.075.233-.14.471-.2.708s-.112.471-.158.7a14,14,0,1,0,14.163-11.222Zm3.663,20.734a4.961,4.961,0,0,1-2.764,1.426v.559a.927.927,0,0,1-.927.927h-.5a.927.927,0,0,1-.927-.927v-.583a6.491,6.491,0,0,1-1.71-.578,4.237,4.237,0,0,1-1.6-1.533,4.876,4.876,0,0,1-.643-1.612.9.9,0,0,1,.1-.643.928.928,0,0,1,.648-.457l.5-.089a.8.8,0,0,1,.3,0,.922.922,0,0,1,.755.685,3.45,3.45,0,0,0,.569,1.286,2.97,2.97,0,0,0,2.344,1.086h0a3.27,3.27,0,0,0,.475-.037,2.691,2.691,0,0,0,2.354-2.778,2.345,2.345,0,0,0-.461-1.519,4.23,4.23,0,0,0-2.4-1.184c-.405-.093-.792-.182-1.174-.289a8.582,8.582,0,0,1-1.855-.746,3.672,3.672,0,0,1-1.459-1.463,4.346,4.346,0,0,1-.508-2.107c0-.093,0-.182,0-.27a5.558,5.558,0,0,1,.093-.76,4.362,4.362,0,0,1,.256-.825,4.254,4.254,0,0,1,1.123-1.529,4.174,4.174,0,0,1,1.16-.7,5.571,5.571,0,0,1,1.119-.326V366.7a.916.916,0,0,1,.061-.322.927.927,0,0,1,.7-.587,1.015,1.015,0,0,1,.168-.014h.531a.926.926,0,0,1,.9.923v.769a4.8,4.8,0,0,1,2.135.951,4.178,4.178,0,0,1,1.286,1.855.924.924,0,0,1-.736,1.221l-.489.075a.924.924,0,0,1-1.011-.615,2.423,2.423,0,0,0-.471-.848,2.538,2.538,0,0,0-1.906-.778,3.273,3.273,0,0,0-.68.075,3.115,3.115,0,0,0-.419.126,2.546,2.546,0,0,0-.974.652,2.354,2.354,0,0,0-.3.424,2.449,2.449,0,0,0,.21,2.605,2.8,2.8,0,0,0,1.063.764,9.153,9.153,0,0,0,1.818.5,8.96,8.96,0,0,1,1.85.508,4.878,4.878,0,0,1,1.487.979,4.009,4.009,0,0,1,.895,1.379,5.028,5.028,0,0,1-.974,5.1Z"
-                                transform="translate(-356.751 -361.7)"
-                                fill="#2e353b"
-                            />
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="#2e353b">
+                            <g><rect fill="none" height="24" width="24" /></g>
+                            <g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M15,1H9v2h6V1z M11,14h2V8h-2V14z M19.03,7.39l1.42-1.42c-0.43-0.51-0.9-0.99-1.41-1.41l-1.42,1.42 C16.07,4.74,14.12,4,12,4c-4.97,0-9,4.03-9,9s4.02,9,9,9s9-4.03,9-9C21,10.88,20.26,8.93,19.03,7.39z M12,20c-3.87,0-7-3.13-7-7 s3.13-7,7-7s7,3.13,7,7S15.87,20,12,20z"
+                                        />
+                                    </g>
+                                </g>
+                            </g>
                         </svg>
 
-                        <p class="text-lg font-semibold">€5.75</p>
+                        <p class="text-lg font-semibold">
+                            {{ msToTime(timer * 1000) }}
+                        </p>
                     </div>
 
-                    <div
+                    <!-- <div
                         class="
                             h-full
                             rounded-lg
@@ -281,12 +313,14 @@ export default defineComponent({
                         "
                         :class="isActivityActive ? 'opacity-100' : 'opacity-0'"
                     >
-                        <p class="text-2xl font-semibold">17</p>
+                        <p class="text-2xl font-semibold">
+                            {{ msToTime(timer * 1000) }}
+                        </p>
 
                         <p class="text-md font-semibold">km/h</p>
-                    </div>
+                    </div> -->
 
-                    <div
+                    <!-- <div
                         class="
                             h-full
                             rounded-lg
@@ -309,7 +343,7 @@ export default defineComponent({
                         </svg>
 
                         <p class="text-lg font-semibold">€5.75</p>
-                    </div>
+                    </div> -->
                 </div>
 
                 <button

@@ -1,15 +1,18 @@
 <script lang="ts">
 import { defineComponent, ref, Ref } from 'vue'
 import { useRoute } from 'vue-router'
+import router from '../bootstrap/router'
 import Header from '../components/Header.vue'
 import { get, post, put } from '../composables/networkComposable'
 import { ReviewPost } from '../interfaces/Review'
+import { EditWalletUser } from '../interfaces/User'
 
 export default defineComponent({
     data() {
         return {
             rating: 0,
-            paymentMethod: '',
+            paymentMethod: 0,
+            paymentMethodText: '',
             description: '',
         }
     },
@@ -24,7 +27,7 @@ export default defineComponent({
             console.log('handlePaymentInput')
             const scrollView = this.$refs.scrollview
             const item = e.currentTarget.parentNode
-            this.paymentMethod = inmethod
+            this.paymentMethodText = inmethod
 
             scrollView.scroll({
                 left: item.offsetLeft,
@@ -32,21 +35,36 @@ export default defineComponent({
             })
         },
         async handleFinish() {
-            if (this.paymentMethod !== '') {
-                const review: ReviewPost = {
-                    rating: this.rating,
-                    hiredhistory: Number.parseInt(
-                        this.$route.params.hiredHistoryId[0],
-                    ),
-                    description: this.description,
-                    user: this.userInfo.userId,
+            if (this.paymentMethodText !== '') {
+                if (this.userdb.wallet >= this.hiredHistory.price) {
+                    const newWallet: EditWalletUser = {
+                        wallet: this.userdb - this.hiredHistory.price,
+                    }
+                    put(
+                        `user/${this.userInfo.userId}`,
+                        newWallet,
+                        this.userInfo.bearerToken,
+                    )
+                    if (this.rating !== 0 || this.description !== '') {
+                        const review: ReviewPost = {
+                            rating: this.rating,
+                            hiredhistory: Number.parseInt(
+                                this.$route.params.hiredHistoryId[0],
+                            ),
+                            description: this.description,
+                            user: this.userInfo.userId,
+                        }
+                        const postReview = await post(
+                            'review',
+                            review,
+                            this.userInfo.bearerToken,
+                        )
+                        // console.log(postReview)
+                    }
+                } else {
+                    console.error('you dont have enough funds in your wallet')
                 }
-                const postReview = await post(
-                    'review',
-                    review,
-                    this.userInfo.bearerToken,
-                )
-                console.log(postReview)
+                router.push('/')
             } else {
                 console.error('please select a payment method')
             }
@@ -508,7 +526,7 @@ export default defineComponent({
                                 "
                             >
                                 Wallet <br />
-                                <span>{{ userdb.wallet }}</span>
+                                <span>€{{ userdb.wallet }}</span>
                             </p>
                         </label>
                     </li>

@@ -62,7 +62,7 @@ export default defineComponent({
                         '-translate-y-12 opacity-0'
                 " 
                 class="w-3/5 h-auto rounded-lg bg-dark-400 p-4 -mt-24 transition duration-300">
-                <h1 v-if="$props.title != ''" class="text-dark-900 font-semibold text-lg mb-4">{{ $props.title }}</h1>
+                <h1 v-if="$props.title != ''" class="text-dark-900 font-semibold text-lg mb-4 capitalize">{{ $props.title }}</h1>
                 <slot></slot>               
             </div>
         </div>

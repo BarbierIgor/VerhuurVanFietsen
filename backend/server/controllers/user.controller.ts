@@ -25,7 +25,7 @@ export class UserController
 
     this.router.get('/all', this.all)
     this.router.get('/:id', this.one)
-    this.router.put('', this.updateUser)
+    this.router.put('/:id', this.updateUser)
     this.router.post('/signup', this.createUser)
     this.router.post('/signup/admin', this.createAdmin)
     this.router.delete('/:id', this.remove)
