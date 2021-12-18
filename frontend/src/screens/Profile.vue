@@ -8,6 +8,7 @@ import SelectOverlay from '../components/SelectOverlay.vue'
 import useFirebase from '../composables/useFirebase'
 import { Problem } from '../interfaces/Problem'
 import { get } from '../composables/networkComposable'
+import { useStore } from 'vuex'
 
 export default defineComponent({
     data() {
@@ -22,22 +23,18 @@ export default defineComponent({
     },
     ready: {},
     methods: {
-        handleEditButton() {
+        handleEditButton(): void {
             router.push({
                 name: 'Login',
                 params: { goToEditProfile: 1 },
             })
         },
-        handleBackButton() {
+        handleBackButton(): void {
             router.go(-1)
         },
         handleClickReport() {},
-        toggleDarkMode(isChecked: boolean) {
-            console.log(isChecked)
-        },
-        toggleModal(modalName: String = '') {
-            console.log(modalName)
 
+        toggleModal(modalName: String = ''): void {
             if (modalName == 'distanceUnits') {
                 if (this.isDistanceUnitsModalActive) {
                     this.isDistanceUnitsModalActive = false
@@ -58,6 +55,7 @@ export default defineComponent({
     },
     setup() {
         const { user } = useFirebase()
+        const store = useStore()
         const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
         const isAdmin = userInfo.isAdmin
         const problems: Ref<any> = ref([])
@@ -74,7 +72,28 @@ export default defineComponent({
             getProblems()
         }
 
-        return { user, isAdmin, problems }
+        const toggleDarkMode = (isChecked: boolean) => {
+            console.log(isChecked)
+            store.commit('toggleDarkMode')
+        }
+
+        const updateUnits = (unit: string): void => {
+            store.commit('updateUnits', unit)
+        }
+        
+        const updateLanguage = (language: string): void => {
+            store.commit('updateLanguage', language)
+        }
+
+        return { 
+            user, 
+            isAdmin, 
+            problems, 
+            toggleDarkMode,
+            store,
+            updateUnits,
+            updateLanguage,
+        }
     },
     components: { ToggleSwitch, Header, SelectOverlay },
 })
@@ -483,8 +502,8 @@ export default defineComponent({
                     </div>
 
                     <div class="flex items-center">
-                        <p class="mx-4 justify-self-start text-dark-600">
-                            English
+                        <p class="mx-4 justify-self-start text-dark-600 capitalize">
+                            {{ store.state.preferences.language }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -534,10 +553,10 @@ export default defineComponent({
                             Dark mode
                         </p>
                     </div>
-
+                    
                     <ToggleSwitch
                         @onToggle="toggleDarkMode($event)"
-                        :is-checked="false"
+                        :is-checked="store.state.preferences.darkMode"
                     ></ToggleSwitch>
                 </div>
 
@@ -575,8 +594,8 @@ export default defineComponent({
                     </div>
 
                     <div class="flex items-center">
-                        <p class="mx-4 justify-self-start text-dark-600">
-                            Metric
+                        <p class="mx-4 justify-self-start text-dark-600 capitalize">
+                            {{ store.state.preferences.units }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -622,11 +641,13 @@ export default defineComponent({
                         <input
                             class="peer group"
                             v-model="measurementUnit"
+                            @input="updateUnits('metric')"
                             hidden
                             type="radio"
                             id="metric"
                             name="units"
-                            value="0"
+                            value="metric"
+                            :checked="(store.state.preferences.units === 'metric')"
                         />
                         <span
                             class="
@@ -663,9 +684,11 @@ export default defineComponent({
                             v-model="measurementUnit"
                             type="radio"
                             hidden
+                            @input="updateUnits('imperial')"
                             id="imperial"
                             name="units"
-                            value="1"
+                            value="imperial"
+                            :checked="(store.state.preferences.units === 'imperial')"
                         />
                         <span
                             class="
@@ -722,9 +745,10 @@ export default defineComponent({
                     >
                         <input
                             v-model="language"
-                            value="English"
+                            value="english"
                             class="peer"
                             name="language"
+                            @input="updateLanguage('english')"
                             hidden
                             type="radio"
                             id="english"
@@ -766,11 +790,12 @@ export default defineComponent({
                     >
                         <input
                             v-model="language"
-                            value="Dutch"
+                            value="dutch"
                             class="peer"
                             name="language"
                             hidden
                             type="radio"
+                            @input="updateLanguage('dutch')"
                             id="dutch"
                         />
                         <label
@@ -810,12 +835,13 @@ export default defineComponent({
                     >
                         <input
                             v-model="language"
-                            value="Spanish"
+                            value="spanish"
                             class="peer"
                             name="language"
                             hidden
                             type="radio"
                             id="spanish"
+                            @input="updateLanguage('spanish')"
                         />
                         <label
                             class="
