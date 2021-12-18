@@ -1,4 +1,4 @@
-import { FirebaseApp, initializeApp } from 'firebase/app'
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
 import {
     Auth,
     browserLocalPersistence,
@@ -27,13 +27,15 @@ import { get, post, put } from './networkComposable'
 import router from '../bootstrap/router'
 import { User as Userdb } from '../interfaces/User'
 
-const firebaseConfig = {
-    apiKey: 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI',
-    authDomain: 'verhuur-fietsen-c124d.firebaseapp.com',
-    projectId: 'verhuur-fietsen-c124d',
-    storageBucket: 'verhuur-fietsen-c124d.appspot.com',
-    messagingSenderId: '461585575411',
-    appId: '1:461585575411:web:a801cb51c68b952415f686',
+declare global {
+    interface Window {
+        _env_: any
+    }
+}
+
+const firebaseConfig: FirebaseOptions = {
+    apiKey: window._env_.apiKey,
+    authDomain: window._env_.authDomain,
 }
 
 // Initialize Firebase
