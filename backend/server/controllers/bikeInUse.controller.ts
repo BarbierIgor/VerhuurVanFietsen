@@ -55,7 +55,7 @@ export class BikeInUseController
 
       if (isUser) {
         const item = await this.repository
-          .createQueryBuilder('hiredHistory')
+          .createQueryBuilder('bikeInUse')
           .where('bikeInUse.userId = :id', { id: request.params.id })
           .getMany()
 
