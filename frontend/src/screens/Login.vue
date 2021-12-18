@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 import router from '../bootstrap/router'
 import useFirebase from '../composables/useFirebase'
 
@@ -27,7 +28,12 @@ export default defineComponent({
             } else {
                 login(this.email, this.password).then((success: boolean) => {
                     if (success) {
-                        router.push({ path: '/' })
+                        const changeProfile = this.$route.params.goToEditProfile
+                        if (changeProfile) {
+                            router.push({ path: '/profile/edit' })
+                        } else {
+                            router.push({ path: '/' })
+                        }
                     }
                 })
             }
