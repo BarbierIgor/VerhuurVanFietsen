@@ -6,6 +6,7 @@ const createHTMLMapMarker = ({ OverlayView = google.maps.OverlayView,  ...args }
         constructor() {
             super();
             this.latlng = args.latlng;
+            this.img = args.img
             this.setMap(args.map);
         }
         
@@ -14,10 +15,10 @@ const createHTMLMapMarker = ({ OverlayView = google.maps.OverlayView,  ...args }
             this.div = document.createElement('div');
             this.div.style.position = 'absolute';
             this.div.innerHTML = `
-                <div class="absolute top-0 left-0 w-10 h-10">
+                <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-10 h-10">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-accent w-full h-full rounded-full opacity-20"></div>
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark-accent w-5/6 h-5/6 rounded-full opacity-80"></div>
-                    <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/6 h-4/6 rounded-full" src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80" alt="profile_picture">
+                    <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/6 h-4/6 rounded-full" src="${this.img}" alt="profile_picture">
                 </div>
             `;
             google.maps.event.addDomListener(this.div, 'click', event => {
@@ -55,7 +56,12 @@ const createHTMLMapMarker = ({ OverlayView = google.maps.OverlayView,  ...args }
         }
         
         getPosition() {
-        return this.latlng;
+            return this.latlng;
+        }
+
+        setMarkerPosition(newPosition: any) {
+            this.latlng = newPosition;
+            this.positionDiv();
         }
 
         getDraggable() {
