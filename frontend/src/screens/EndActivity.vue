@@ -14,6 +14,9 @@ export default defineComponent({
             paymentMethod: 0,
             paymentMethodText: '',
             description: '',
+
+            selectPaymentError: false,
+            notEnoughFundsError: false,
         }
     },
     methods: {
@@ -56,8 +59,9 @@ export default defineComponent({
                     )
                 } else {
                     console.error('you dont have enough funds in your wallet')
+                    this.notEnoughFundsError = true
                 }
-                if (this.rating !== 0 || this.description !== '') {
+                if (this.rating !== 0 && this.description !== '') {
                     const review: ReviewPost = {
                         rating: this.rating,
                         hiredhistory: Number.parseInt(
@@ -76,6 +80,7 @@ export default defineComponent({
                 router.push('/')
             } else {
                 console.error('please select a payment method')
+                this.selectPaymentError = true
             }
         },
     },
@@ -544,7 +549,19 @@ export default defineComponent({
         </div>
 
         <div class="fixed bottom-4 px-4 left-0 w-full flex flex-col items-end">
-            <p class="text-dark-400 text-center leading-tight mb-6">
+            <p
+                v-if="selectPaymentError"
+                class="text-red-600 leading-tight mb-6 w-full text-center"
+            >
+                Please select a payment method
+            </p>
+            <p
+                v-if="notEnoughFundsError"
+                class="text-red-600 leading-tight mb-6 w-full text-center"
+            >
+                you dont have enough funds in your wallet
+            </p>
+            <p class="text-dark-400 w-full text-center leading-tight mb-6">
                 Please put your bike back inside a bike rack before finishing
             </p>
             <button

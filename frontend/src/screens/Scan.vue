@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue'
 import { QrcodeStream } from 'vue3-qrcode-reader'
 import router from '../bootstrap/router'
+import { get } from '../composables/networkComposable'
+import Bike from '../interfaces/Bike'
 
 export default defineComponent({
     components: {
@@ -14,6 +16,7 @@ export default defineComponent({
 
             noRearCamera: false,
             noFrontCamera: false,
+            bikeNotFound: false,
 
             loading: false,
             destroyed: false,
@@ -24,9 +27,24 @@ export default defineComponent({
     },
 
     methods: {
-        onDecode(decodedString: string) {
+        async onDecode(decodedString: string) {
+            var found = false
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
             console.log(decodedString)
-            router.push({ name: 'BikeDetails', params: { id: decodedString } })
+            const bikes: Bike[] = await get('bike/all', userInfo.bearerToken)
+            bikes.forEach(bike => {
+                if (bike.id === Number.parseFloat(decodedString)) {
+                    found = true
+                }
+            })
+            if (found) {
+                router.push({
+                    name: 'BikeDetails',
+                    params: { id: decodedString },
+                })
+            } else {
+                this.bikeNotFound = true
+            }
         },
         handlePreviousClick(e: any) {
             router.go(-1)
@@ -237,6 +255,20 @@ export default defineComponent({
 
             <p class="" v-if="noRearCamera">
                 You don't seem to have a rear camera on your device
+            </p>
+
+            <p
+                v-if="bikeNotFound"
+                class="
+                    text-2xl text-red-600 text-center
+                    mt-24
+                    absolute
+                    top-10
+                    left-1/2
+                    -translate-x-1/2
+                "
+            >
+                Bike not found
             </p>
 
             <transition
