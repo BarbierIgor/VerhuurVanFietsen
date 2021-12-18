@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         component: () => import('../screens/Home.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
     },
     {
         path: '/login',
@@ -117,6 +117,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/activity/finish',
+        name: 'EndActivity',
         component: () => import('../screens/EndActivity.vue'),
         meta: { requireAuth: false },
     },
