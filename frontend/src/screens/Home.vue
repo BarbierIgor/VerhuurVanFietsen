@@ -4,7 +4,7 @@ import { useNetwork } from '../utils/networkComposable'
 import FilterSwitch from '../components/FilterSwitch.vue'
 import SearchBar from '../components/SearchBar.vue'
 import data from '../utils/data.json'
-import { mapState } from 'vuex'
+import { mapState, useStore } from 'vuex'
 import router from '../bootstrap/router'
 import BottomNavigation from '../components/BottomNavigation.vue'
 import StorageList from '../components/StorageList.vue'
@@ -12,6 +12,7 @@ import StorageListItem from '../components/StorageListItem.vue'
 import useFirebase from '../composables/useFirebase'
 import { get } from '../composables/networkComposable'
 import BikeStorage from '../interfaces/BikeStorage'
+import store from '../store'
 
 export default defineComponent({
     components: {
@@ -22,6 +23,8 @@ export default defineComponent({
         StorageListItem,
     },
     setup() {
+        const store = useStore()
+        console.log(store.state.preferences.units)
         const bikeStorages: Ref<any> = ref([])
         var data: BikeStorage[] = []
         const onSearch = (value: any) => {
@@ -44,6 +47,7 @@ export default defineComponent({
             data = await get('bikestorage/all', userInfo.bearerToken)
             console.log(bikeStorages)
             bikeStorages.value = data
+
         }
         getData()
         return { onSearch, handleScanClick, handleMapsClick, bikeStorages }

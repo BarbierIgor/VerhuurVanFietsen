@@ -8,6 +8,7 @@ import BottomNavigation from '../components/BottomNavigation.vue'
 
 import createHTMLMapMarker from '../classes/CustomMarker';
 import Coordinates from '../interfaces/Coordinates';
+import { useStore } from 'vuex';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 // const GOOGLE_MAPS_API_KEY = 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI'
@@ -16,6 +17,8 @@ const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 
 export default defineComponent({
     setup() {
+        const store = useStore()
+
         const data = reactive({showInfo: false});
         const markerLocations = [
             {lat: 50.822670, lng: 3.270039},
@@ -65,7 +68,9 @@ export default defineComponent({
                     origins: [origin],
                     destinations: [location],
                     travelMode: google.maps.TravelMode.DRIVING,
-                    unitSystem: google.maps.UnitSystem.METRIC,
+                    unitSystem: store.state.preferences.units === 'imperial' ? 
+                        google.maps.UnitSystem.IMPERIAL :
+                        google.maps.UnitSystem.METRIC,
                     avoidHighways: false,
                     avoidTolls: false,
                 };
@@ -73,6 +78,10 @@ export default defineComponent({
                 const distance = await service.getDistanceMatrix(request)
 
                 console.log(distance)
+
+                
+
+
 
                 const marker = new google.maps.Marker({
                     storageId: 2,
