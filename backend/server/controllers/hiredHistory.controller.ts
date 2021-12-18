@@ -54,7 +54,7 @@ export class HiredHistoryController
 
   byUser = async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const isUser = await checkIfUser(request)
+      const isUser = await checkIfUser(request, request.params.id)
 
       if (isUser) {
         const item = await this.repository
@@ -78,7 +78,7 @@ export class HiredHistoryController
 
   save = async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const isUser = await checkIfUser(request)
+      const isUser = await checkIfUser(request, request.body.user)
 
       if (isUser) {
         const { user, bikeInUse } = request.body

@@ -54,7 +54,7 @@ export class UserController
   one = async (request: Request, response: Response, next: NextFunction) => {
     try {
       const isAdmin = await checkIfAdmin(request)
-      const isUser = await checkIfUser(request)
+      const isUser = await checkIfUser(request, request.params.id)
 
       if (isAdmin || isUser) {
         const item = await this.repository.findOne(request.params.id)
@@ -83,7 +83,7 @@ export class UserController
 
   remove = async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const isUser = await checkIfUser(request)
+      const isUser = await checkIfUser(request, request.params.id)
       if (isUser) {
         const itemToRemove = await this.repository.findOne(request.params.id)
         if (itemToRemove) {
@@ -182,10 +182,17 @@ export class UserController
     next: NextFunction,
   ) => {
     try {
-      const isUser = await checkIfUser(request)
+      const { uuid, username, wallet } = request.body
+      const isUser = await checkIfUser(request, request.params.id)
       if (isUser) {
         const user: any = await this.repository.findOne(request.params.id)
-        this.repository.merge(user, request.body)
+        const newUser: User = {
+          uuid: uuid,
+          username: username,
+          wallet: wallet,
+          isAdmin: user.isAdmin,
+        }
+        this.repository.merge(user, newUser)
         const result = await this.repository.save(user)
         return response.send(result)
       } else {
