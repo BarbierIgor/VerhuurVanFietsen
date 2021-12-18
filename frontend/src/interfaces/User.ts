@@ -20,3 +20,7 @@ export interface EditUserEmail {
     uuid: string
     email: string
 }
+
+export interface EditWalletUser {
+    wallet: number
+}
