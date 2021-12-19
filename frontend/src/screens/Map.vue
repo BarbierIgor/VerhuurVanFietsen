@@ -1,14 +1,25 @@
 <script lang="ts">
 /* eslint-disable no-undef */
-import { computed, defineComponent, onMounted, onUpdated, reactive, ref, watch } from 'vue'
+import {
+    computed,
+    defineComponent,
+    onMounted,
+    onUpdated,
+    reactive,
+    ref,
+    watch,
+} from 'vue'
 import { useGeolocation } from '../composables/useGeolocation'
-import { MarkerClusterer, MarkerClustererOptions } from "@googlemaps/markerclusterer";
+import {
+    MarkerClusterer,
+    MarkerClustererOptions,
+} from '@googlemaps/markerclusterer'
 import { Loader } from '@googlemaps/js-api-loader'
 import BottomNavigation from '../components/BottomNavigation.vue'
 
-import createHTMLMapMarker from '../classes/CustomMarker';
-import Coordinates from '../interfaces/Coordinates';
-import { useStore } from 'vuex';
+import createHTMLMapMarker from '../classes/CustomMarker'
+import Coordinates from '../interfaces/Coordinates'
+import { useStore } from 'vuex'
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 // const GOOGLE_MAPS_API_KEY = 'AIzaSyDHwfc4JAJY9LUunGaU8iM8Z5IXPi1AntI'
@@ -19,34 +30,37 @@ export default defineComponent({
     setup() {
         const store = useStore()
 
-        const data = reactive({showInfo: false});
+        const data = reactive({ showInfo: false })
         const markerLocations = [
-            {lat: 50.822670, lng: 3.270039},
-            {lat: 50.825355, lng: 3.280136},
-            {lat: 50.818365, lng: 3.272511},
-            {lat: 50.817057, lng: 3.278106},
-            {lat: 50.819027, lng: 3.285213},
-        ];
+            { lat: 50.82267, lng: 3.270039 },
+            { lat: 50.825355, lng: 3.280136 },
+            { lat: 50.818365, lng: 3.272511 },
+            { lat: 50.817057, lng: 3.278106 },
+            { lat: 50.819027, lng: 3.285213 },
+        ]
 
-        const { coords } = useGeolocation();
+        const { coords } = useGeolocation()
         console.log(coords.value)
         const currPos = computed(() => ({
             lat: coords.value.latitude,
             lng: coords.value.longitude,
-        }));
-        const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY,  version: 'beta'});
+        }))
+        const loader = new Loader({
+            apiKey: GOOGLE_MAPS_API_KEY,
+            version: 'beta',
+        })
 
-        const mapDiv = ref(null);
+        const mapDiv = ref(null)
 
-        let map: google.maps.Map;
-        let markers: any;
+        let map: google.maps.Map
+        let markers: any
         let currPosMarker: any
 
-        let service: any;
+        let service: any
 
         onMounted(async () => {
-            await loader.load();
-            service = new google.maps.DistanceMatrixService();
+            await loader.load()
+            service = new google.maps.DistanceMatrixService()
 
             map = new google.maps.Map(mapDiv.value as HTMLElement, {
                 mapId: 'f01f21c52ee2ebff',
@@ -56,32 +70,32 @@ export default defineComponent({
                 disableDefaultUI: true,
                 rotateControl: true,
                 gestureHandling: 'greedy',
-            });
+            })
 
             // TODO: ------------------ Distance Matrix ---------------------
 
             markers = markerLocations.map(async (location: any) => {
                 // build request
-                const origin = { lat: 50.82004350284792, lng: 3.277652756641025 };
-    
+                const origin = {
+                    lat: 50.82004350284792,
+                    lng: 3.277652756641025,
+                }
+
                 const request = {
                     origins: [origin],
                     destinations: [location],
                     travelMode: google.maps.TravelMode.DRIVING,
-                    unitSystem: store.state.preferences.units === 'imperial' ? 
-                        google.maps.UnitSystem.IMPERIAL :
-                        google.maps.UnitSystem.METRIC,
+                    unitSystem:
+                        store.state.preferences.units === 'imperial'
+                            ? google.maps.UnitSystem.IMPERIAL
+                            : google.maps.UnitSystem.METRIC,
                     avoidHighways: false,
                     avoidTolls: false,
-                };
+                }
 
                 const distance = await service.getDistanceMatrix(request)
 
                 console.log(distance)
-
-                
-
-
 
                 const marker = new google.maps.Marker({
                     storageId: 2,
@@ -89,52 +103,56 @@ export default defineComponent({
                     position: location,
                     map: map,
                     icon: {
-                        url: "src/assets/images/mapsMarker.png",
+                        url: '../assets/images/mapsMarker.png',
                         anchor: new google.maps.Point(17, 17),
-                        labelOrigin:  new google.maps.Point(17,48),
+                        labelOrigin: new google.maps.Point(17, 48),
                     },
                     clickable: true,
                     optimized: false,
                     label: {
-                        text: distance.rows[0].elements[0].distance.text, 
-                        color: '#DEDEDE', 
-                        fontWeight: 'bold'
+                        text: distance.rows[0].elements[0].distance.text,
+                        color: '#DEDEDE',
+                        fontWeight: 'bold',
                     },
-                });
-    
+                })
+
                 marker.addListener('click', (e: any) => {
-                    console.log(marker.storageId);
+                    console.log(marker.storageId)
                     showInfoPopup()
                 })
 
-                return marker;
-            });
-
+                return marker
+            })
 
             // TODO: ------------------ Distance Matrix ---------------------
 
             // const markerCluster = new MarkerClusterer(map, markers, clusterOptions);
             // const markerCluster = new MarkerClusterer({ markers, map});
 
-
             currPosMarker = createHTMLMapMarker({
                 latlng: { lat: 50.82004350284792, lng: 3.277652756641025 },
                 map: map,
-                img: "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
-            });
+                img: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80',
+            })
 
-            window.addEventListener("deviceorientation", (e: any) => {
-                console.log(map.getHeading())
-                map.setHeading(e.alpha);
-            }, true);
-        });
-        
-        watch(coords, (coords, prevCount) => {
-            if (currPosMarker) {
-                currPosMarker.setMarkerPosition({ lat: coords.latitude, lng: coords.longitude });
-            }
+            window.addEventListener(
+                'deviceorientation',
+                (e: any) => {
+                    console.log(map.getHeading())
+                    map.setHeading(e.alpha)
+                },
+                true,
+            )
         })
 
+        watch(coords, (coords, prevCount) => {
+            if (currPosMarker) {
+                currPosMarker.setMarkerPosition({
+                    lat: coords.latitude,
+                    lng: coords.longitude,
+                })
+            }
+        })
 
         const centerMap = (): void => {
             console.log(currPos.value)
@@ -145,36 +163,61 @@ export default defineComponent({
         }
 
         const showInfoPopup = () => {
-            data.showInfo = !data.showInfo;
+            data.showInfo = !data.showInfo
         }
-
 
         return {
             data,
             currPos,
             mapDiv,
             centerMap,
-        };
+        }
     },
-    components: { BottomNavigation }
+    components: { BottomNavigation },
 })
 </script>
 
 <template>
     <div class="relative h-screen w-screen">
         <div ref="mapDiv" class="h-screen w-screen"></div>
-        <div class="absolute top-14 left-0 right-0 w-screen p-4 transition-all duration-200" :class="!data.showInfo ? '-translate-y-4 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100 pointer-events-auto'">
-            <div class="w-full h-36 bg-dark-700 flex p-2 justify-between rounded-2xl">
+        <div
+            class="
+                absolute
+                top-14
+                left-0
+                right-0
+                w-screen
+                p-4
+                transition-all
+                duration-200
+            "
+            :class="
+                !data.showInfo
+                    ? '-translate-y-4 opacity-0 pointer-events-none'
+                    : 'translate-y-0 opacity-100 pointer-events-auto'
+            "
+        >
+            <div
+                class="
+                    w-full
+                    h-36
+                    bg-dark-700
+                    flex
+                    p-2
+                    justify-between
+                    rounded-2xl
+                "
+            >
                 <div class="bg-dark-400 rounded-2xl h-30 w-24">
-                    <img class="h-full" src="../assets/images/bike01.png" alt="bike" />
+                    <img
+                        class="h-full"
+                        src="../assets/images/bike01.png"
+                        alt="bike"
+                    />
                 </div>
                 <div class="flex flex-col justify-around flex-grow pl-4">
-                    <h1 class="text-dark-400">
-                        Andre devaerelaan
-                    </h1>
-                    <p class="text-dark-600">
-                        Andre devaerelaan 20
-                    </p>
+                    <h1 class="text-dark-400">Andre devaerelaan</h1>
+                    <p class="text-dark-600">Andre devaerelaan 20</p>
                     <div class="flex items-center">
                         <svg class="h-6 w-8" viewBox="0 0 24 24" fill="#dedede">
                             <path
@@ -182,9 +225,7 @@ export default defineComponent({
                             />
                         </svg>
 
-                        <p class="ml-2 text-dark-600">
-                            €6/h
-                        </p>
+                        <p class="ml-2 text-dark-600">€6/h</p>
                     </div>
                     <div class="flex items-center">
                         <svg class="h-4 w-8" viewBox="0 0 18.005 11.675">
@@ -194,9 +235,7 @@ export default defineComponent({
                                 fill="#dedede"
                             />
                         </svg>
-                        <p class="ml-2 text-dark-600">
-                            8
-                        </p>
+                        <p class="ml-2 text-dark-600">8</p>
                     </div>
                 </div>
                 <div class="favorite-checkbox mr-2">
@@ -237,7 +276,8 @@ export default defineComponent({
                 justify-center
                 items-center
                 absolute
-                top-4 left-4
+                top-4
+                left-4
             "
         >
             <svg class="w-2/4 h-2/4 -ml-1" viewBox="0 0 16.192 22.396">
@@ -270,20 +310,24 @@ export default defineComponent({
             </svg>
         </div>
 
-        <BottomNavigation @handleMapCenter="centerMap" page='map'></BottomNavigation>
+        <BottomNavigation
+            @handleMapCenter="centerMap"
+            page="map"
+        ></BottomNavigation>
     </div>
 </template>
 
 <style>
-    a[href^="http://maps.google.com/maps"],
+a[href^="http://maps.google.com/maps"],
     a[href^="https://maps.google.com/maps"],
-    a[href^="https://www.google.com/maps"] {
-        display: none !important;
-    }
-    .gm-bundled-control .gmnoprint {
-        display: block;
-    }
-    .gmnoprint:not(.gm-bundled-control) {
-        display: none;
-    }
+    a[href^="https://www.google.com/maps"]
+{
+    display: none !important;
+}
+.gm-bundled-control .gmnoprint {
+    display: block;
+}
+.gmnoprint:not(.gm-bundled-control) {
+    display: none;
+}
 </style>
