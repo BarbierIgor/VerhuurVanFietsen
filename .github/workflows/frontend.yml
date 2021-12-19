@@ -30,3 +30,7 @@ jobs:
         context: ./frontend
         push: true
         tags: ghcr.io/barbierigor/verhuurvanfietsenfrontend:latest
+
+    - name: Use latest image on rancher
+      run: kubectl set image deployment/vue-frontend vue-frontend=ghcr.io/barbierigor/verhuurvanfietsenfrontend
+      run: kubectl set image deployment/vue-frontend vue-frontend=ghcr.io/barbierigor/verhuurvanfietsenfrontend:latest
