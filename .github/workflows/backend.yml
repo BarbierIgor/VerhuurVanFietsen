@@ -30,3 +30,7 @@ jobs:
         context: ./backend
         push: true
         tags: ghcr.io/barbierigor/verhuurvanfietsen:latest
+
+    - name: Use latest image on rancher
+      run: kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen
+      run: kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen:latest
