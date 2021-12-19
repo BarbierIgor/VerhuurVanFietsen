@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'backend/**'
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Log in to the container registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GITHUB_username }}
+        password: ${{ secrets.GITHUB_PAT }}
+    
+    - name: Build and push docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./backend
+        push: true
+        tags: ghcr.io/barbierigor/verhuurvanfietsen:latest
