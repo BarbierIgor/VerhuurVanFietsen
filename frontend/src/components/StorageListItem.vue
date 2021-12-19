@@ -1,6 +1,12 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { Loader } from '@googlemaps/js-api-loader';
+import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, unref } from 'vue'
+import { useStore } from 'vuex'
+import { useGeolocation } from '../composables/useGeolocation';
 import BikeStorage from '../interfaces/BikeStorage'
+import Coordinates from '../interfaces/Coordinates';
+
+const GOOGLE_MAPS_API_KEY = 'AIzaSyAde16u-_4w_GdVuNxXEGUzRoSJM5_Y9DE'
 
 export default defineComponent({
     props: {
@@ -9,9 +15,89 @@ export default defineComponent({
         },
     },
     methods: {
-        handleFavorite(e: any, id: string) {},
+
     },
-    setup() {},
+    setup(props) {
+        const store = useStore();
+        const state = reactive({
+            distance: store.state.preferences.units === 'metric' ? '0 km' : '0 mi'
+        });
+
+        const { coords } = useGeolocation();
+        console.log(unref(coords).latitude)
+
+        // TODO: ------------------------------------------
+
+        const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY,  version: 'beta'});
+        let service: any;
+
+        onMounted(async () => {
+            await loader.load();
+            service = new google.maps.DistanceMatrixService();
+
+            if (props.bikeStorage.location) {
+                var destinationCoords = {lat: props.bikeStorage.location.lat, lng: props.bikeStorage.location.long}
+            } else {
+                var destinationCoords = {lat: 0, lng: 0}
+            }
+
+            if (coords) {
+                var originCoords = { lat: coords.value.latitude, lng: coords.value.longitude }
+            } else {
+                var originCoords = {lat: 0, lng: 0}
+            }
+
+
+            console.log(`Origin: ${originCoords}`)
+            console.log(`Destination: ${destinationCoords.lat}`)
+
+            const request = {
+                // origins: [{lat: 50.928, lng: 3.25738}],
+                origins: [originCoords],
+                destinations: [destinationCoords],
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: store.state.preferences.units === 'imperial' ? 
+                    google.maps.UnitSystem.IMPERIAL :
+                    google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false,
+            };
+
+            await service.getDistanceMatrix(request, (res: any, status: string) => {
+                if (status == 'OK') {
+                    if (res.rows[0].elements[0].status === 'OK') {
+                        state.distance = res.rows[0].elements[0].distance.text
+                    }
+                    console.log(res)
+                }
+            })
+        })
+
+        // TODO: ------------------------------------------
+
+        const isFavorite = (id: number) => {
+            // if (store.state.favorites.includes(id)) {
+            //     return true
+            // } else {
+            //     return false
+            // }
+            console.log((store.state.favorites))
+            console.log(store.state.favorites.includes(id))
+            return store.state.favorites.includes(id)
+                
+        }
+
+        const handleFavorite = (e: any, id: number) => {
+            store.commit('addRemoveFavorites', id)
+        }
+
+        return {
+            store,
+            state,
+            handleFavorite,
+            isFavorite,
+        }
+    },
 })
 </script>
 
@@ -26,30 +112,32 @@ export default defineComponent({
         </div>
         <div class="flex flex-col justify-around flex-grow pl-4">
             <h1 class="text-dark-400">
-                {{ `${$props.bikeStorage.street}` }}
+                {{ `${$props.bikeStorage.street} ${$props.bikeStorage.houseNumber}` }}
             </h1>
-            <p class="text-dark-600">
-                {{
-                    `${$props.bikeStorage.street} ${$props.bikeStorage.houseNumber}`
-                }}
-            </p>
             <div class="flex items-center">
-                <!-- <svg class="h-6 w-8" viewBox="0 0 10.988 14.868">
-                    <path
-                        d="M15,18.5c-2.51,0-4.68-1.42-5.76-3.5H15l1-2H8.58c-0.05-0.33-0.08-0.66-0.08-1s0.03-0.67,0.08-1H15l1-2H9.24 C10.32,6.92,12.5,5.5,15,5.5c1.61,0,3.09,0.59,4.23,1.57L21,5.3C19.41,3.87,17.3,3,15,3c-3.92,0-7.24,2.51-8.48,6H3l-1,2h4.06 C6.02,11.33,6,11.66,6,12s0.02,0.67,0.06,1H3l-1,2h4.52c1.24,3.49,4.56,6,8.48,6c2.31,0,4.41-0.87,6-2.3l-1.78-1.77 C18.09,17.91,16.62,18.5,15,18.5z"
-                        fill="#dedede"
-                    />
-                </svg> -->
-                <svg class="h-6 w-8" viewBox="0 0 24 24" fill="#dedede">
-                    <path
-                        d="M15,18.5c-2.51,0-4.68-1.42-5.76-3.5H15l1-2H8.58c-0.05-0.33-0.08-0.66-0.08-1s0.03-0.67,0.08-1H15l1-2H9.24 C10.32,6.92,12.5,5.5,15,5.5c1.61,0,3.09,0.59,4.23,1.57L21,5.3C19.41,3.87,17.3,3,15,3c-3.92,0-7.24,2.51-8.48,6H3l-1,2h4.06 C6.02,11.33,6,11.66,6,12s0.02,0.67,0.06,1H3l-1,2h4.52c1.24,3.49,4.56,6,8.48,6c2.31,0,4.41-0.87,6-2.3l-1.78-1.77 C18.09,17.91,16.62,18.5,15,18.5z"
-                    />
+                <svg class="h-4 w-4" viewBox="0 0 16 16">
+                    <path d="M365,361.705c-.083,0-.165-.005-.25-.005-.051,0-.1,0-.149,0q-.2,0-.4.016a8.016,8.016,0,0,0-7.089,5.593c-.043.133-.08.269-.115.4s-.064.269-.091.4A8,8,0,1,0,365,361.705Zm2.093,11.848a2.835,2.835,0,0,1-1.579.815v.32a.53.53,0,0,1-.53.53H364.7a.53.53,0,0,1-.53-.53v-.333a3.709,3.709,0,0,1-.977-.33,2.421,2.421,0,0,1-.913-.876,2.785,2.785,0,0,1-.368-.921.512.512,0,0,1,.056-.368.53.53,0,0,1,.37-.261l.285-.051a.458.458,0,0,1,.17,0,.527.527,0,0,1,.431.391,1.97,1.97,0,0,0,.325.735,1.7,1.7,0,0,0,1.34.621h0a1.869,1.869,0,0,0,.272-.021,1.538,1.538,0,0,0,1.345-1.587,1.34,1.34,0,0,0-.264-.868,2.417,2.417,0,0,0-1.371-.676c-.232-.053-.453-.1-.671-.165a4.905,4.905,0,0,1-1.06-.426,2.1,2.1,0,0,1-.834-.836,2.483,2.483,0,0,1-.29-1.2c0-.053,0-.1,0-.154a3.175,3.175,0,0,1,.053-.434,2.491,2.491,0,0,1,.146-.471,2.431,2.431,0,0,1,.642-.874,2.384,2.384,0,0,1,.663-.4,3.182,3.182,0,0,1,.639-.186v-.431a.523.523,0,0,1,.035-.184.53.53,0,0,1,.4-.336.58.58,0,0,1,.1-.008h.3a.529.529,0,0,1,.514.527V365a2.743,2.743,0,0,1,1.22.543,2.388,2.388,0,0,1,.735,1.06.528.528,0,0,1-.421.7l-.28.043a.528.528,0,0,1-.578-.352,1.385,1.385,0,0,0-.269-.485,1.45,1.45,0,0,0-1.089-.445,1.87,1.87,0,0,0-.389.043,1.78,1.78,0,0,0-.24.072,1.455,1.455,0,0,0-.557.373,1.344,1.344,0,0,0-.173.242,1.4,1.4,0,0,0,.12,1.489,1.6,1.6,0,0,0,.607.437,5.233,5.233,0,0,0,1.039.285,5.119,5.119,0,0,1,1.057.29,2.788,2.788,0,0,1,.85.559,2.291,2.291,0,0,1,.511.788,2.873,2.873,0,0,1-.557,2.916Z" transform="translate(-356.751 -361.7)" fill="#dedede"/>
                 </svg>
+
 
                 <p class="ml-2 text-dark-600">
                     {{ `${$props.bikeStorage.prices.nonElectric} / Hr` }}
                 </p>
             </div>
+
+            <div class="flex items-center">
+
+                <svg class="h-4 w-4" viewBox="0 0 10.988 14.868">
+                    <path d="M5.494,14.868a.353.353,0,0,1-.272-.128C5.009,14.484,0,8.425,0,5.494a5.494,5.494,0,0,1,10.988,0c0,2.933-5.009,8.99-5.222,9.247A.354.354,0,0,1,5.494,14.868ZM5.5,3A2.5,2.5,0,1,0,8,5.5,2.5,2.5,0,0,0,5.5,3Z" fill="#dedede"/>
+                </svg>
+
+
+
+                <p class="ml-2 text-dark-600">
+                    {{ state.distance }}
+                </p>
+            </div>
+
             <div class="flex items-center">
                 <svg class="h-4 w-8" viewBox="0 0 18.005 11.675">
                     <path
@@ -69,7 +157,7 @@ export default defineComponent({
                 hidden
                 @change="handleFavorite($event, $props.bikeStorage.id)"
                 :id="`checkbox${$props.bikeStorage.id}`"
-                :checked="Boolean(true)"
+                :checked="isFavorite($props.bikeStorage.id)"
             />
             <label :for="`checkbox${$props.bikeStorage.id}`">
                 <svg class="h-full w-6" viewBox="0 0 24 21.208">
