@@ -32,5 +32,6 @@ jobs:
         tags: ghcr.io/barbierigor/verhuurvanfietsen:latest
 
     - name: Use latest image on rancher
-      run: kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen
-      run: kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen:latest
+      run: |
+        kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen
+        kubectl set image deployment/express-api api=ghcr.io/barbierigor/verhuurvanfietsen:latest
