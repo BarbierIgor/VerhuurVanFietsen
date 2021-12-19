@@ -22,7 +22,7 @@ interface BikeStation {
 
 export default defineComponent({
     setup() {
-
+        
     },
 
     data() {
