@@ -87,7 +87,8 @@ export default defineComponent({
                 )
                 item.distance = Math.round(distanceBetween * 10) / 10
             })
-            data.sort((a, b) => a.distance - b.distance)
+
+            data.sort((a, b) => (a.distance || 0) - (b.distance || 0))
 
             console.log(bikeStorages)
             bikeStorages.value = data
