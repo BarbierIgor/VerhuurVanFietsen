@@ -1,5 +1,6 @@
 import Bike from './Bike'
 import Prices from './Prices'
+import Location from './Location'
 
 export default interface BikeStorage {
     id: number
@@ -9,4 +10,5 @@ export default interface BikeStorage {
     prices: Prices
     bikesAvailable: number
     bikes: Array<Bike>
+    location: Location
 }
