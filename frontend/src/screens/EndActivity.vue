@@ -540,7 +540,7 @@ export default defineComponent({
                                 "
                             >
                                 Wallet <br />
-                                <span>€{{ userdb.wallet }}</span>
+                                <span>€ {{ userdb.wallet }}</span>
                             </p>
                         </label>
                     </li>
