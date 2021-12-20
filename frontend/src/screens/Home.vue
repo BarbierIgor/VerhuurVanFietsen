@@ -26,7 +26,13 @@ export default defineComponent({
         const store = useStore()
         console.log(store.state.preferences.units)
         const bikeStorages: Ref<any> = ref([])
+        var ownlat: number
+        var ownlong: number
         var data: BikeStorage[] = []
+        navigator.geolocation.getCurrentPosition(position => {
+            ownlat = position.coords.latitude
+            ownlong = position.coords.longitude
+        })
         const onSearch = (value: any) => {
             const filteredData = data.filter(bikeStorage =>
                 bikeStorage.street.toLowerCase().includes(value.toLowerCase()),
@@ -41,56 +47,54 @@ export default defineComponent({
             router.push({ path: '/scan' })
         }
 
-        // const bikeStorages: BikeStorage[] = []
+        function distance(lat1: any, lat2: any, lon1: any, lon2: any) {
+            // The math module contains a function
+            // named toRadians which converts from
+            // degrees to radians.
+            lon1 = (lon1 * Math.PI) / 180
+            lon2 = (lon2 * Math.PI) / 180
+            lat1 = (lat1 * Math.PI) / 180
+            lat2 = (lat2 * Math.PI) / 180
+
+            // Haversine formula
+            let dlon = lon2 - lon1
+            let dlat = lat2 - lat1
+            let a =
+                Math.pow(Math.sin(dlat / 2), 2) +
+                Math.cos(lat1) *
+                    Math.cos(lat2) *
+                    Math.pow(Math.sin(dlon / 2), 2)
+
+            let c = 2 * Math.asin(Math.sqrt(a))
+
+            // Radius of earth in kilometers. Use 3956
+            // for miles
+            let r = 6371
+
+            // calculate the result
+            return c * r
+        }
+
         const getData = async () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
             data = await get('bikestorage/all', userInfo.bearerToken)
+            data.forEach(item => {
+                const distanceBetween = distance(
+                    item.location.lat,
+                    ownlat,
+                    item.location.long,
+                    ownlong,
+                )
+                item.distance = Math.round(distanceBetween * 10) / 10
+            })
+            data.sort((a, b) => a.distance - b.distance)
+
             console.log(bikeStorages)
             bikeStorages.value = data
-
         }
         getData()
         return { onSearch, handleScanClick, handleMapsClick, bikeStorages }
     },
-
-    // data() {
-    //     return {
-    //         fromchild: '',
-    //         bikeStations: {},
-    //         loading: false,
-    //     }
-    // },
-
-    // computed: mapState(['items']),
-
-    // mounted() {
-    //     this.$store.dispatch('loadItems')
-    //     // this.getData()
-    // },
-
-    // methods: {
-    //     onSearch(value: any) {
-    //         // this.fromChild = value
-    //         // console.log(`Parent: ${value}`)
-    //     },
-    //     handleMapsClick() {
-    //         router.push({ path: '/map', params: { filter: 'all' } })
-    //     },
-    //     handleScanClick() {
-    //         router.push({ path: '/scan' })
-    //     },
-    //     // getData() {
-    //     //     const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
-    //     //     console.log('token' + userInfo.bearerToken)
-
-    //     //     const bikeStorages = get('bikestorage/all', userInfo.bearerToken)
-    //     //     console.log(bikeStorages)
-    //     //     setTimeout(() => {
-    //     //         this.bikeStations = bikeStorages
-    //     //         this.loading = false
-    //     //     }, 2000)
-    //     // },
-    // },
 })
 </script>
 

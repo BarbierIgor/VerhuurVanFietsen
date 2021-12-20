@@ -11,4 +11,5 @@ export default interface BikeStorage {
     bikesAvailable: number
     bikes: Array<Bike>
     location: Location
+    distance?: number
 }
