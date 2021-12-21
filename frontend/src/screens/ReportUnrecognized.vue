@@ -49,18 +49,22 @@ export default defineComponent({
             console.log(val)
         },
     },
-    setup() {},
+    setup() { 
+        return {
+
+        }
+    },
     components: { Header, CustomSelect },
 })
 </script>
 
 <template>
     <div class="p-4">
-        <Header title="Unrecognized Bike"></Header>
+        <Header :title="$t('report_problem.TITLE_UNRECOGNIZED')"></Header>
         <div class="w-full mt-10 grid gap-8">
             <div>
                 <h1 class="text-dark-600">
-                    Bike number <span class="text-dark-accent">*</span>
+                    {{ $t('report_problem.BIKE_NUMBER') }} <span class="text-dark-accent">*</span>
                 </h1>
                 <input
                     v-model="bikeNumber"
@@ -78,7 +82,7 @@ export default defineComponent({
                         focus:outline-none focus:opacity-100
                     "
                     type="text"
-                    placeholder="Bike number"
+                    :placeholder="$t('report_problem.BIKE_NUMBER')"
                 />
             </div>
         </div>
@@ -95,7 +99,7 @@ export default defineComponent({
                     text-dark-400 text-lg
                 "
             >
-                Report
+                {{ $t('report_problem.REPORT') }}
             </button>
         </div>
     </div>

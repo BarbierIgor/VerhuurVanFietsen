@@ -2,8 +2,8 @@ import Preferences from "../../interfaces/Preferences"
 
 
 const state: Preferences = {
-    darkMode: false,
-    language: null,
+    darkMode: true,
+    language: 'en',
     units: 'metric',
 }
 

@@ -30,7 +30,17 @@ export default defineComponent({
     StorageListItem,
     Header
 },
+
+    data() {
+        return {
+            isLoading: false,
+        }
+    },
+
     setup() {
+        const state = reactive({
+            isLoading: false,
+        })
         // force a reload, can be buggy when coming from map page when its not reloaded.
         if (!localStorage.getItem('foo')) {
             localStorage.setItem('foo', 'no reload')
@@ -51,11 +61,13 @@ export default defineComponent({
             getData()
         })
         const onSearch = (value: any) => {
+            state.isLoading = true
             const filteredData = data.filter(bikeStorage =>
                 bikeStorage.street.toLowerCase().includes(value.toLowerCase()),
             )
             bikeStorages.value = filteredData
             console.log(filteredData)
+            state.isLoading = false
         }
         const handleMapsClick = () => {
             router.push({
@@ -96,6 +108,7 @@ export default defineComponent({
         }
 
         const getData = async () => {
+            state.isLoading = true
             const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
             data = await get('bikestorage/all', userInfo.bearerToken)
             data.forEach(item => {
@@ -112,8 +125,9 @@ export default defineComponent({
 
             console.log(bikeStorages)
             bikeStorages.value = data
+            state.isLoading = false 
         }
-        return { onSearch, handleScanClick, handleMapsClick, bikeStorages }
+        return { onSearch, handleScanClick, handleMapsClick, bikeStorages, state }
     },
 })
 </script>
@@ -124,7 +138,7 @@ export default defineComponent({
 
         <!-- <FilterSwitch class="mt-4"></FilterSwitch> -->
 
-        <StorageList :data="bikeStorages" :loading="false" class="mt-8">
+        <StorageList :data="bikeStorages" :loading="state.isLoading" class="mt-8">
             <template v-slot="slotProps">
                 <StorageListItem
                     :bikeStorage="slotProps.item"

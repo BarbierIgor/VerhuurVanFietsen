@@ -97,7 +97,7 @@ export default defineComponent({
                 flex-col
             "
         >
-            <h1 class="text-white text-2xl pt-8 pl-8 self-start">Log in</h1>
+            <h1 class="text-white text-2xl pt-8 pl-8 self-start">{{ $t('signin.LOGIN')}}</h1>
             <form
                 @submit.prevent="loginFunction"
                 class="flex justify-center flex-col w-full pl-8 pr-8 pt-8"
@@ -122,7 +122,7 @@ export default defineComponent({
                             duration-200
                             rounded-lg
                         "
-                        placeholder="Email"
+                        :placeholder="$t('signin.EMAIL')"
                         type="text"
                         required
                     />
@@ -145,7 +145,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >Email</label
+                        >{{ $t('signin.EMAIL')}}</label
                     >
                 </div>
 
@@ -169,7 +169,7 @@ export default defineComponent({
                             rounded-lg
                         "
                         :type="showPassword ? 'text' : 'password'"
-                        placeholder="Password"
+                        :placeholder="$t('signin.PASSWORD')"
                         required
                     />
                     <label
@@ -191,7 +191,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >Password</label
+                        >{{ $t('signin.PASSWORD')}}</label
                     >
                     <span
                         @click="togglePassword"
@@ -239,18 +239,18 @@ export default defineComponent({
                 <input
                     class="bg-dark-accent text-white rounded-lg p-2 mb-2"
                     type="submit"
-                    value="Login"
+                    :value="$t('signin.LOGIN')"
                 />
-                <a class="text-dark-600" href="#">Forgot password?</a>
+                <a class="text-dark-600" href="#">{{ $t('signin.FORGOT_PASSWORD')}}?</a>
             </form>
 
             <p class="text-dark-600 absolute bottom-4">
-                Don't have an account yet?
+                {{ $t('signin.NO_ACCOUNT')}}?
                 <RouterLink
                     class="text-dark-accent"
                     exact-active-class="text-dark-600"
                     to="/signup"
-                    >Sign Up</RouterLink
+                    >{{ $t('signin.SIGNUP')}}</RouterLink
                 >
             </p>
         </div>

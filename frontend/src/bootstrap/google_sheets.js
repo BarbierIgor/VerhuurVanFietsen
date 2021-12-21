@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // The export file must be placed at this location : src/assets/
-fs.readFile('src/bootstrap/sheets2.json', (err, data) => {
+fs.readFile('src/bootstrap/sheets.json', (err, data) => {
     if (err) throw err;
     parseSource(JSON.parse(data));
 });

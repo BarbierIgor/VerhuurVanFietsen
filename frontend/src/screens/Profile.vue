@@ -9,7 +9,7 @@ import useFirebase from '../composables/useFirebase'
 import { Problem } from '../interfaces/Problem'
 import { get } from '../composables/networkComposable'
 import { useStore } from 'vuex'
-import i18n, { CURRENT_LANGUAGE, loadLocaleMessages, SUPPORT_LOCALES } from '../plugins/i18n-setup'
+import i18n, { CURRENT_LANGUAGE, loadLocaleMessages, setCurrentLanguage, SUPPORT_LOCALES } from '../plugins/i18n-setup'
 
 export default defineComponent({
     data() {
@@ -101,6 +101,7 @@ export default defineComponent({
                 await loadLocaleMessages(i18n, language)
                 i18n.global.locale = language
             }
+            setCurrentLanguage(language)
         }
 
         const getLanguageFromLocale = (locale: string): string => {
@@ -172,7 +173,7 @@ export default defineComponent({
                         cursor-pointer
                     "
                 >
-                    <p class="text-dark-400 font-bold">Edit profile</p>
+                    <p class="text-dark-400 font-bold">{{ $t('profile.EDIT_PROFILE') }}</p>
                     <svg
                         class="w-4 h-4 ml-4 rotate-180"
                         viewBox="0 0 15.515 23.959"
@@ -219,7 +220,7 @@ export default defineComponent({
                         cursor-pointer
                     "
                 >
-                    <p class="text-dark-400 font-bold">Logout</p>
+                    <p class="text-dark-400 font-bold">{{ $t('profile.LOGOUT') }}</p>
                     <svg
                         class="w-4 h-4 ml-4 rotate-180"
                         viewBox="0 0 15.515 23.959"
@@ -303,7 +304,7 @@ export default defineComponent({
                     </g>
                 </svg>
                 <!-- <p class="text-md text-dark-400 mx-4">{{ $t('home.HOME_TITLE') }}</p> -->
-                <p class="text-md text-dark-400 mx-4">Report a problem</p>
+                <p class="text-md text-dark-400 mx-4">{{ $t('profile.REPORT_PROBLEM') }}</p>
                 <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                     <g data-name="Group 82" transform="translate(2.121 2.121)">
                         <path
@@ -324,7 +325,7 @@ export default defineComponent({
 
             <!-- Section Admin -->
             <div v-if="isAdmin" class="my-2">
-                <h1 class="text-dark-600">Admin</h1>
+                <h1 class="text-dark-600 capitalize">{{ $t('profile.ADMIN') }}</h1>
                 <router-link
                     to="/admin/problems"
                     class="flex w-full items-center justify-between py-2"
@@ -361,7 +362,7 @@ export default defineComponent({
                         </svg>
 
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Problems
+                            {{ $t('profile.PROBLEMS') }}
                         </p>
                     </div>
 
@@ -407,7 +408,7 @@ export default defineComponent({
                             />
                         </svg>
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Empty storages
+                            {{ $t('profile.EMPTY') }}
                         </p>
                     </div>
 
@@ -443,7 +444,7 @@ export default defineComponent({
 
             <!-- Section Account -->
             <div class="my-2">
-                <h1 class="text-dark-600">Account</h1>
+                <h1 class="text-dark-600">{{ $t('profile.ACCOUNT') }}</h1>
                 <router-link
                     to="/favorites"
                     class="flex w-full items-center justify-between py-2"
@@ -466,7 +467,7 @@ export default defineComponent({
                         </svg>
 
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Favorites
+                            {{ $t('profile.FAVORITES') }}
                         </p>
                     </div>
 
@@ -526,7 +527,7 @@ export default defineComponent({
                             </g>
                         </svg>
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Wallet
+                            {{ $t('profile.WALLET') }}
                         </p>
                     </div>
 
@@ -562,7 +563,7 @@ export default defineComponent({
 
             <!-- Section Preferences -->
             <div class="my-2">
-                <h1 class="text-dark-600">Preferences</h1>
+                <h1 class="text-dark-600 capitalize">{{ $t('profile.PREFERENCES') }}</h1>
                 <!-- Language -->
                 <div
                     @click="toggleModal('language')"
@@ -586,7 +587,7 @@ export default defineComponent({
                             />
                         </svg>
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Language
+                            {{ $t('profile.LANGUAGE') }}
                         </p>
                     </div>
 
@@ -600,7 +601,7 @@ export default defineComponent({
                             "
                         >
                             <!-- {{ store.state.preferences.language }} -->
-                            {{ getLanguageFromLocale(CURRENT_LANGUAGE) }}
+                            {{ getLanguageFromLocale(store.state.preferences.language) }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -656,7 +657,7 @@ export default defineComponent({
                         </svg>
 
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Dark mode
+                            {{ $t('profile.DARK_MODE') }}
                         </p>
                     </div>
 
@@ -702,7 +703,7 @@ export default defineComponent({
                             </g>
                         </svg>
                         <p class="mx-4 justify-self-start text-dark-400">
-                            Distance units
+                            {{ $t('profile.DISTANCE_UNITS') }}
                         </p>
                     </div>
 
@@ -715,7 +716,7 @@ export default defineComponent({
                                 capitalize
                             "
                         >
-                            {{ store.state.preferences.units }}
+                            {{ store.state.preferences.units == 'metric' ? $t('profile.METRIC') : $t('profile.IMPERIAL') }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -748,7 +749,7 @@ export default defineComponent({
             v-on:toggleModal="toggleModal('distanceUnits')"
             :isActive="isDistanceUnitsModalActive"
             ref="overlayActive"
-            title="Distance units"
+            :title="$t('profile.DISTANCE_UNITS')"
         >
             <div class="w-full">
                 <!-- <h1 class="text-dark-900 font-semibold text-lg mb-4">Measurement Unit</h1> -->
@@ -757,7 +758,7 @@ export default defineComponent({
                         class="w-full flex justify-between items-center py-2"
                         for="metric"
                     >
-                        <p>Metric</p>
+                        <p>{{ $t('profile.METRIC') }}</p>
                         <input
                             class="peer group"
                             v-model="measurementUnit"
@@ -800,7 +801,7 @@ export default defineComponent({
                         class="w-full flex justify-between items-center py-2"
                         for="imperial"
                     >
-                        <p>Imperial</p>
+                        <p>{{ $t('profile.IMPERIAL') }}</p>
                         <input
                             class="peer group"
                             v-model="measurementUnit"
@@ -845,7 +846,7 @@ export default defineComponent({
         <SelectOverlay
             v-on:toggleModal="toggleModal('language')"
             :isActive="isLanguageModalActive"
-            :title="`Language${language != null ? ' - ' + language : ''}`"
+            :title="`${$t('profile.LANGUAGE')}${language != null ? ' - ' + language : ''}`"
         >
             <div class="w-full">
                 <form
