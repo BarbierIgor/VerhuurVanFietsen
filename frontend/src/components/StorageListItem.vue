@@ -181,7 +181,7 @@ export default defineComponent({
                 </p>
             </div>
         </div>
-        <div class="favorite-checkbox">
+        <div class="favorite-checkbox cursor-pointer">
             <input
                 type="checkbox"
                 hidden
