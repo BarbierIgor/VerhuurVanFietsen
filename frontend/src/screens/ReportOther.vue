@@ -71,18 +71,22 @@ export default defineComponent({
             console.log(val)
         },
     },
-    setup() {},
+    setup() {
+        return {
+
+        }
+    },
     components: { Header, CustomSelect },
 })
 </script>
 
 <template>
     <div class="p-4">
-        <Header title="Other"></Header>
+        <Header :title="$t('report_problem.OTHER')"></Header>
         <div class="w-full mt-10 grid gap-8">
             <div>
                 <h1 class="text-dark-600">
-                    Description <span class="text-dark-accent">*</span>
+                    {{ $t('report_problem.DESCRIPTION') }} <span class="text-dark-accent">*</span>
                 </h1>
                 <input
                     v-model="description"
@@ -105,7 +109,7 @@ export default defineComponent({
             </div>
 
             <div>
-                <h1 class="text-dark-600">Images</h1>
+                <h1 class="text-dark-600">{{ $t('report_problem.IMAGES') }}</h1>
                 <div class="mt-4">
                     <transition-group
                         name="image-grid"
@@ -246,7 +250,7 @@ export default defineComponent({
                     text-dark-400 text-lg
                 "
             >
-                Report
+                {{ $t('report_problem.REPORT') }}
             </button>
         </div>
     </div>
@@ -266,10 +270,6 @@ export default defineComponent({
     opacity: 1;
     transform: scale(1);
 }
-
-/* .image-grid-leave-active {
-        position: absolute;
-    } */
 
 .image-grid-move {
     opacity: 1;

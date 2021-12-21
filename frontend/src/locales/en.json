@@ -1,9 +1,1 @@
-{
-    "home": {
-        "LOCALE_LANGUAGE": "English",
-        "HOME_TITLE": "Home",
-        "HOME_TEXT_1": "Text 1",
-        "HOME_TEXT_2": "Text 2",
-        "HOME_TEXT_3": "Text 3"
-    }
-}
+{"signin":{"LOCALE_LANGUAGE":"English","LOGIN":"Login","EMAIL":"Email","PASSWORD":"Password","SHOW":"Show","HIDE":"Hide","FORGOT_PASSWORD":"Forgot password","NO_ACCOUNT":"Don't have an account yet?","SIGNUP":"Sign Up","TITLE":"Start renting bikes"},"signup":{"LOCALE_LANGUAGE":"English","CREATE_ACCOUNT":"Create an account","SIGN_UP":"Sign up","FIRST_NAME":"First name","LAST_NAME":"Last name","PASSWORD":"Password","ALREADY_HAVE_ACCOUNT":"Already have an account?"},"home":{"LOCALE_LANGUAGE":"English","FIND":"Find a bike station","HOUR":"Hr"},"profile":{"LOCALE_LANGUAGE":"English","EDIT_PROFILE":"Edit profile","LOGOUT":"Logout","REPORT_PROBLEM":"Report a problem","ADMIN":"Admin","PROBLEMS":"Problems","EMPTY":"Empty storages","ACCOUNT":"Account","FAVORITES":"Favorites","WALLET":"Wallet","PREFERENCES":"Preferences","LANGUAGE":"Language","DARK_MODE":"Dark mode","DISTANCE_UNITS":"Distance units","COIN":"Dollar","METRIC":"Metric","IMPERIAL":"Imperial"},"report_problem":{"LOCALE_LANGUAGE":"English","TITLE_REPORT":"Report a problem","SUB_TITLE":"Choose an option","DEFECT_BIKE":"Defect bike","STORAGE_PROBLEM":"Storage problem","UNRECOGNIZED":"Unrecognized","OTHER":"Other","TITLE_DEFECT_BIKE":"Defect Bike","BIKE_NUMBER":"Bike number","DESCRIPTION":"Description","IMAGES":"Images","REPORT":"Report","TITLE_DEFECT_BIKE_STORAGE":"Defect Bike Storage","BIKE_STORAGE_NUMBER":"Bike storage number","TITLE_UNRECOGNIZED":"Unrecognized Bike"},"general":{"LOCALE_LANGUAGE":"English","LOADING":"Loading","SHOW":"Show","HIDE":"Hide","ENTER_BIKE_NUMBER":"Enter bike number"}}

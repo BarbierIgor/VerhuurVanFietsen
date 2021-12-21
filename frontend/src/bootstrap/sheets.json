@@ -1,4 +1,110 @@
 {
+  "signin": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
+    },
+    "LOGIN": {
+      "en": "Login",
+      "nl": "Log in",
+      "de": "Anmeldung",
+      "es": "Acceso"
+    },
+    "EMAIL": {
+      "en": "Email",
+      "nl": "E-mail",
+      "de": "Email",
+      "es": "Correo electrónico"
+    },
+    "PASSWORD": {
+      "en": "Password",
+      "nl": "Wachtwoord",
+      "de": "Passwort",
+      "es": "Contraseña"
+    },
+    "SHOW": {
+      "en": "Show",
+      "nl": "Laten zien",
+      "de": "Show",
+      "es": "Show"
+    },
+    "HIDE": {
+      "en": "Hide",
+      "nl": "Zich verstoppen",
+      "de": "Verstecken",
+      "es": "Esconder"
+    },
+    "FORGOT_PASSWORD": {
+      "en": "Forgot password",
+      "nl": "Wachtwoord vergeten",
+      "de": "Passwort vergessen",
+      "es": "Se te olvidó tu contraseña"
+    },
+    "NO_ACCOUNT": {
+      "en": "Don't have an account yet?",
+      "nl": "Heb je nog geen account?",
+      "de": "Habe noch kein Konto?",
+      "es": "¿Ya no tienes una cuenta?"
+    },
+    "SIGNUP": {
+      "en": "Sign Up",
+      "nl": "Inschrijven",
+      "de": "Anmeldung",
+      "es": "Inscribirse"
+    },
+    "TITLE": {
+      "en": "Start renting bikes",
+      "nl": "Begin met het huren van fietsen",
+      "de": "Beginnen Sie mit dem Mieten von Bikes.",
+      "es": "Empezar alquiler de bicicletas"
+    }
+  },
+  "signup": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
+    },
+    "CREATE_ACCOUNT": {
+      "en": "Create an account",
+      "nl": "Account aanmaken",
+      "de": "Ein Konto erstellen",
+      "es": "Crea una cuenta"
+    },
+    "SIGN_UP": {
+      "en": "Sign up",
+      "nl": "Inschrijven",
+      "de": "Anmelden",
+      "es": "Inscribirse"
+    },
+    "FIRST_NAME": {
+      "en": "First name",
+      "nl": "Voornaam",
+      "de": "Vorname",
+      "es": "Nombre de pila"
+    },
+    "LAST_NAME": {
+      "en": "Last name",
+      "nl": "Achternaam",
+      "de": "Nachname",
+      "es": "Apellido"
+    },
+    "PASSWORD": {
+      "en": "Password",
+      "nl": "Wachtwoord",
+      "de": "Passwort",
+      "es": "Contraseña"
+    },
+    "ALREADY_HAVE_ACCOUNT": {
+      "en": "Already have an account?",
+      "nl": "Heb je al een account?",
+      "de": "Sie haben bereits ein Konto?",
+      "es": "¿Ya tienes una cuenta?"
+    }
+  },
   "home": {
     "LOCALE_LANGUAGE": {
       "en": "English",
@@ -6,29 +112,246 @@
       "de": "Deutsch",
       "es": "Espagnol"
     },
-    "HOME_TITLE": {
-      "en": "Home",
-      "nl": "Huis",
-      "de": "Heim",
-      "es": "Casa"
+    "FIND": {
+      "en": "Find a bike station",
+      "nl": "Zoek een fietstation",
+      "de": "Finden Sie eine Fahrradstation",
+      "es": "Encontrar una estación de bicicletas"
     },
-    "HOME_TEXT_1": {
-      "en": "Text 1",
-      "nl": "Tekst 1",
-      "de": "Text 1",
-      "es": "Texto 1"
+    "HOUR": {
+      "en": "Hr",
+      "nl": "HR",
+      "de": "Hr.",
+      "es": "Hora"
     },
-    "HOME_TEXT_2": {
-      "en": "Text 2",
-      "nl": "Tekst 2",
-      "de": "Text 2.",
-      "es": "Texto 2"
+    "": {}
+  },
+  "profile": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
     },
-    "HOME_TEXT_3": {
-      "en": "Text 3",
-      "nl": "Tekst 3",
-      "de": "Text 3.",
-      "es": "Texto 3"
+    "EDIT_PROFILE": {
+      "en": "Edit profile",
+      "nl": "Bewerk profiel",
+      "de": "Profil bearbeiten",
+      "es": "Editar perfil"
+    },
+    "LOGOUT": {
+      "en": "Logout",
+      "nl": "Uitloggen",
+      "de": "Ausloggen",
+      "es": "Cerrar sesión"
+    },
+    "REPORT_PROBLEM": {
+      "en": "Report a problem",
+      "nl": "Meld een probleem",
+      "de": "Ein Problem melden",
+      "es": "Reportar un problema"
+    },
+    "ADMIN": {
+      "en": "Admin",
+      "nl": "beheerder",
+      "de": "Administrator",
+      "es": "Administración"
+    },
+    "PROBLEMS": {
+      "en": "Problems",
+      "nl": "Problemen",
+      "de": "Probleme",
+      "es": "Problemas"
+    },
+    "EMPTY": {
+      "en": "Empty storages",
+      "nl": "Lege opslag",
+      "de": "Leere Speicher",
+      "es": "Almacenes vacíos"
+    },
+    "ACCOUNT": {
+      "en": "Account",
+      "nl": "Account",
+      "de": "#ERROR!",
+      "es": "#ERROR!"
+    },
+    "FAVORITES": {
+      "en": "Favorites",
+      "nl": "Favorieten",
+      "de": "Favoriten",
+      "es": "Favoritos"
+    },
+    "WALLET": {
+      "en": "Wallet",
+      "nl": "Portemonnee",
+      "de": "Brieftasche",
+      "es": "Cartera"
+    },
+    "PREFERENCES": {
+      "en": "Preferences",
+      "nl": "Voorkeuren",
+      "de": "Vorlieben",
+      "es": "Preferencias"
+    },
+    "LANGUAGE": {
+      "en": "Language",
+      "nl": "Taal",
+      "de": "Sprache",
+      "es": "Idioma"
+    },
+    "DARK_MODE": {
+      "en": "Dark mode",
+      "nl": "Donkere modus",
+      "de": "Dunkler Modus",
+      "es": "Modo oscuro"
+    },
+    "DISTANCE_UNITS": {
+      "en": "Distance units",
+      "nl": "Afstandseenheden",
+      "de": "Entfernungseinheiten",
+      "es": "Unidades de distancia"
+    },
+    "COIN": {
+      "en": "Dollar",
+      "nl": "Euro",
+      "de": "Euro",
+      "es": "Euro"
+    },
+    "METRIC": {
+      "en": "Metric",
+      "nl": "Metrisch",
+      "de": "Metrisch",
+      "es": "Métrico"
+    },
+    "IMPERIAL": {
+      "en": "Imperial",
+      "nl": "Imperiaal",
+      "de": "Kaiserliche",
+      "es": "Imperial"
+    }
+  },
+  "report_problem": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
+    },
+    "TITLE_REPORT": {
+      "en": "Report a problem",
+      "nl": "Meld een probleem",
+      "de": "Ein Problem melden",
+      "es": "Reportar un problema"
+    },
+    "SUB_TITLE": {
+      "en": "Choose an option",
+      "nl": "Kies een optie",
+      "de": "Wähle eine Option",
+      "es": "Elige una opcion"
+    },
+    "DEFECT_BIKE": {
+      "en": "Defect bike",
+      "nl": "Defecte fiets",
+      "de": "Defektes Fahrrad",
+      "es": "Bicicleta de defecto"
+    },
+    "STORAGE_PROBLEM": {
+      "en": "Storage problem",
+      "nl": "Opslagprobleem",
+      "de": "Speicherprobleme",
+      "es": "Problema de almacenamiento"
+    },
+    "UNRECOGNIZED": {
+      "en": "Unrecognized",
+      "nl": "Niet opgenomen",
+      "de": "Unerkannt",
+      "es": "Poco reconocido"
+    },
+    "OTHER": {
+      "en": "Other",
+      "nl": "Ander",
+      "de": "Andere",
+      "es": "Otro"
+    },
+    "TITLE_DEFECT_BIKE": {
+      "en": "Defect Bike",
+      "nl": "Defecte fiets",
+      "de": "Defektes Fahrrad",
+      "es": "Bicicleta de defecto"
+    },
+    "BIKE_NUMBER": {
+      "en": "Bike number",
+      "nl": "Fietsnummer",
+      "de": "Fahrradnummer",
+      "es": "Número de bicicletas"
+    },
+    "DESCRIPTION": {
+      "en": "Description",
+      "nl": "Beschrijving",
+      "de": "Beschreibung",
+      "es": "Descripción"
+    },
+    "IMAGES": {
+      "en": "Images",
+      "nl": "Afbeeldingen",
+      "de": "Bilde",
+      "es": "Imágenes"
+    },
+    "REPORT": {
+      "en": "Report",
+      "nl": "Rapporteren",
+      "de": "Prüfbericht",
+      "es": "Reporte"
+    },
+    "TITLE_DEFECT_BIKE_STORAGE": {
+      "en": "Defect Bike Storage",
+      "nl": "Defecte fietsopslag",
+      "de": "Defekte Fahrradspeicherung.",
+      "es": "Almacenamiento de bicicletas de defectos"
+    },
+    "BIKE_STORAGE_NUMBER": {
+      "en": "Bike storage number",
+      "nl": "Fietsopslagnummer",
+      "de": "Bike-Speichernummer.",
+      "es": "Número de almacenamiento de bicicletas"
+    },
+    "TITLE_UNRECOGNIZED": {
+      "en": "Unrecognized Bike",
+      "nl": "Niet-herkende fiets",
+      "de": "Nicht erkanntes Fahrrad",
+      "es": "Bicicleta no reconocida"
+    }
+  },
+  "general": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
+    },
+    "LOADING": {
+      "en": "Loading",
+      "nl": "Bezig met laden",
+      "de": "Wird geladen",
+      "es": "Cargando"
+    },
+    "SHOW": {
+      "en": "Show",
+      "nl": "Toon",
+      "de": "Show",
+      "es": "Show"
+    },
+    "HIDE": {
+      "en": "Hide",
+      "nl": "Verberg",
+      "de": "Verstecken",
+      "es": "Esconder"
+    },
+    "ENTER_BIKE_NUMBER": {
+      "en": "Enter bike number",
+      "nl": "Voer het fietsnummer in",
+      "de": "Geben Sie die Fahrradnummer ein",
+      "es": "Ingrese el número de bicicleta"
     }
   }
 }

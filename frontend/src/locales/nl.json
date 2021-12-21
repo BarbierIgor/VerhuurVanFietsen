@@ -1,9 +1,1 @@
-{
-    "home": {
-        "LOCALE_LANGUAGE": "Nederlands",
-        "HOME_TITLE": "Huis",
-        "HOME_TEXT_1": "Tekst 1",
-        "HOME_TEXT_2": "Tekst 2",
-        "HOME_TEXT_3": "Tekst 3"
-    }
-}
+{"signin":{"LOCALE_LANGUAGE":"Nederlands","LOGIN":"Log in","EMAIL":"E-mail","PASSWORD":"Wachtwoord","SHOW":"Laten zien","HIDE":"Zich verstoppen","FORGOT_PASSWORD":"Wachtwoord vergeten","NO_ACCOUNT":"Heb je nog geen account?","SIGNUP":"Inschrijven","TITLE":"Begin met het huren van fietsen"},"signup":{"LOCALE_LANGUAGE":"Nederlands","CREATE_ACCOUNT":"Account aanmaken","SIGN_UP":"Inschrijven","FIRST_NAME":"Voornaam","LAST_NAME":"Achternaam","PASSWORD":"Wachtwoord","ALREADY_HAVE_ACCOUNT":"Heb je al een account?"},"home":{"LOCALE_LANGUAGE":"Nederlands","FIND":"Zoek een fietstation","HOUR":"HR"},"profile":{"LOCALE_LANGUAGE":"Nederlands","EDIT_PROFILE":"Bewerk profiel","LOGOUT":"Uitloggen","REPORT_PROBLEM":"Meld een probleem","ADMIN":"beheerder","PROBLEMS":"Problemen","EMPTY":"Lege opslag","ACCOUNT":"Account","FAVORITES":"Favorieten","WALLET":"Portemonnee","PREFERENCES":"Voorkeuren","LANGUAGE":"Taal","DARK_MODE":"Donkere modus","DISTANCE_UNITS":"Afstandseenheden","COIN":"Euro","METRIC":"Metrisch","IMPERIAL":"Imperiaal"},"report_problem":{"LOCALE_LANGUAGE":"Nederlands","TITLE_REPORT":"Meld een probleem","SUB_TITLE":"Kies een optie","DEFECT_BIKE":"Defecte fiets","STORAGE_PROBLEM":"Opslagprobleem","UNRECOGNIZED":"Niet opgenomen","OTHER":"Ander","TITLE_DEFECT_BIKE":"Defecte fiets","BIKE_NUMBER":"Fietsnummer","DESCRIPTION":"Beschrijving","IMAGES":"Afbeeldingen","REPORT":"Rapporteren","TITLE_DEFECT_BIKE_STORAGE":"Defecte fietsopslag","BIKE_STORAGE_NUMBER":"Fietsopslagnummer","TITLE_UNRECOGNIZED":"Niet-herkende fiets"},"general":{"LOCALE_LANGUAGE":"Nederlands","LOADING":"Bezig met laden","SHOW":"Toon","HIDE":"Verberg","ENTER_BIKE_NUMBER":"Voer het fietsnummer in"}}

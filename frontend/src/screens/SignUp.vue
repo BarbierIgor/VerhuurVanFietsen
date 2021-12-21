@@ -50,7 +50,12 @@ export default defineComponent({
             this.showPassword = !this.showPassword
         },
     },
-    setup() {},
+    setup() {
+
+        return {
+
+        }
+    },
 })
 </script>
 
@@ -74,7 +79,7 @@ export default defineComponent({
                 flex-col
             "
         >
-            <h1 class="text-white text-2xl pt-8 pl-8 self-start">Sign up</h1>
+            <h1 class="text-white text-2xl pt-8 pl-8 self-start">{{ $t('signup.SIGN_UP') }}</h1>
             <form
                 @submit.prevent="signUp"
                 class="flex justify-center flex-col w-full pl-8 pr-8 pt-8"
@@ -99,7 +104,7 @@ export default defineComponent({
                             duration-200
                             rounded-lg
                         "
-                        placeholder="First name"
+                        :placeholder="$t('signup.FIRST_NAME')"
                         type="text"
                         required
                     />
@@ -122,7 +127,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >First name</label
+                        >{{ $t('signup.FIRST_NAME') }}</label
                     >
                 </div>
 
@@ -145,7 +150,7 @@ export default defineComponent({
                             duration-200
                             rounded-lg
                         "
-                        placeholder="Last name"
+                        :placeholder="$t('signup.LAST_NAME')"
                         type="text"
                         required
                     />
@@ -168,7 +173,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >Last name</label
+                        >{{ $t('signup.LAST_NAME') }}</label
                     >
                 </div>
 
@@ -191,7 +196,7 @@ export default defineComponent({
                             duration-200
                             rounded-lg
                         "
-                        placeholder="Email"
+                        :placeholder="$t('signin.EMAIL')"
                         type="text"
                         required
                     />
@@ -214,7 +219,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >Email</label
+                        >{{ $t('signin.EMAIL') }}</label
                     >
                 </div>
 
@@ -237,7 +242,7 @@ export default defineComponent({
                             duration-200
                             rounded-lg
                         "
-                        placeholder="Password"
+                        :placeholder="$t('signup.PASSWORD')"
                         :type="showPassword ? 'text' : 'password'"
                         required
                     />
@@ -260,7 +265,7 @@ export default defineComponent({
                             bg-opacity-100
                         "
                         for=""
-                        >Password</label
+                        >{{ $t('signup.PASSWORD') }}</label
                     >
 
                     <span
@@ -309,17 +314,17 @@ export default defineComponent({
                 <input
                     class="bg-dark-accent text-white rounded-lg p-2 mb-2"
                     type="submit"
-                    value="Sign Up"
+                    :value="$t('signup.SIGN_UP')"
                 />
             </form>
 
             <p class="text-dark-600 absolute bottom-4">
-                Already have an account?
+                {{ $t('signup.ALREADY_HAVE_ACCOUNT') }}
                 <RouterLink
                     class="text-dark-accent"
                     exact-active-class="text-dark-600"
                     to="/login"
-                    >Sign In</RouterLink
+                    >{{ $t('signin.LOGIN') }}</RouterLink
                 >
             </p>
         </div>
