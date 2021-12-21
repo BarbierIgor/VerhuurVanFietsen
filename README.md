@@ -1,6 +1,6 @@
 # VerhuurVanFietsen
 
-### Alles draait op k8s op de vm van Barbier-Igor
+### Alles draait op k8s op de vm van Barbier-Igor:
 
 Frontend: op poort 31402
 Backend: op poort 31401
