@@ -38,7 +38,7 @@ export default defineComponent({
             v-on:keyup.enter="handleSearch($event)"
             class="relative w-full h-full rounded-full bg-dark-400 pl-12"
             type="text"
-            placeholder="Find a bike station"
+            :placeholder="$t('home.FIND')"
         />
         <img
             v-if="user?.photoURL"

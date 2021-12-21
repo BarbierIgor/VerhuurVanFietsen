@@ -30,6 +30,10 @@ if (localStorage.getItem('preferences') != null) {
 
 // const currentLanguage = 'en'
 
+export function setCurrentLanguage(language: string): void {
+    CURRENT_LANGUAGE = language
+}
+
 export function setupI18n(options = { locale: 'nl' }) {
     const i18n = createI18n(options)
     setI18nLanguage(i18n, options.locale)

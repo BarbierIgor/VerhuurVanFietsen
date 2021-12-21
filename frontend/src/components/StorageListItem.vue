@@ -151,7 +151,7 @@ export default defineComponent({
                 </svg>
 
                 <p class="ml-2 text-dark-600">
-                    {{ `${$props.bikeStorage.prices.nonElectric} / Hr` }}
+                    {{ `${$props.bikeStorage.prices.nonElectric} / ` }} {{ $t('home.HOUR') }}
                 </p>
             </div>
 
