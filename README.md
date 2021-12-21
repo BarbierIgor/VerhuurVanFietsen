@@ -2,8 +2,8 @@
 
 ### Alles draait op k8s op de vm van Barbier-Igor:
 
-Frontend: op poort 31402
-Backend: op poort 31401
+Frontend: op poort 31402\
+Backend: op poort 31401\
 Adminer op poort 31400
 
 ## Test account
@@ -15,7 +15,7 @@ password: P@ssw0rd
 
 ### non admin:
 
-email: robbe.platteeuw@gmail.com
+email: robbe.platteeuw@gmail.com\
 password: StrongPassword123
 
 ## Project info
