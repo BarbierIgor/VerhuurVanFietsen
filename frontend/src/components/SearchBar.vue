@@ -52,6 +52,7 @@ export default defineComponent({
                 bg-dark-900
                 top-1.5
                 -mt-0.5
+                cursor-pointer
             "
             :src="user.photoURL"
         />
@@ -67,6 +68,7 @@ export default defineComponent({
                 bg-dark-900
                 top-1.5
                 -mt-0.5
+                cursor-pointer
             "
             src="../assets/images/default-profile.png"
         />
