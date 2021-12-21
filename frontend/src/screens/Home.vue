@@ -23,6 +23,13 @@ export default defineComponent({
         StorageListItem,
     },
     setup() {
+        // force a reload, can be buggy when coming from map page when its not reloaded.
+        if (!localStorage.getItem('foo')) {
+            localStorage.setItem('foo', 'no reload')
+            location.reload()
+        } else {
+            localStorage.removeItem('foo')
+        }
         const store = useStore()
         console.log(store.state.preferences.units)
         const bikeStorages: Ref<any> = ref([])
@@ -32,6 +39,7 @@ export default defineComponent({
         navigator.geolocation.getCurrentPosition(position => {
             ownlat = position.coords.latitude
             ownlong = position.coords.longitude
+            getData()
         })
         const onSearch = (value: any) => {
             const filteredData = data.filter(bikeStorage =>
@@ -41,7 +49,10 @@ export default defineComponent({
             console.log(filteredData)
         }
         const handleMapsClick = () => {
-            router.push({ path: '/map', params: { filter: 'all' } })
+            router.push({
+                path: '/map',
+                params: { filter: 'all' },
+            })
         }
         const handleScanClick = () => {
             router.push({ path: '/scan' })
@@ -93,7 +104,6 @@ export default defineComponent({
             console.log(bikeStorages)
             bikeStorages.value = data
         }
-        getData()
         return { onSearch, handleScanClick, handleMapsClick, bikeStorages }
     },
 })
