@@ -32,6 +32,12 @@ export default defineComponent({
         handleBackButton(): void {
             router.go(-1)
         },
+        handleLogoutButton() {
+            const { logout } = useFirebase()
+            localStorage.removeItem('userInfo')
+            logout()
+            router.push('/login')
+        },
         handleClickReport() {},
 
         toggleModal(modalName: String = ''): void {
@@ -59,6 +65,8 @@ export default defineComponent({
         const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
         const isAdmin = userInfo.isAdmin
         const problems: Ref<any> = ref([])
+        const userdb: Ref<any> = ref({})
+
         var data: Problem[] = []
 
         const getProblems = async () => {
@@ -68,8 +76,12 @@ export default defineComponent({
             problems.value = data
         }
 
-        if (isAdmin) {
-            getProblems()
+        const getData = async () => {
+            const dataUserDb = await get(
+                `user/${userInfo.userId}`,
+                userInfo.bearerToken,
+            )
+            userdb.value = dataUserDb
         }
 
         const toggleDarkMode = (isChecked: boolean) => {
@@ -80,19 +92,25 @@ export default defineComponent({
         const updateUnits = (unit: string): void => {
             store.commit('updateUnits', unit)
         }
-        
+
         const updateLanguage = (language: string): void => {
             store.commit('updateLanguage', language)
         }
 
-        return { 
-            user, 
-            isAdmin, 
-            problems, 
+        if (isAdmin) {
+            getProblems()
+        }
+        getData()
+
+        return {
+            user,
+            isAdmin,
+            problems,
             toggleDarkMode,
             store,
             updateUnits,
             updateLanguage,
+            userdb,
         }
     },
     components: { ToggleSwitch, Header, SelectOverlay },
@@ -136,9 +154,57 @@ export default defineComponent({
                         py-1
                         px-4
                         rounded-full
+                        cursor-pointer
                     "
                 >
                     <p class="text-dark-400 font-bold">Edit profile</p>
+                    <svg
+                        class="w-4 h-4 ml-4 rotate-180"
+                        viewBox="0 0 15.515 23.959"
+                    >
+                        <g
+                            id="Group_52"
+                            data-name="Group 52"
+                            transform="translate(3.536 3.535)"
+                        >
+                            <line
+                                id="Line_3"
+                                data-name="Line 3"
+                                x2="11.942"
+                                transform="translate(0 8.444) rotate(45)"
+                                fill="none"
+                                stroke="#dedede"
+                                stroke-linecap="round"
+                                stroke-width="5"
+                            />
+                            <line
+                                id="Line_4"
+                                data-name="Line 4"
+                                x2="11.942"
+                                transform="translate(0 8.444) rotate(-45)"
+                                fill="none"
+                                stroke="#dedede"
+                                stroke-linecap="round"
+                                stroke-width="5"
+                            />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div
+                    @click="handleLogoutButton"
+                    class="
+                        flex
+                        items-center
+                        bg-dark-accent
+                        py-1
+                        px-4
+                        rounded-full
+                        cursor-pointer
+                    "
+                >
+                    <p class="text-dark-400 font-bold">Logout</p>
                     <svg
                         class="w-4 h-4 ml-4 rotate-180"
                         viewBox="0 0 15.515 23.959"
@@ -450,7 +516,7 @@ export default defineComponent({
 
                     <div class="flex items-center">
                         <p class="mx-4 justify-self-start text-dark-600">
-                            €2.40
+                            € {{ userdb.wallet }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -484,7 +550,14 @@ export default defineComponent({
                 <!-- Language -->
                 <div
                     @click="toggleModal('language')"
-                    class="flex w-full items-center justify-between py-2"
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
                 >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 20 20">
@@ -502,7 +575,14 @@ export default defineComponent({
                     </div>
 
                     <div class="flex items-center">
-                        <p class="mx-4 justify-self-start text-dark-600 capitalize">
+                        <p
+                            class="
+                                mx-4
+                                justify-self-start
+                                text-dark-600
+                                capitalize
+                            "
+                        >
                             {{ store.state.preferences.language }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
@@ -531,7 +611,16 @@ export default defineComponent({
                 </div>
 
                 <!-- Dark mode -->
-                <div class="flex w-full items-center justify-between py-2">
+                <div
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
+                >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 22.099 24">
                             <g transform="translate(-30.7 -11.3)">
@@ -553,7 +642,7 @@ export default defineComponent({
                             Dark mode
                         </p>
                     </div>
-                    
+
                     <ToggleSwitch
                         @onToggle="toggleDarkMode($event)"
                         :is-checked="store.state.preferences.darkMode"
@@ -563,7 +652,14 @@ export default defineComponent({
                 <!-- Distance units -->
                 <div
                     @click="toggleModal('distanceUnits')"
-                    class="flex w-full items-center justify-between py-2"
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
                 >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 25.117 25">
@@ -594,7 +690,14 @@ export default defineComponent({
                     </div>
 
                     <div class="flex items-center">
-                        <p class="mx-4 justify-self-start text-dark-600 capitalize">
+                        <p
+                            class="
+                                mx-4
+                                justify-self-start
+                                text-dark-600
+                                capitalize
+                            "
+                        >
                             {{ store.state.preferences.units }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
@@ -647,7 +750,9 @@ export default defineComponent({
                             id="metric"
                             name="units"
                             value="metric"
-                            :checked="(store.state.preferences.units === 'metric')"
+                            :checked="
+                                store.state.preferences.units === 'metric'
+                            "
                         />
                         <span
                             class="
@@ -688,7 +793,9 @@ export default defineComponent({
                             id="imperial"
                             name="units"
                             value="imperial"
-                            :checked="(store.state.preferences.units === 'imperial')"
+                            :checked="
+                                store.state.preferences.units === 'imperial'
+                            "
                         />
                         <span
                             class="

@@ -12,6 +12,7 @@ export default defineComponent({
             showErrorMessage: false,
             errorMessage: '',
             showPassword: false,
+            showChangeAccountMsg: this.$route.params.goToEditProfile,
         }
     },
 
@@ -65,9 +66,22 @@ export default defineComponent({
             w-screen
         "
     >
-        <h1 class="text-white text-5xl leading-none pt-32 pl-8 font-semibold">
+        <h1
+            v-if="!showChangeAccountMsg"
+            class="text-white text-5xl leading-none pt-32 pl-8 font-semibold"
+        >
             Start renting <br />
             bikes<span class="text-dark-accent text-6xl leading-none">.</span>
+        </h1>
+
+        <h1
+            v-if="showChangeAccountMsg"
+            class="text-white text-5xl leading-none pt-32 pl-8 font-semibold"
+        >
+            Please log in again to edit your profile.<span
+                class="text-dark-accent text-6xl leading-none"
+                >.</span
+            >
         </h1>
 
         <div
