@@ -9,6 +9,7 @@ import useFirebase from '../composables/useFirebase'
 import { Problem } from '../interfaces/Problem'
 import { get } from '../composables/networkComposable'
 import { useStore } from 'vuex'
+import i18n, { CURRENT_LANGUAGE, loadLocaleMessages, SUPPORT_LOCALES } from '../plugins/i18n-setup'
 
 export default defineComponent({
     data() {
@@ -93,8 +94,19 @@ export default defineComponent({
             store.commit('updateUnits', unit)
         }
 
-        const updateLanguage = (language: string): void => {
+        const updateLanguage = async (language: string) => {
             store.commit('updateLanguage', language)
+            // console.log(SUPPORT_LOCALES)
+            if (SUPPORT_LOCALES.includes(language)) {
+                await loadLocaleMessages(i18n, language)
+                i18n.global.locale = language
+            }
+        }
+
+        const getLanguageFromLocale = (locale: string): string => {
+            const languages = new Intl.DisplayNames([locale], { type: 'language' });
+            // console.log(languages.of(locale))
+            return languages.of(locale)
         }
 
         if (isAdmin) {
@@ -111,6 +123,9 @@ export default defineComponent({
             updateUnits,
             updateLanguage,
             userdb,
+            getLanguageFromLocale,
+            SUPPORT_LOCALES,
+            CURRENT_LANGUAGE,
         }
     },
     components: { ToggleSwitch, Header, SelectOverlay },
@@ -287,6 +302,7 @@ export default defineComponent({
                         />
                     </g>
                 </svg>
+                <!-- <p class="text-md text-dark-400 mx-4">{{ $t('home.HOME_TITLE') }}</p> -->
                 <p class="text-md text-dark-400 mx-4">Report a problem</p>
                 <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                     <g data-name="Group 82" transform="translate(2.121 2.121)">
@@ -576,7 +592,8 @@ export default defineComponent({
                                 capitalize
                             "
                         >
-                            {{ store.state.preferences.language }}
+                            <!-- {{ store.state.preferences.language }} -->
+                            {{ getLanguageFromLocale(CURRENT_LANGUAGE) }}
                         </p>
                         <svg class="w-4 h-4" viewBox="0 0 9.519 14.795">
                             <g transform="translate(2.121 2.121)" opacity="0.5">
@@ -814,6 +831,7 @@ export default defineComponent({
                         items-center
                         flex-col
                         overflow-y-scroll
+                        max-h-52
                     "
                 >
                     <div
@@ -826,16 +844,18 @@ export default defineComponent({
                             items-center
                             pb-3
                         "
+                        v-for="(locale, index) in SUPPORT_LOCALES"
+                        :key="index"
                     >
                         <input
                             v-model="language"
-                            value="english"
+                            :value="getLanguageFromLocale(locale)"
                             class="peer"
                             name="language"
-                            @input="updateLanguage('english')"
+                            @input="updateLanguage(locale)"
                             hidden
                             type="radio"
-                            id="english"
+                            :id="getLanguageFromLocale(locale)"
                         />
                         <label
                             class="
@@ -854,102 +874,14 @@ export default defineComponent({
                                 peer-checked:bg-dark-accent
                                 peer-checked:text-dark-400
                                 peer-checked:bg-opacity-100
+                                capitalize
                             "
-                            for="english"
+                            :for="getLanguageFromLocale(locale)"
                         >
-                            <p>English</p>
+                            <p>{{ getLanguageFromLocale(locale) }}</p>
                         </label>
                     </div>
 
-                    <div
-                        class="
-                            relative
-                            w-full
-                            rounded-lg
-                            flex
-                            justify-start
-                            items-center
-                            pb-3
-                        "
-                    >
-                        <input
-                            v-model="language"
-                            value="dutch"
-                            class="peer"
-                            name="language"
-                            hidden
-                            type="radio"
-                            @input="updateLanguage('dutch')"
-                            id="dutch"
-                        />
-                        <label
-                            class="
-                                w-full
-                                h-full
-                                bg-dark-600 bg-opacity-10
-                                rounded-lg
-                                flex
-                                justify-start
-                                items-center
-                                p-2
-                                pl-4
-                                transition
-                                duration-300
-                                ease-in
-                                peer-checked:bg-dark-accent
-                                peer-checked:text-dark-400
-                                peer-checked:bg-opacity-100
-                            "
-                            for="dutch"
-                        >
-                            <p>Dutch</p>
-                        </label>
-                    </div>
-
-                    <div
-                        class="
-                            relative
-                            w-full
-                            rounded-lg
-                            flex
-                            justify-start
-                            items-center
-                            pb-3
-                        "
-                    >
-                        <input
-                            v-model="language"
-                            value="spanish"
-                            class="peer"
-                            name="language"
-                            hidden
-                            type="radio"
-                            id="spanish"
-                            @input="updateLanguage('spanish')"
-                        />
-                        <label
-                            class="
-                                w-full
-                                h-full
-                                bg-dark-600 bg-opacity-10
-                                rounded-lg
-                                flex
-                                justify-start
-                                items-center
-                                p-2
-                                pl-4
-                                transition
-                                duration-300
-                                ease-in
-                                peer-checked:bg-dark-accent
-                                peer-checked:text-dark-400
-                                peer-checked:bg-opacity-100
-                            "
-                            for="spanish"
-                        >
-                            <p>Spanish</p>
-                        </label>
-                    </div>
                 </form>
             </div>
         </SelectOverlay>

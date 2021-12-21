@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "serve": "vite preview"
+        "serve": "vite preview",
+        "google-sheets": "node ./src/bootstrap/google_sheets.js"
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.12.11",
@@ -13,8 +14,10 @@
         "animate.css": "^4.1.1",
         "axios": "^0.24.0",
         "firebase": "^9.6.0",
+        "googleapis": "^39.2.0",
         "lottie-vuejs": "^0.4.0",
         "vue": "^3.2.23",
+        "vue-i18n": "^9.2.0-beta.23",
         "vue-qrcode-reader": "^3.0.6",
         "vue-router": "^4.0.12",
         "vue3-qrcode-reader": "0.0.1",

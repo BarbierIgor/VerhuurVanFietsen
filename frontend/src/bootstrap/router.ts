@@ -9,6 +9,7 @@ import {
 } from 'vue-router'
 
 import useFirebase from '../composables/useFirebase'
+import i18n, { loadLocaleMessages, setI18nLanguage, SUPPORT_LOCALES } from '../plugins/i18n-setup'
 
 const { user } = useFirebase()
 
@@ -155,4 +156,22 @@ router.beforeEach(
     },
 )
 
+// router.beforeEach(async (to, from, next) => {
+//     const paramsLocale = to.params.locale
+
+//     // use locale if paramsLocale is not in SUPPORT_LOCALES
+//     if (!SUPPORT_LOCALES.includes(String(paramsLocale))) {
+//       return next(`/${'en'}`)
+//     }
+
+//     // load locale messages
+//     if (!i18n.global.availableLocales.includes(String(paramsLocale))) {
+//       await loadLocaleMessages(i18n, paramsLocale)
+//     }
+
+//     // set i18n language
+//     setI18nLanguage(i18n, paramsLocale)
+
+//     return next()
+// })
 export default router

@@ -14,16 +14,25 @@ import { get } from '../composables/networkComposable'
 import BikeStorage from '../interfaces/BikeStorage'
 import store from '../store'
 
+import Header from '../components/Header.vue'
+
+// import { provideI18n } from "../plugins/i18n";
+// import { useI18n } from "../plugins/i18n";
+import i18n from 'vue-i18n'
+
+
 export default defineComponent({
     components: {
-        FilterSwitch,
-        SearchBar,
-        BottomNavigation,
-        StorageList,
-        StorageListItem,
-    },
+    FilterSwitch,
+    SearchBar,
+    BottomNavigation,
+    StorageList,
+    StorageListItem,
+    Header
+},
     setup() {
         const store = useStore()
+        
         console.log(store.state.preferences.units)
         const bikeStorages: Ref<any> = ref([])
         var data: BikeStorage[] = []
@@ -52,45 +61,6 @@ export default defineComponent({
         getData()
         return { onSearch, handleScanClick, handleMapsClick, bikeStorages }
     },
-
-    // data() {
-    //     return {
-    //         fromchild: '',
-    //         bikeStations: {},
-    //         loading: false,
-    //     }
-    // },
-
-    // computed: mapState(['items']),
-
-    // mounted() {
-    //     this.$store.dispatch('loadItems')
-    //     // this.getData()
-    // },
-
-    // methods: {
-    //     onSearch(value: any) {
-    //         // this.fromChild = value
-    //         // console.log(`Parent: ${value}`)
-    //     },
-    //     handleMapsClick() {
-    //         router.push({ path: '/map', params: { filter: 'all' } })
-    //     },
-    //     handleScanClick() {
-    //         router.push({ path: '/scan' })
-    //     },
-    //     // getData() {
-    //     //     const userInfo = JSON.parse(localStorage.getItem('userInfo') as any)
-    //     //     console.log('token' + userInfo.bearerToken)
-
-    //     //     const bikeStorages = get('bikestorage/all', userInfo.bearerToken)
-    //     //     console.log(bikeStorages)
-    //     //     setTimeout(() => {
-    //     //         this.bikeStations = bikeStorages
-    //     //         this.loading = false
-    //     //     }, 2000)
-    //     // },
-    // },
 })
 </script>
 
