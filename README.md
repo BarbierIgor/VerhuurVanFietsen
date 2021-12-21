@@ -101,8 +101,8 @@ Frontend:
 - [x] Gegevens worden persistent gestockeerd in de meest passende datastructuur. Maak
       een goed onderbouwde keuze. SQL
 
-- [] Backend communiceert naar frontend in realtime en vice-versa met de gepaste
-  protocollen.
+- [ ] Backend communiceert naar frontend in realtime en vice-versa met de gepaste
+      protocollen.
 
 - [x] Firebase of dergelijke
 
@@ -114,7 +114,7 @@ Frontend:
 
 - [x] CORS is enabled.
 
-- [] Extra beveiligingen tegen Cross Site Forgery, Cross Site Scripting.
+- [ ] Extra beveiligingen tegen Cross Site Forgery, Cross Site Scripting.
 
 - [x] De API documenteert zichzelf op basis van een self-documenting library. (bv.: Swagger
       of GraphiQL)
@@ -146,7 +146,7 @@ Frontend:
       Registry (DockerHub / Harbor) (met versiebeheer van de Container tags)
       **_Staat op github registry_**
 
-- [] Image beschikbaar op DockerHub / Harbor
+- [ ] Image beschikbaar op DockerHub / Harbor
 
 ---
 
@@ -154,9 +154,9 @@ Frontend:
 
 - [x] Met een JS-framework gemaakt, met TypeScript. Vuejs
 
-- [] Minstens één unit test
+- [ ] Minstens één unit test
 
-- [] Minstens één integratie test
+- [ ] Minstens één integratie test
 
 - [x] Je werkt met SCSS met een solide achterliggende structuur of **tailwindCSS**.
 
@@ -168,7 +168,7 @@ Frontend:
 
 - [x] Multi-language
 
-- [] Error Logging
+- [ ] Error Logging
 
 - [x] De applicatie draait volledig in Docker.
 
