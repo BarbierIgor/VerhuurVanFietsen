@@ -1,0 +1,34 @@
+{
+  "home": {
+    "LOCALE_LANGUAGE": {
+      "en": "English",
+      "nl": "Nederlands",
+      "de": "Deutsch",
+      "es": "Espagnol"
+    },
+    "HOME_TITLE": {
+      "en": "Home",
+      "nl": "Huis",
+      "de": "Heim",
+      "es": "Casa"
+    },
+    "HOME_TEXT_1": {
+      "en": "Text 1",
+      "nl": "Tekst 1",
+      "de": "Text 1",
+      "es": "Texto 1"
+    },
+    "HOME_TEXT_2": {
+      "en": "Text 2",
+      "nl": "Tekst 2",
+      "de": "Text 2.",
+      "es": "Texto 2"
+    },
+    "HOME_TEXT_3": {
+      "en": "Text 3",
+      "nl": "Tekst 3",
+      "de": "Text 3.",
+      "es": "Texto 3"
+    }
+  }
+}

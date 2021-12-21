@@ -14,14 +14,22 @@ import { get } from '../composables/networkComposable'
 import BikeStorage from '../interfaces/BikeStorage'
 import store from '../store'
 
+import Header from '../components/Header.vue'
+
+// import { provideI18n } from "../plugins/i18n";
+// import { useI18n } from "../plugins/i18n";
+import i18n from 'vue-i18n'
+
+
 export default defineComponent({
     components: {
-        FilterSwitch,
-        SearchBar,
-        BottomNavigation,
-        StorageList,
-        StorageListItem,
-    },
+    FilterSwitch,
+    SearchBar,
+    BottomNavigation,
+    StorageList,
+    StorageListItem,
+    Header
+},
     setup() {
         // force a reload, can be buggy when coming from map page when its not reloaded.
         if (!localStorage.getItem('foo')) {
@@ -31,6 +39,7 @@ export default defineComponent({
             localStorage.removeItem('foo')
         }
         const store = useStore()
+        
         console.log(store.state.preferences.units)
         const bikeStorages: Ref<any> = ref([])
         var ownlat: number
