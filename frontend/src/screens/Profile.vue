@@ -566,7 +566,14 @@ export default defineComponent({
                 <!-- Language -->
                 <div
                     @click="toggleModal('language')"
-                    class="flex w-full items-center justify-between py-2"
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
                 >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 20 20">
@@ -621,7 +628,16 @@ export default defineComponent({
                 </div>
 
                 <!-- Dark mode -->
-                <div class="flex w-full items-center justify-between py-2">
+                <div
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
+                >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 22.099 24">
                             <g transform="translate(-30.7 -11.3)">
@@ -653,7 +669,14 @@ export default defineComponent({
                 <!-- Distance units -->
                 <div
                     @click="toggleModal('distanceUnits')"
-                    class="flex w-full items-center justify-between py-2"
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        py-2
+                        cursor-pointer
+                    "
                 >
                     <div class="flex items-center">
                         <svg class="w-4 h-4" viewBox="0 0 25.117 25">

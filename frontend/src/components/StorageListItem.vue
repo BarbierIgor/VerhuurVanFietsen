@@ -128,8 +128,12 @@ export default defineComponent({
         :key="`${$props.bikeStorage.id}`"
         class="flex h-28 justify-between mt-8 first:mt-0"
     >
-        <div class="bg-dark-400 rounded-2xl h-30 w-24">
-            <img class="h-full" src="../assets/images/bike01.png" alt="bike" />
+        <div class="bg-dark-400 rounded-3xl h-30 w-30">
+            <img
+                class="h-full"
+                src="../assets/images/bikeStorage.png"
+                alt="bike"
+            />
         </div>
         <div class="flex flex-col justify-around flex-grow pl-4">
             <h1 class="text-dark-400">
@@ -160,7 +164,7 @@ export default defineComponent({
                 </svg>
 
                 <p class="ml-2 text-dark-600">
-                    {{ state.distance }}
+                    {{ $props.bikeStorage.distance }} km
                 </p>
             </div>
 
@@ -177,7 +181,7 @@ export default defineComponent({
                 </p>
             </div>
         </div>
-        <div class="favorite-checkbox">
+        <div class="favorite-checkbox cursor-pointer">
             <input
                 type="checkbox"
                 hidden

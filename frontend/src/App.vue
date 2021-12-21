@@ -39,9 +39,9 @@ export default defineComponent({
     },
 
     beforeCreate() {
-        const store = useStore();
-        store.commit('initializePreferences');
-        store.commit('initializeFavorites');
-    }
+        const store = useStore()
+        store.commit('initializePreferences')
+        store.commit('initializeFavorites')
+    },
 })
 </script>

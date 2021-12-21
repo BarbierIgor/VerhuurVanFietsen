@@ -3,6 +3,7 @@ import { defineComponent, ref, Ref } from 'vue'
 import router from '../bootstrap/router'
 import { get, post } from '../composables/networkComposable'
 import { HiredHistoryPost } from '../interfaces/HiredHistory'
+import MapComponent from '../components/MapComponent.vue'
 
 export default defineComponent({
     data() {
@@ -75,13 +76,15 @@ export default defineComponent({
         startTimer()
         return { bikeInUse, stopButtonUsed, timer, msToTime }
     },
+    components: { MapComponent },
 })
 </script>
 
 <template>
     <div class="relative h-screen w-screen">
         <!-- map -->
-        <div class="w-full h-full bg-dark-900 opacity-20"></div>
+        <!-- <div class="w-full h-full bg-dark-900 opacity-20"></div> -->
+        <MapComponent />
 
         <!-- content -->
         <div class="w-full h-full p-4 absolute top-0 left-0">
@@ -92,6 +95,7 @@ export default defineComponent({
                         h-10
                         w-10
                         bg-dark-400
+                        z-10
                         rounded-full
                         mr-4
                         flex
