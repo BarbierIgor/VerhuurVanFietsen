@@ -1,5 +1,11 @@
 # VerhuurVanFietsen
 
+### Alles draait op k8s op de vm van Barbier-Igor
+
+Frontend: op poort 31402
+Backend: op poort 31401
+Adminer op poort 31400
+
 ## Test account
 
 ### admin:
