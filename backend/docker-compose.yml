@@ -16,7 +16,7 @@ services:
       - 9999:8080
 
   verhuurvanfietsen:
-    image: ghrc.io/barbierigor/verhuurvanfietsen
+    image: ghcr.io/barbierigor/verhuurvanfietsen
     build:
       context: .
       dockerfile: ./Dockerfile
